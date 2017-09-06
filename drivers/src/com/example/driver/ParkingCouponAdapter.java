@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.driver.R.color;
+
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ public class ParkingCouponAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private Context context;  
     public int clickPosition = -1;
+    private static final String LOG_TAG = "ParkingCouponAdapter";
 
     public ParkingCouponAdapter(Context context,ArrayList<HashMap<String,Object>> data) {
         this.context=context;   
@@ -30,6 +33,7 @@ public class ParkingCouponAdapter extends BaseAdapter {
     }
     
     public class ViewHolder{
+    	CouponsView couponView;
     	TextView titleTV;
     	TextView startTimeTV;
     	TextView endTimeTV;
@@ -58,6 +62,7 @@ public class ParkingCouponAdapter extends BaseAdapter {
         if(convertView == null){
             vh = new ViewHolder();
             convertView = layoutInflater.inflate(R.layout.list_parking_coupon, null);
+            vh.couponView=(CouponsView)convertView.findViewById(R.id.cv_coupon);
             vh.titleTV = (TextView) convertView.findViewById(R.id.tv_coupon_title);
             vh.startTimeTV = (TextView) convertView.findViewById(R.id.tv_start_time_coupon);
             vh.endTimeTV = (TextView) convertView.findViewById(R.id.tv_end_time_coupon);
@@ -77,7 +82,14 @@ public class ParkingCouponAdapter extends BaseAdapter {
         vh.denominationTV.setText((String)(data.get(position).get("couponDenomination")));
         vh.couponDetailHideTV.setText((String)(data.get(position).get("couponDetail")));
 		if (clickPosition == position) {
-		    if (vh.enterCouponDetailIV.isSelected()) {
+			if(vh.couponView.isSelected()){
+				vh.couponView.setSelected(false);
+				vh.couponView.setBackgroundResource(R.color.gray);
+			}else{
+				vh.couponView.setSelected(true);
+				vh.couponView.setBackgroundResource(R.color.orange);
+			}
+			/*if (vh.enterCouponDetailIV.isSelected()) {
 		    	    vh.enterCouponDetailIV.setSelected(false);
 		    	    vh.enterCouponDetailIV.setImageResource(R.drawable.ic_chevron_right_black_24dp);
                     vh.couponHideDetail.setVisibility(View.GONE);
@@ -86,20 +98,28 @@ public class ParkingCouponAdapter extends BaseAdapter {
 		    	    vh.enterCouponDetailIV.setSelected(true);
 		    	    vh.enterCouponDetailIV.setImageResource(R.drawable.ic_expand_more_black_24dp);
                     vh.couponHideDetail.setVisibility(View.VISIBLE);
-              }
+             }*/
         } else {
-        	vh.couponHideDetail.setVisibility(View.GONE);
-        	vh.enterCouponDetailIV.setSelected(false);
-    	    vh.enterCouponDetailIV.setImageResource(R.drawable.ic_chevron_right_black_24dp);
+        	vh.couponView.setBackgroundColor(color.gray);
+            /*vh.couponHideDetail.setVisibility(View.GONE);
+            vh.enterCouponDetailIV.setSelected(false);
+        	vh.enterCouponDetailIV.setImageResource(R.drawable.ic_chevron_right_black_24dp);*/
         }
-		vh.enterCouponDetailIV.setOnClickListener(new OnClickListener(){
+		vh.couponView.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v){
+				clickPosition = position;
+		    	notifyDataSetChanged();
+			}
+		});
+        /*vh.enterCouponDetailIV.setOnClickListener(new OnClickListener(){
 		    @Override
 		    public void onClick(View v){
 		    	clickPosition = position;
 		    	notifyDataSetChanged();
 		    }
-		});
-        Log.e("yifan","getview");
+		});*/
+        Log.e(LOG_TAG,"getview");
         return convertView;
     }
 }

@@ -567,7 +567,7 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
 				bundle.putString("startTime", (String)map.get("startTime"));
 				bundle.putString("leaveTime", (String)map.get("leaveTime"));
 				bundle.putString("parkingLocation", (String)map.get("parkingLocation"));
-				bundle.putString("feeScale", (String)map.get("feeScale"));
+				//bundle.putString("feeScale", (String)map.get("feeScale"));
 				intent.putExtras(bundle);
 				startActivity(intent);
             }
@@ -1814,12 +1814,11 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
                    HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
  		  httpClient.getParams().setIntParameter(  
                    HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置 
- 		  String strurl = "http://" + this.getString(R.string.ip) + ":8080/itspark/owner/userCenter/query";
+ 		  String strurl = "http://" + this.getString(R.string.ip) + "/itspark/owner/userCenter/query";
  		  HttpPost request = new HttpPost(strurl);
  		  request.addHeader("Accept","application/json");
 			//request.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 		  request.setHeader("Content-Type", "application/json; charset=utf-8");
-		  JSONObject param = new JSONObject();
 		  QueryUserInfo info = new QueryUserInfo();
 		  CommonRequestHeader header = new CommonRequestHeader();
 		  header.addRequestHeader(CommonRequestHeader.REQUEST_OWNER_USER_CENTER_INFORMATION_CODE, mTeleNumber, readToken());
@@ -2048,7 +2047,7 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
 	                  HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
 			  httpClient.getParams().setIntParameter(  
 	                  HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置 
-			  String strurl = "http://" + this.getString(R.string.ip) + ":8080/park/owner/queryNearbyParking/query";
+			  String strurl = "http://" + this.getString(R.string.ip) + "/itspark/owner/queryNearbyParking/query";
 			  HttpPost request = new HttpPost(strurl);
 			  request.addHeader("Accept","application/json");
 			  //request.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
@@ -2156,7 +2155,7 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
                   HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
 		  httpClient.getParams().setIntParameter(  
                   HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置 
-		  String strurl = "http://" + this.getString(R.string.ip) + ":8080/itspark/owner/queryCurrent/query";
+		  String strurl = "http://" + this.getString(R.string.ip) + "/itspark/owner/queryCurrent/query";
 		  HttpPost request = new HttpPost(strurl);
 		  request.addHeader("Accept","application/json");
 			//request.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
@@ -2253,7 +2252,7 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
                   HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
 		  httpClient.getParams().setIntParameter(  
                   HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置,"0"代表永不超时
-		  String strurl = "http://" + 	this.getString(R.string.ip) + ":8080/park/owner/userCenter/logout";
+		  String strurl = "http://" + 	this.getString(R.string.ip) + "/itspark/owner/userCenter/logout";
 		  HttpPost request = new HttpPost(strurl);
 		  request.addHeader("Accept","application/json");
 		//request.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");

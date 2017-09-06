@@ -48,7 +48,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.DatePicker.OnDateChangedListener;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -59,6 +61,8 @@ public class ParkingCouponActivity extends FragmentActivity {
     private TextView mEmptyCouponNotifyTV;
 	private UserDbAdapter mUserDbAdapter;
 	private String mTeleNumber;
+	private String mExpense;
+	private String mCouponID;
 	private int mParkingCoupon;
     private static final String FILE_NAME_TOKEN = "save_pref_token";
     private UserCouponTask mCouponTask= null;
@@ -66,6 +70,7 @@ public class ParkingCouponActivity extends FragmentActivity {
     private ParkingCouponAdapter mParkingCouponAdapter;
 	public static final int NO_COUPON =101;
 	public static final int EVENT_SET_ADAPTER = 102;
+	private static final int COUPON_CODE = 401;
     private static final String LOG_TAG = "ParkingCouponActivity";
 
 	@Override  
@@ -77,6 +82,7 @@ public class ParkingCouponActivity extends FragmentActivity {
         Bundle bundle=intent.getExtras();
         if(bundle!=null){
         	mTeleNumber = bundle.getString("telenumber");
+        	mExpense = bundle.getString("expnese");
         }
         mListView=(ListView)findViewById(R.id.list_parking_coupon);  
         mEmptyCouponNotifyTV=(TextView)findViewById(R.id.tv_empty_coupon_notify_coupon);  
@@ -92,6 +98,9 @@ public class ParkingCouponActivity extends FragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {  
 	    switch (item.getItemId()) {  
 	         case android.R.id.home:  
+	             Intent intent = new Intent();  
+	             intent.putExtra("couponID", mCouponID);  
+	             setResult(COUPON_CODE, intent); 
 	             finish();  
 	             break;    
 	        default:  
@@ -128,6 +137,13 @@ public class ParkingCouponActivity extends FragmentActivity {
                 case EVENT_SET_ADAPTER:
                 	mParkingCouponAdapter= new ParkingCouponAdapter(getApplicationContext(), mList);
     	            mListView.setAdapter(mParkingCouponAdapter); 
+    	            mListView.setOnItemClickListener(new OnItemClickListener(){
+    	            	@Override
+    	            	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+    	            		HashMap<String,Object> map=(HashMap<String,Object>)mListView.getItemAtPosition(arg2);
+    	            		mCouponID = (String)map.get("couponID");
+    	            	}
+    	            });
     	            mParkingCouponAdapter.notifyDataSetChanged();
             	    break;
                 default:
@@ -149,13 +165,13 @@ public class ParkingCouponActivity extends FragmentActivity {
 		  String strurl = "http://" + this.getString(R.string.ip) + ":8080/park/owner/queryCoupon/query";
 		  HttpPost request = new HttpPost(strurl);
 		  request.addHeader("Accept","application/json");
-	 	//request.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 		  request.setHeader("Content-Type", "application/json; charset=utf-8");
-		  JSONObject param = new JSONObject();
+		  QueryCouponInfo info = new QueryCouponInfo();
 		  CommonRequestHeader header = new CommonRequestHeader();
 		  header.addRequestHeader(CommonRequestHeader.REQUEST_OWNER_QUERY_COUPON_CODE, mTeleNumber, readToken());
-		  param.put("header", header);
-		  StringEntity se = new StringEntity(param.toString(), "UTF-8");
+		  info.setHeader(header);
+		  info.setExpensePrimary(mExpense);
+		  StringEntity se = new StringEntity(JacksonJsonUtil.beanToJson(info), "UTF-8");
 		  request.setEntity(se);//发送数据
 		  try{
 			  HttpResponse httpResponse = httpClient.execute(request);//获得响应

@@ -11,6 +11,8 @@ public class PaymentInfo {
 	private String couponID;
 	private String password;
 	private String tradeRecordID;
+	private String IP;
+	private String authCode;
 	
 	public CommonRequestHeader getheader() {
 		return header;
@@ -74,10 +76,24 @@ public class PaymentInfo {
 	public void setTradeRecordID(String tradeRecordID) {
 		this.tradeRecordID = tradeRecordID;
 	}
+	
+	public String getIP() {
+		return IP;
+	}
+	public void setIP(String IP) {
+		this.IP= IP;
+	}
+	
+	public String getAuthCode() {
+		return authCode;
+	}
+	public void setAuthCode(String authCode) {
+		this.authCode= authCode;
+	}
 	@Override
 	public String toString() {
-		return "PaymentInfo [header=" + header + ", parkingRecordID=" + parkingRecordID + ", paymentPattern="
-				+ paymentPattern + ", paidMoney=" + paidMoney + "]";
+		return "PaymentInfo [header=" + header + ", parkingRecordID=" + parkingRecordID + ", tradeRecordID=" + tradeRecordID + ", paymentPattern="
+				+ paymentPattern + ", paidMoney=" + paidMoney + ", IP" + IP + ", authCode" + authCode + "]";
 	}
 }
 

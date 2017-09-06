@@ -109,6 +109,18 @@
                      android:paddingBottom="3dp"
                      android:gravity="left"
                      android:textSize="15sp"/>
+                     <TextView 
+                     android:id="@+id/tv_coupon_choose"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/coupon_expand"
+                     android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+                     android:paddingLeft="10dp"
+                     android:paddingRight="10dp"
+                     android:paddingTop="3dp"
+                     android:paddingBottom="3dp"
+                     android:gravity="left"
+                     android:textSize="15sp"/>
              </LinearLayout>
         </LinearLayout>
         <LinearLayout 

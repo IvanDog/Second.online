@@ -47,17 +47,14 @@ import android.widget.Toast;
 
 public class PaymentActivity extends Activity {
 	private static final int EVENT_PASSWD_EMPTY = 101;
-	private static final int EVENT_PASSWD_ERROR = 102;
-	private static final int EVENT_ACCOUNT_PAYMENT_SUCCESS = 103;
-	private static final int EVENT_ACCOUNT_PAYMENT_FAIL = 104;
-	private static final int EVENT_UPDATE_ACCOUNT_RB_STATE=105;
-	private static final int EVENT_MOBILE_PAYMENT_SUCCESS=106;
-	private static final int EVENT_MOBILE_PAYMENT_FAIL = 107;
+	private static final int EVENT_ACCOUNT_PAYMENT_SUCCESS = 102;
+	private static final int EVENT_MOBILE_PAYMENT_SUCCESS=103;
+	private static final int EVENT_MOBILE_PAYMENT_FAIL = 104;
 	private static final int PAYMENT_TYPE_ACCOUNT=201;
 	private static final int PAYMENT_TYPE_ALIPAY=202;
 	private static final int PAYMENT_TYPE_WECHATPAY=203;
-	private static final int PAYMENT_TYPE_MOBILE=204;
 	private static final int EVENT_DISPLAY_INFORMATION = 301;
+	private static final int COUPON_CODE = 401;
 	private static final String LOG_TAG = "PaymentActivity";
     private static final String FILE_NAME_TOKEN = "save_pref_token";
 
@@ -68,14 +65,13 @@ public class PaymentActivity extends Activity {
 	private TextView mExpenseTV;
 	private TextView mExpenseDiscountTV;
 	private TextView mExpenseFinalTV;
+	private TextView mCouponTV;
 	private Button mConfirmPaymentBT;
-	private Button mCancelLeavingBT;
 	private RadioGroup mPaymentTypeRG;
 	private RadioButton  mAccountPaymentTypeRB;
 	private RadioButton mAlipayPaymentTypeRB;
 	private RadioButton mWechatpayPaymentRB;;
 	private int mPaymentType;
-	private UserDbAdapter mUserDbAdapter;
 	private String mTeleNumber;
 	private String mParkNumber;
 	private String mLicensePlateNumber;
@@ -88,8 +84,9 @@ public class PaymentActivity extends Activity {
 	private String mExpense;
 	private String mDiscount;
 	private String mExpenseFinal;
-	private boolean mAccountState;
-	private Long mParkingRecordrID;
+	//private boolean mAccountState;
+	private String mParkingRecordrID;
+	private String mTradeRecordID;
 	private String mCouponID;
 	private Context mContext;
 	private AlertDialog mDialog;
@@ -104,12 +101,11 @@ public class PaymentActivity extends Activity {
 		Bundle bundle = intent.getExtras();
 		mTeleNumber=bundle.getString("telenumber");
         mParkNumber = bundle.getString("parkNumber");
-        mParkingRecordrID = bundle.getLong("parkingRecordrID");
+        mParkingRecordrID = bundle.getString("parkingRecordrID");
 		mLicensePlateNumber = bundle.getString("licensePlateNumber");
 		mCarType=bundle.getString("carType");
 		mStartTime = bundle.getString("startTime");
 		mLeaveTime = bundle.getString("leaveTime");
-		mFeeScale = bundle.getString("feeScale");
 		mLicensePlateNumberTV=(TextView)findViewById(R.id.tv_license_number_leaving);
 		mStartTimeTV=(TextView)findViewById(R.id.tv_start_time_leaving);
 		mLeaveTimeTV=(TextView)findViewById(R.id.tv_leave_time_leaving);
@@ -117,6 +113,17 @@ public class PaymentActivity extends Activity {
 		mExpenseTV=(TextView)findViewById(R.id.tv_expense_leaving);
 		mExpenseDiscountTV=(TextView)findViewById(R.id.tv_expense_discount_leaving);
 		mExpenseFinalTV=(TextView)findViewById(R.id.tv_expense_final_leaving);
+		mCouponTV=(TextView)findViewById(R.id.tv_coupon_choose);
+		mCouponTV.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v){
+				Intent intent = new Intent(PaymentActivity.this, ParkingCouponActivity.class);
+				Bundle bundle = new Bundle();
+				bundle.putString("expnese", mExpense);
+				intent.putExtras(bundle);
+				startActivityForResult(intent,COUPON_CODE);
+			}
+		});
 		mPaymentTypeRG=(RadioGroup)findViewById(R.id.rg_payment_type_leaving);
 		mAccountPaymentTypeRB=(RadioButton)findViewById(R.id.rb_account_payment_leaving);
 		mAlipayPaymentTypeRB=(RadioButton)findViewById(R.id.rb_alipay_payment_leaving);
@@ -142,9 +149,9 @@ public class PaymentActivity extends Activity {
 				if(mPaymentType==PAYMENT_TYPE_ACCOUNT){
 					showAccountPaymentDialog();
 				}else if(mPaymentType==PAYMENT_TYPE_ALIPAY){
-					makeMobilePay();
+					makeMobilePay(PAYMENT_TYPE_ALIPAY);
 				}else if(mPaymentType==PAYMENT_TYPE_WECHATPAY){
-					makeMobilePay();
+					makeMobilePay(PAYMENT_TYPE_WECHATPAY);
 				}
 			}
 		});
@@ -170,10 +177,6 @@ public class PaymentActivity extends Activity {
         		    mExpenseTV.setText("停车费用: " +mExpense + "元");
 				    mExpenseDiscountTV.setText("停车券抵扣: " + mDiscount + "元" );
 				    mExpenseFinalTV.setText("支付金额: " + mExpenseFinal + "元");
-				    if(!mAccountState){
-	        			mAccountPaymentTypeRB.setText("余额不足");
-	        			mAccountPaymentTypeRB.setEnabled(false);
-				    }
             	    break;
                 case EVENT_PASSWD_EMPTY:
                 	Toast.makeText(getApplicationContext(), "密码为空", Toast.LENGTH_SHORT).show();
@@ -229,16 +232,14 @@ public class PaymentActivity extends Activity {
 		mDialog.show();
     }
 
-    public void makeMobilePay(){
-		/*if(mUserDbAdapter.updateParkingDetail(mParkingEnterID,  mLeaveTime, mExpense, "移动支付")){
-			Message msg = new Message();
-            msg.what = EVENT_MOBILE_PAYMENT_SUCCESS;
-            mHandler.sendMessage(msg);
-		}else{
-			Message msg = new Message();
-            msg.what = EVENT_MOBILE_PAYMENT_FAIL;
-            mHandler.sendMessage(msg);
-		}*/
+    public void makeMobilePay(int mPaymentType){
+    	if(mPaymentType == PAYMENT_TYPE_WECHATPAY){
+			mPaymentTask = new UserPaymentTask(null,"微信支付");
+			mPaymentTask.execute((Void) null);
+    	}else if(mPaymentType == PAYMENT_TYPE_ALIPAY){
+			mPaymentTask = new UserPaymentTask(null,"支付宝支付");
+			mPaymentTask.execute((Void) null);
+    	}
     }
     
 	public boolean onOptionsItemSelected(MenuItem item) {  
@@ -273,16 +274,15 @@ public class PaymentActivity extends Activity {
 	 * Add for payment
 	 * */
 	public boolean clientPayment(String password, String paymentPattern) throws ParseException, IOException, JSONException{
-		Log.e("clientPayment","enter clientPayment");  
+		Log.e(LOG_TAG,"enter clientPayment");  
 		HttpClient httpClient = new DefaultHttpClient();
 		  httpClient.getParams().setIntParameter(  
                   HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
 		  httpClient.getParams().setIntParameter(  
                   HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置 
-		  String strurl = "http://" + this.getString(R.string.ip) + ":8080/itspark/owner/payment/pay";
+		  String strurl = "http://" + this.getString(R.string.ip) + "/itspark/owner/payment/pay";
 		  HttpPost request = new HttpPost(strurl);
 		  request.addHeader("Accept","application/json");
-		  //request.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 		  request.setHeader("Content-Type", "application/json; charset=utf-8");
 		  JSONObject param = new JSONObject();
 		  PaymentInfo info = new PaymentInfo();
@@ -292,9 +292,11 @@ public class PaymentActivity extends Activity {
 		  info.setParkNumber(mParkNumber);
 		  info.setLicensePlateNumber(mLicensePlateNumber);
 		  info.setPassword(getMD5Code(password));
-		  info.setParkingRecordID(String.valueOf(mParkingRecordrID));
+		  info.setParkingRecordID(mParkingRecordrID);
+		  info.setTradeRecordID(mTradeRecordID);
 		  info.setPaymentPattern(convertPayPattToInteger(paymentPattern));
 		  info.setPaidMoney(mExpenseFinal);
+		  info.setCouponID(mCouponID);
 		  StringEntity se = new StringEntity(JacksonJsonUtil.beanToJson(info), "UTF-8");
 		  Log.e(LOG_TAG,"clientPayment-> param is " + JacksonJsonUtil.beanToJson(info));
 		  request.setEntity(se);//发送数据
@@ -354,9 +356,15 @@ public class PaymentActivity extends Activity {
 		protected void onPostExecute(final Boolean success) {
 			mPaymentTask = null;
 		    if(success){
-        		Message msg = new Message();
-        		msg.what = EVENT_ACCOUNT_PAYMENT_SUCCESS;
-        		mHandler.sendMessage(msg);
+		    	if(mPaymentType==PAYMENT_TYPE_ACCOUNT){
+	        		Message msg = new Message();
+	        		msg.what = EVENT_ACCOUNT_PAYMENT_SUCCESS;
+	        		mHandler.sendMessage(msg);
+		    	}else if(mPaymentType==PAYMENT_TYPE_WECHATPAY){
+		    		//TODO
+		    	}else if(PAYMENT_TYPE_ACCOUNT==PAYMENT_TYPE_ALIPAY){
+		    		//TODO
+		    	}
 		    }
 		}
 
@@ -377,7 +385,7 @@ public class PaymentActivity extends Activity {
                   HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
 		  httpClient.getParams().setIntParameter(  
                   HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置 
-		  String strurl = "http://" + this.getString(R.string.ip) + ":8080/itspark/owner/payment/queryExpense";
+		  String strurl = "http://" + this.getString(R.string.ip) + "/itspark/owner/payment/queryExpense";
 		  HttpPost request = new HttpPost(strurl);
 		  request.addHeader("Accept","application/json");
 		  //request.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
@@ -411,12 +419,12 @@ public class PaymentActivity extends Activity {
 					  Log.e(LOG_TAG,"clientQueryExpense->mDiscount is" + mDiscount );
 					  mExpenseFinal =  (String)res.getPropertyMap().get("expenseFinal");
 					  Log.e(LOG_TAG,"clientQueryExpense->mExpenseFinal is" + mExpenseFinal );
-					  //mAccountState = Boolean.parseBoolean(String.valueOf(res.getPropertyMap().get("accountState")));
-					  //Log.e(LOG_TAG,"clientQueryExpense->mAccountState is" + mAccountState );
-					  mParkingRecordrID = Long.parseLong(String.valueOf (res.getPropertyMap().get("parkingRecordID")));
-					  Log.e(LOG_TAG,"clientQueryExpense->mParkingRecordID is" + mParkingRecordrID );
+					  mFeeScale =  (String)res.getPropertyMap().get("feeScale");
+					  Log.e(LOG_TAG,"clientQueryExpense->mFeeScale is" + mFeeScale );
+					  mTradeRecordID =  (String)res.getPropertyMap().get("tradeRecordID");
+					  Log.e(LOG_TAG,"clientQueryExpense->mTradeRecordID is" + mTradeRecordID);
 					  return true;
-				  }else if(res.getResCode().equals("201")){
+				  }else{
 			          return false;
 				  } 
 			}else{
@@ -469,6 +477,21 @@ public class PaymentActivity extends Activity {
 		
 	}
 	
+	
+    @Override  
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {  
+        switch (requestCode) {  
+        case COUPON_CODE:  
+        	mCouponID = data.getStringExtra("couponID");
+    		mQueryTask = new UserQueryTask();
+    		mQueryTask.execute((Void) null);
+            break;   
+        default:  
+            break;  
+        }  
+    } 
+    
+    
 	 //封装Toast
 	 private void toastWrapper(final String str) {
 	      runOnUiThread(new Runnable() {
@@ -512,15 +535,25 @@ public class PaymentActivity extends Activity {
 	
 	public Integer convertPayPattToInteger(String paymentPattern){
         if("pos机支付".equals(paymentPattern)){
-			return 1;
-		}else if("微信支付".equals(paymentPattern)){
-			return 2;
-		}else if("支付宝支付".equals(paymentPattern)){
-			return 3;
-		}else if("余额支付".equals(paymentPattern)){
-			return 6;
-		}else{
-			return 0;
+				return 1;
+			}else if("微信支付".equals(paymentPattern)){
+				return 2;
+			}else if("支付宝支付".equals(paymentPattern)){
+				return 3;
+			}else if("微信扫码支付".equals(paymentPattern)){
+				return 4;
+			}else if("支付宝扫码支付".equals(paymentPattern)){
+				return 5;
+			}else if("微信刷卡支付".equals(paymentPattern)){
+				return 6;
+			}else if("支付宝条码支付".equals(paymentPattern)){
+				return 7;
+			}else if("余额支付".equals(paymentPattern)){
+				return 8;
+			}else if("逃费".equals(paymentPattern)){
+				return 9;
+			}else{
+				return 0;
+			}
 		}
-	}
 }

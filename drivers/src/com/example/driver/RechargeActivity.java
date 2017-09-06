@@ -15,32 +15,25 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.driver.LicensePlateManagementActivity.UserLicenseDisplayTask;
-import com.example.driver.R.drawable;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.graphics.Color;
 import android.net.ParseException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -56,7 +49,6 @@ public class RechargeActivity extends Activity {
 	private static final int PAYMENT_TYPE_ACCOUNT=201;
 	private static final int PAYMENT_TYPE_ALIPAY=202;
 	private static final int PAYMENT_TYPE_WECHATPAY=203;
-	private static final int PAYMENT_TYPE_MOBILE=204;
 	
     private static final String FILE_NAME_TOKEN = "save_pref_token";
     private UserRechargeTask mRechargeTask = null;
@@ -67,16 +59,14 @@ public class RechargeActivity extends Activity {
 	private Button mFiftyBT;
 	private Button mHundredBT;
 	private Button mConfirmPaymentBT;
-	private Button mCancelLeavingBT;
 	private RadioGroup mPaymentTypeRG;
-	private RadioButton  mAccountPaymentTypeRB;
 	private RadioButton mAlipayPaymentTypeRB;
 	private RadioButton mWechatpayPaymentRB;;
-	private int mPaymentType;
+	private String mPaymentPattern;
 	private UserDbAdapter mUserDbAdapter;
 	private String mTeleNumber;
-	private int mAccountbalance;
-	private int mCharge;
+	private String mAccountbalance;
+	private String mCharge;
 	private Context mContext;
 	private AlertDialog mDialog;
     private static final String LOG_TAG = "RechargeActivity";
@@ -102,7 +92,7 @@ public class RechargeActivity extends Activity {
 		    		mHundredBT.setSelected(false);
 		    	}
 		    	mTwentyBT.setSelected(!mTwentyBT.isSelected());
-		    	mCharge=20;
+		    	mCharge="20";
 		    }
 		});
 		mFiftyBT=(Button)findViewById(R.id.bt_payment_fifty_recharge);
@@ -116,7 +106,7 @@ public class RechargeActivity extends Activity {
 		    		mHundredBT.setSelected(false);
 		    	}
 		    	mFiftyBT.setSelected(!mFiftyBT.isSelected());
-		    	mCharge=50;
+		    	mCharge="50";
 		    }
 		});
 		mHundredBT=(Button)findViewById(R.id.bt_payment_hundred_recharge);
@@ -130,7 +120,7 @@ public class RechargeActivity extends Activity {
 		    		mFiftyBT.setSelected(false);
 		    	}
 				mHundredBT.setSelected(!mHundredBT.isSelected());
-				mCharge=100;
+				mCharge="100";
 		    }
 		});
 		mPaymentTypeRG=(RadioGroup)findViewById(R.id.rg_payment_type_recharge);
@@ -140,9 +130,9 @@ public class RechargeActivity extends Activity {
 			@Override 
 			public void onCheckedChanged(RadioGroup group, int checkedId){
                 if (mAlipayPaymentTypeRB.getId() == checkedId){
-		        	mPaymentType = PAYMENT_TYPE_ALIPAY; 
+                	mPaymentPattern = "支付宝支付"; 
 			    }else if (mWechatpayPaymentRB.getId() == checkedId){
-		        	mPaymentType = PAYMENT_TYPE_WECHATPAY; 
+			    	mPaymentPattern = "微信支付"; 
 			    }
                 mConfirmPaymentBT.setEnabled(true);
 			  } 
@@ -177,7 +167,7 @@ public class RechargeActivity extends Activity {
                 	Toast.makeText(getApplicationContext(), "移动支付失败", Toast.LENGTH_SHORT).show();
                 	break;
                 case 	EVENT_DISPLAY_WALLET_DETAIL_MONEY:
-                	mWalletDetailMoneyTV.setText((double)mAccountbalance + "");
+                	mWalletDetailMoneyTV.setText(mAccountbalance);
                 	break;
                 default:
                     break;
@@ -241,18 +231,18 @@ public class RechargeActivity extends Activity {
                    HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
  		  httpClient.getParams().setIntParameter(  
                    HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置 
- 		  String strurl = "http://" + this.getString(R.string.ip) + ":8080/park/owner/recharge/recharge";
+ 		  String strurl = "http://" + this.getString(R.string.ip) + "/itspark/owner/recharge/recharge";
  		  HttpPost request = new HttpPost(strurl);
  		  request.addHeader("Accept","application/json");
- 	 		//request.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 		  request.setHeader("Content-Type", "application/json; charset=utf-8");
 		  JSONObject param = new JSONObject();
+		  RechargeInfo info = new RechargeInfo();
 		  CommonRequestHeader header = new CommonRequestHeader();
 		  header.addRequestHeader(CommonRequestHeader.REQUEST_OWNER_QUERY_RECHARGE_CODE, mTeleNumber, readToken());
-		  param.put("header", header);
- 		  param.put("recharge", mCharge);
- 		  param.put("paymentPattern", mPaymentType);
- 		  StringEntity se = new StringEntity(param.toString(), "UTF-8");
+		  info.setHeader(header);
+		  info.setRecharge(mCharge);
+		  info.setPaymentPattern(convertPayPattToInteger(mPaymentPattern));
+ 		  StringEntity se = new StringEntity(JacksonJsonUtil.beanToJson(info), "UTF-8");
  		  request.setEntity(se);//发送数据
  		  try{
  			  HttpResponse httpResponse = httpClient.execute(request);//获得响应
@@ -263,7 +253,7 @@ public class RechargeActivity extends Activity {
  				  CommonResponse res = new CommonResponse(strResult);
  				  if(res.getResCode().equals("100")){
  					  return true;
- 				  }else if(res.getResCode().equals("201")){
+ 				  }else{
  			          return false;
  				  }  
  			}else{
@@ -322,23 +312,22 @@ public class RechargeActivity extends Activity {
     /**
  	 * Add for request display account state
  	 * */
- 	public boolean clientQueryAccount() throws ParseException, IOException, JSONException{
+ 	public boolean clientQueryBalance() throws ParseException, IOException, JSONException{
  		Log.e(LOG_TAG,"clientQueryAccount->enter clientQueryAccount");  
  		HttpClient httpClient = new DefaultHttpClient();
  		  httpClient.getParams().setIntParameter(  
                    HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
  		  httpClient.getParams().setIntParameter(  
                    HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置 
- 		  String strurl = "http://" + this.getString(R.string.ip) + ":8080/park/owner/recharge/query";
+ 		  String strurl = "http://" + this.getString(R.string.ip) + "/itspark/owner/recharge/queryBalance";
  		  HttpPost request = new HttpPost(strurl);
  		  request.addHeader("Accept","application/json");
- 		//request.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 		  request.setHeader("Content-Type", "application/json; charset=utf-8");
-		  JSONObject param = new JSONObject();
+		  QueryBalanceInfo info = new QueryBalanceInfo();
 		  CommonRequestHeader header = new CommonRequestHeader();
 		  header.addRequestHeader(CommonRequestHeader.REQUEST_OWNER_QUERY_ACCOUNT_CODE, mTeleNumber, readToken());
-		  param.put("header", header);
- 		  StringEntity se = new StringEntity(param.toString(), "UTF-8");
+		  info.setHeader( header);
+		  StringEntity se = new StringEntity(JacksonJsonUtil.beanToJson(info), "UTF-8");
  		  request.setEntity(se);//发送数据
  		  try{
  			  HttpResponse httpResponse = httpClient.execute(request);//获得响应
@@ -348,9 +337,9 @@ public class RechargeActivity extends Activity {
  				  Log.e(LOG_TAG,"clientQueryAccount->strResult is " + strResult);
  				  CommonResponse res = new CommonResponse(strResult);
  				  if(res.getResCode().equals("100")){
- 					 mAccountbalance = Integer.parseInt(String.valueOf(res.getPropertyMap().get("accountBalance")));
+ 					 mAccountbalance = String.valueOf(res.getPropertyMap().get("accountBalance"));
  					  return true;
- 				  }else if(res.getResCode().equals("201")){
+ 				  }else{
  			          return false;
  				  }  
  			}else{
@@ -377,7 +366,7 @@ public class RechargeActivity extends Activity {
  		protected Boolean doInBackground(Void... params) {
  			try{
  				Log.e(LOG_TAG,"UserLicensePlateTask->doInBackground");  
- 				return clientQueryAccount();
+ 				return clientQueryBalance();
  			}catch(Exception e){
  				Log.e(LOG_TAG,"UserLicensePlateTask->exists exception ");  
  				e.printStackTrace();
@@ -419,4 +408,28 @@ public class RechargeActivity extends Activity {
          String str = pref.getString("token", "");
          return str;
      }
+     
+ 	public Integer convertPayPattToInteger(String paymentPattern){
+        if("pos机支付".equals(paymentPattern)){
+				return 1;
+			}else if("微信支付".equals(paymentPattern)){
+				return 2;
+			}else if("支付宝支付".equals(paymentPattern)){
+				return 3;
+			}else if("微信扫码支付".equals(paymentPattern)){
+				return 4;
+			}else if("支付宝扫码支付".equals(paymentPattern)){
+				return 5;
+			}else if("微信刷卡支付".equals(paymentPattern)){
+				return 6;
+			}else if("支付宝条码支付".equals(paymentPattern)){
+				return 7;
+			}else if("余额支付".equals(paymentPattern)){
+				return 8;
+			}else if("逃费".equals(paymentPattern)){
+				return 9;
+			}else{
+				return 0;
+			}
+		}
 }
