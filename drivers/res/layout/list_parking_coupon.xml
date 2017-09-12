@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:id="@+id/list_record_history"
+android:id="@+id/list_parking_coupon"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:background="#BFBFBF"
 android:orientation="vertical" >
- <com.example.driver.CouponsView
+ <com.example.driver.view.CouponsView
      android:id="@+id/cv_coupon"
     android:orientation="horizontal" 
+    android:background="#BFBFBF"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants">
     <TextView
         android:id="@+id/tv_coupon_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="#BFBFBF"
+        android:background="#00000000"
         android:paddingLeft="3dp"
         android:paddingRight="3dp"
         android:paddingTop="3dp"
@@ -23,8 +25,7 @@ android:orientation="vertical" >
         android:drawableBottom="@drawable/ic_coupon_32px"
         android:gravity="center"
         android:textSize="18sp"
-        android:text="停车券"
-        android:textColor="@color/orange"/>
+        android:textColor="#000000"/>
      <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -35,7 +36,7 @@ android:orientation="vertical" >
               android:id="@+id/tv_start_time_coupon"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:background="#BFBFBF"
+              android:background="#00000000"
               android:paddingLeft="3dp"
               android:paddingRight="3dp"
               android:layout_gravity="center_horizontal"
@@ -45,7 +46,7 @@ android:orientation="vertical" >
               android:id="@+id/tv_end_time_coupon"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:background="#BFBFBF"
+              android:background="#00000000"
               android:paddingLeft="3dp"
               android:paddingRight="3dp"
               android:layout_gravity="center_horizontal"
@@ -55,11 +56,10 @@ android:orientation="vertical" >
               android:id="@+id/tv_notify_coupon"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:background="#BFBFBF"
+              android:background="#00000000"
               android:paddingLeft="3dp"
               android:paddingRight="3dp"
               android:layout_gravity="center_horizontal"
-              android:text="限京津地区使用"
               android:textColor="#EBEBEB"
               android:textSize="12sp"/>
         </LinearLayout>
@@ -68,12 +68,12 @@ android:orientation="vertical" >
              android:layout_width="0dp"
              android:layout_height="wrap_content"
              android:layout_weight="0.5"
-              android:background="#BFBFBF"
+             android:background="#00000000"
              android:paddingLeft="1dp"
              android:paddingRight="1dp"
              android:drawableLeft="@drawable/ic_money_32px"
              android:gravity="center"
-             android:textColor="#E94509"
+             android:textColor="#000000"
              android:text="5元"
              android:textSize="15sp"/>
         <ImageView 
@@ -86,7 +86,8 @@ android:orientation="vertical" >
             android:paddingRight="10dp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:textSize="15sp"/>
-    </com.example.driver.CouponsView>
+            android:textSize="15sp"
+            android:visibility="gone"/>
+    </com.example.driver.view.CouponsView>
     <include layout="@layout/list_parking_coupon_hide"/>
 </LinearLayout>
