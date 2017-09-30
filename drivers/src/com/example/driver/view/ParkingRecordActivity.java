@@ -78,10 +78,10 @@ public class ParkingRecordActivity extends FragmentActivity {
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();//开启一个Fragment事务  
         hideFragments(transaction);//隐藏所有fragment  
         if(resId==R.id.tv_record_current){
-        	mCurrentRecordFragment = new RecordFragment(TYPE_CURRENT_RECORD,true);
+        	mCurrentRecordFragment = new RecordFragment(TYPE_CURRENT_RECORD, true);
         	 transaction.replace(R.id.record_container, mCurrentRecordFragment);
         }else if(resId==R.id.tv_record_history){
-        	mHistoryRecordFragment = new RecordFragment(TYPE_HISTORY_RECORD,false);  
+        	mHistoryRecordFragment = new RecordFragment(TYPE_HISTORY_RECORD, false);  
         	transaction.replace(R.id.record_container, mHistoryRecordFragment);
         }
         transaction.commit();//提交事务  

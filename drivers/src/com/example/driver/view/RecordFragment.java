@@ -23,9 +23,11 @@ import com.example.driver.R;
 import com.example.driver.R.id;
 import com.example.driver.R.layout;
 import com.example.driver.R.string;
+import com.example.driver.common.JacksonJsonUtil;
 import com.example.driver.common.UserDbAdapter;
 import com.example.driver.info.CommonRequestHeader;
 import com.example.driver.info.CommonResponse;
+import com.example.driver.info.RecordSearchInfo;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -168,18 +170,18 @@ public class RecordFragment extends Fragment {
 	                  HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
 			  httpClient.getParams().setIntParameter(  
 	                  HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置 
-			  String strurl = "http://" + this.getString(R.string.ip) + ":8080/park/owner/queryRecord/query";
+			  String strurl = "http://" + this.getString(R.string.ip) + "/itspark/owner/queryRecord/query";
 			  HttpPost request = new HttpPost(strurl);
 			  request.addHeader("Accept","application/json");
-				//request.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 			  request.setHeader("Content-Type", "application/json; charset=utf-8");
-			  JSONObject param = new JSONObject();
+			  RecordSearchInfo info = new RecordSearchInfo();
 			  CommonRequestHeader header = new CommonRequestHeader();
 			  header.addRequestHeader(CommonRequestHeader.REQUEST_OWNER_MESSAGE_CENTER_CODE, 
 					  ((ParkingRecordActivity)getActivity()).getAccount(), ((ParkingRecordActivity)getActivity()).readToken());
-			  param.put("header", header);
-			  param.put("searchType", type);
-			  StringEntity se = new StringEntity(param.toString(), "UTF-8");
+			  info.setHeader(header);
+			  info.setType(type);
+			  StringEntity se = new StringEntity(JacksonJsonUtil.beanToJson(info), "UTF-8");
+			  Log.e(LOG_TAG,"clientQuery-> param is " + JacksonJsonUtil.beanToJson(info));
 			  request.setEntity(se);//发送数据
 			  try{
 				  HttpResponse httpResponse = httpClient.execute(request);//获得响应
@@ -195,7 +197,7 @@ public class RecordFragment extends Fragment {
 					  if(res.getResCode().equals("100")){
 						  mList = res.getDataList();
 						  return true;
-					  }else if(res.getResCode().equals("201")){
+					  }else{
 				          return false;
 					  } 
 				}else{

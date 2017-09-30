@@ -16,6 +16,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.alipay.sdk.app.EnvUtils;
 import com.alipay.sdk.app.PayTask;
 import com.example.driver.R;
 import com.example.driver.R.id;
@@ -66,6 +67,7 @@ public class RechargeActivity extends Activity {
 	private static final int PAYMENT_TYPE_WECHATPAY=203;
 	
 	private static final int SDK_PAY_FLAG = 301;
+	private static final int QUERY_ACCOUNT_BALANCE = 401;
     private static final String FILE_NAME_TOKEN = "save_pref_token";
     private UserRechargeTask mRechargeTask = null;
     private UserAccountDisplayTask  mDisplayAccountTask= null;
@@ -201,11 +203,18 @@ public class RechargeActivity extends Activity {
     				if (TextUtils.equals(resultStatus, "9000")) {
     					// 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
     					Toast.makeText(RechargeActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+	    				Message msgQuery = new Message();
+	    				msgQuery.what = QUERY_ACCOUNT_BALANCE;
+	    				mHandler.sendMessage(msgQuery);
     				} else {
     					// 该笔订单真实的支付结果，需要依赖服务端的异步通知。
     					Toast.makeText(RechargeActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
     				}
     				break;
+                case QUERY_ACCOUNT_BALANCE:
+                    mDisplayAccountTask = new UserAccountDisplayTask();
+                    mDisplayAccountTask.execute((Void) null);
+                	break;
                 default:
                     break;
             }
@@ -268,7 +277,7 @@ public class RechargeActivity extends Activity {
                    HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
  		  httpClient.getParams().setIntParameter(  
                    HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置 
- 		  String strurl = "http://" + this.getString(R.string.ip) + "/ipippay-pay/owner/recharge/recharge";
+ 		  String strurl = "http://" + this.getString(R.string.ip) + "/itspark/owner/recharge/recharge";
  		  HttpPost request = new HttpPost(strurl);
  		  request.addHeader("Accept","application/json");
 		  request.setHeader("Content-Type", "application/json; charset=utf-8");
@@ -333,6 +342,7 @@ public class RechargeActivity extends Activity {
  			mRechargeTask = null;
         	if(success){
         		if(mPaymentType==PAYMENT_TYPE_ALIPAY){
+        			EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
 		    		Runnable payRunnable = new Runnable() {
 		    			@Override
 		    			public void run() {
@@ -375,7 +385,7 @@ public class RechargeActivity extends Activity {
                    HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
  		  httpClient.getParams().setIntParameter(  
                    HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置 
- 		  String strurl = "http://" + this.getString(R.string.ip) + "/ipippay-pay/owner/recharge/queryBalance";
+ 		  String strurl = "http://" + this.getString(R.string.ip) + "/itspark/owner/recharge/queryBalance";
  		  HttpPost request = new HttpPost(strurl);
  		  request.addHeader("Accept","application/json");
 		  request.setHeader("Content-Type", "application/json; charset=utf-8");

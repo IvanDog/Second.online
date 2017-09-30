@@ -80,8 +80,10 @@ import com.example.driver.common.JacksonJsonUtil;
 import com.example.driver.common.UserDbAdapter;
 import com.example.driver.info.CommonRequestHeader;
 import com.example.driver.info.CommonResponse;
+import com.example.driver.info.LogoutInfo;
 import com.example.driver.info.QueryRecordInfo;
 import com.example.driver.info.QueryUserInfo;
+import com.example.driver.info.SearchParkInfo;
 
 
 import android.net.ParseException;
@@ -186,7 +188,7 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
 
     private long mExitTime = 0;
 	/**
- 	 *      定位需要的声明g
+ 	 *      定位需要的声明
  	 */
     private AMapLocationClient mLocationClient = null;//定位发起端
     private AMapLocationClientOption mLocationOption = null;//定位参数
@@ -480,7 +482,7 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
                         	showProgressDialog();
                             //doSearchQuery(mCurrentCity,false);
                         	searchNearbyParking(false);
-                            Log.e("yifan","onCameraChangeFinish->doSearchQuery");
+                            Log.e(LOG_TAG,"onCameraChangeFinish->doSearchQuery");
                     	}
                     }
             }
@@ -519,13 +521,13 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
         mGeocoderSearch.setOnGeocodeSearchListener(new GeocodeSearch.OnGeocodeSearchListener() {
             @Override
             public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
-           	     Log.e("yifan","onRegeocodeSearched");
+           	     Log.e(LOG_TAG,"onRegeocodeSearched");
             }
  
             @Override
             public void onGeocodeSearched(GeocodeResult geocodeResult, int returnCode) {
                 //判断请求是否成功(1000为成功，其他为失败)
-           	 Log.e("yifan","onGeocodeSearched");
+           	 Log.e(LOG_TAG,"onGeocodeSearched");
                 if (returnCode == 1000) {
                     if (geocodeResult != null && geocodeResult.getGeocodeAddressList() != null
                             && geocodeResult.getGeocodeAddressList().size() > 0) {
@@ -535,7 +537,7 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
                         lp = new LatLonPoint(address.getLatLonPoint().getLatitude(), address.getLatLonPoint().getLongitude());
                         //doSearchQuery(address.getCity(),true);
                         searchNearbyParking(true);
-                        Log.e("yifan","onGeocodeSearched->doSearchQuery");
+                        Log.e(LOG_TAG,"onGeocodeSearched->doSearchQuery");
                     }
                 }
             }
@@ -554,7 +556,7 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
                 GeocodeQuery query = new GeocodeQuery(mKey.getText().toString().trim(), mCurrentCity);
                 //发起请求
                 mGeocoderSearch.getFromLocationNameAsyn(query);
-                Log.e("yifan","getFromLocationNameAsyn");
+                Log.e(LOG_TAG,"getFromLocationNameAsyn");
             	mSearchList.setVisibility(View.GONE);
             	mSearchTag=1;
             }
@@ -569,7 +571,7 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
             	Intent intent = new Intent(MainActivity.this,PaymentActivity.class);
 				Bundle bundle = new Bundle();
 				bundle.putString("telenumber", mTeleNumber);
-				bundle.putString("parkingRecordrID", (String)map.get("parkingRecordrID"));
+				bundle.putString("parkingRecordID", (String)map.get("parkingRecordID"));
 				bundle.putString("licensePlateNumber", (String)map.get("licensePlateNumber"));
 				bundle.putString("parkNumber", (String)map.get("parkNumber"));
 				bundle.putString("parkName", (String)map.get("parkName"));
@@ -672,7 +674,7 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
         class InputtipsListener implements Inputtips.InputtipsListener{
 			@Override
 			public void onGetInputtips(List<Tip> list, int resultCode) {
-				Log.e("yifan","onGetInputtips->resultCode is " + resultCode);
+				Log.e(LOG_TAG,"onGetInputtips->resultCode is " + resultCode);
 			      if (resultCode == 1000 && mSearchTag==0) {// 正确返回
 			    	  mSearchList.setVisibility(View.VISIBLE);
 			    	  mDialogMain.setVisibility(View.GONE);
@@ -680,14 +682,14 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
 			            for (int i=0;i<list.size();i++){
 			                Map<String, Object> hashMap=new HashMap<String, Object>();
 			                hashMap.put("name",list.get(i).getName());
-			                Log.e("yifan","name is " + list.get(i).getName());
+			                Log.e(LOG_TAG,"name is " + list.get(i).getName());
 			                hashMap.put("address",list.get(i).getDistrict());//将地址信息取出放入HashMap中
-			                Log.e("yifan","address is " + list.get(i).getDistrict());
+			                Log.e(LOG_TAG,"address is " + list.get(i).getDistrict());
 			                searchList.add(hashMap);//将HashMap放入表中
 			            }
-			            Log.e("yifan","newAdapter");
+			            Log.e(LOG_TAG,"newAdapter");
 			            ParkingSearchAdapter searchAdapter=new ParkingSearchAdapter(getApplicationContext(),searchList);//新建一个适配器
-			            Log.e("yifan","setAdapter");
+			            Log.e(LOG_TAG,"setAdapter");
 			            mSearchList.setAdapter(searchAdapter);//为listview适配
 			            searchAdapter.notifyDataSetChanged();//动态更新listview
 			    }
@@ -977,11 +979,11 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
                         	if(i==0){
                         		setPoiItemDisplayContent(poiResult.getPois().get(i));
                         	}
-                            Log.e("gouyifan0621", "POI的名称=" + poiResult.getPois().get(i).getTitle());
-                            Log.e("gouyifan0621", "POI的距离=" + poiResult.getPois().get(i).getDistance());
-                            Log.e("gouyifan0621", "POI的地址=" + poiResult.getPois().get(i).getSnippet());
-                            Log.e("gouyifan0621", "POI的纬度=" + poiResult.getPois().get(i).getLatLonPoint().getLatitude());
-                            Log.e("gouyifan0621", "POI的经度=" + poiResult.getPois().get(i).getLatLonPoint().getLongitude());
+                            Log.e(LOG_TAG, "POI的名称=" + poiResult.getPois().get(i).getTitle());
+                            Log.e(LOG_TAG, "POI的距离=" + poiResult.getPois().get(i).getDistance());
+                            Log.e(LOG_TAG, "POI的地址=" + poiResult.getPois().get(i).getSnippet());
+                            Log.e(LOG_TAG, "POI的纬度=" + poiResult.getPois().get(i).getLatLonPoint().getLatitude());
+                            Log.e(LOG_TAG, "POI的经度=" + poiResult.getPois().get(i).getLatLonPoint().getLongitude());
                             HashMap<String, Object> map=new HashMap<String, Object>();  
                             map.put("parkingName", poiResult.getPois().get(i).getTitle());
                             map.put("distance", poiResult.getPois().get(i).getDistance());
@@ -1056,7 +1058,7 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
                     	  Toast.makeText(getApplicationContext(), "未发现附近停车场", Toast.LENGTH_SHORT).show();
                       }
                   }else{
-                	   Log.e("yifan","query not consistent.");
+                	   Log.e(LOG_TAG,"query not consistent.");
                   }
               
                 }
@@ -1134,7 +1136,7 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
                     lp = new LatLonPoint(amapLocation.getLatitude(), amapLocation.getLongitude());
                     //doSearchQuery(amapLocation.getCity(),true);
                     searchNearbyParking(true);
-                    Log.e("yifan","onLocationChanged->doSearchQuery");
+                    Log.e(LOG_TAG,"onLocationChanged->doSearchQuery");
                     //点击定位按钮 能够将地图的中心移动到定位点
                     mLocationListener.onLocationChanged(amapLocation);
                     //添加图钉
@@ -1543,9 +1545,9 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
                     // 返回 true 则表示接口已响应事件，否则返回false
                     @Override
                     public boolean onMarkerClick(Marker marker) {
-        			    mDialogParkingNameTV.setText(mList.get(Integer.parseInt(marker.getSnippet())).get("parkingName") + "");
-        		    	mDialogParkingFreeNumberTV.setText("空闲: " + mList.get(Integer.parseInt(marker.getSnippet())).get("parkingNumberIdle"));
-        		    	mDialogParkingFeeTV.setText("计费: " +mList.get(Integer.parseInt(marker.getSnippet())).get("parkingFee"));
+        			    mDialogParkingNameTV.setText(mList.get(Integer.parseInt(marker.getSnippet())).get("parkName") + "");
+        		    	mDialogParkingFreeNumberTV.setText("空闲: " + mList.get(Integer.parseInt(marker.getSnippet())).get("idleLocationNumber"));
+        		    	mDialogParkingFeeTV.setText("计费: " +mList.get(Integer.parseInt(marker.getSnippet())).get("feeScale"));
         		    	mDialogParkingFreeDurationTV.setText("免费时长: " + mList.get(Integer.parseInt(marker.getSnippet())).get("parkingFreeTime") + "h");
         		    	mDialogCertificationTV = (TextView)findViewById(R.id.tv_parking_type_certification_or_not_dialog);
         		    	mDialogParkingChargeTV = (TextView)findViewById(R.id.tv_parking_type_certification_or_not_dialog);
@@ -1562,9 +1564,9 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
                 mAMAP.setOnMarkerClickListener(markerClickListener);
                 dismissProgressDialog();
 	  		    mDialogMain.setVisibility(View.VISIBLE);
-			    mDialogParkingNameTV.setText(mList.get(0).get("parkingName") + "");
-			    mDialogParkingFreeNumberTV.setText("空闲: " + mList.get(0).get("parkingNumberIdle"));
-		    	mDialogParkingFeeTV.setText("计费: " +mList.get(0).get("parkingFee"));
+			    mDialogParkingNameTV.setText(mList.get(0).get("parkName") + "");
+			    mDialogParkingFreeNumberTV.setText("空闲: " + mList.get(0).get("idleLocationNumber"));
+		    	mDialogParkingFeeTV.setText("计费: " +mList.get(0).get("feeScale"));
 		    	mDialogParkingFreeDurationTV.setText("免费时长: " + mList.get(0).get("parkingFreeTime") + "h");
 			    mCurrentDialogLatitude = Double.parseDouble(String.valueOf(mList.get(0).get("latitude")));
 			    mCurrentDialogLongtitude =  Double.parseDouble(String.valueOf(mList.get(0).get("longitude")));
@@ -1736,7 +1738,7 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
     public void onDriveRouteSearched(DriveRouteResult driveRouteResult, int i) {
     	dismissProgressDialog();
     	mAMAP.clear();
-    	Log.e("yifan","onDriveRouteSearched->clear");
+    	Log.e(LOG_TAG,"onDriveRouteSearched->clear");
         if (i == 1000) {
             if (driveRouteResult != null && driveRouteResult.getPaths() != null) {
                 if (driveRouteResult.getPaths().size() > 0) {
@@ -1747,7 +1749,7 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
                     drivingRouteOverlay.removeFromMap();
                     //drivingRouteOverlay.setNodeIconVisibility(false);//隐藏转弯的节点
                     drivingRouteOverlay.addToMap();
-                    Log.e("yifan","onDriveRouteSearched");
+                    Log.e(LOG_TAG,"onDriveRouteSearched");
                     drivingRouteOverlay.zoomToSpan();
                     mIsZoomByRoute = true;
                     mDialogRouteBT.setText("关闭路线");
@@ -1827,7 +1829,6 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
  		  String strurl = "http://" + this.getString(R.string.ip) + "/itspark/owner/userCenter/query";
  		  HttpPost request = new HttpPost(strurl);
  		  request.addHeader("Accept","application/json");
-			//request.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 		  request.setHeader("Content-Type", "application/json; charset=utf-8");
 		  QueryUserInfo info = new QueryUserInfo();
 		  CommonRequestHeader header = new CommonRequestHeader();
@@ -1849,12 +1850,11 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
          			mNickName = (String)res.getPropertyMap().get("nickName");
          			byte[] headPortraitByteArray = new byte[1024];
          			headPortraitByteArray = ((String)res.getPropertyMap().get("headportrait")).getBytes();
-         			//byte[]  headPortraitByteArray = new byte[]{-119,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,-128,0,0,0,-128,8,6,0,0,0,-61,62,97,-53,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,-102,-100,24,0,0,10,79,105,67,67,80,80,104,111,116,111,115,104,111,112,32,73,67,67,32,112,114,111,102,105,108,101,0,0,120,-38,-99,83,103,84,83,-23,22,61,-9,-34,-12,66,75,-120,-128,-108,75,111,82,21,8,32,82,66,-117,-128,20,-111,38,42,33,9,16,74,-120,33,-95,-39,21,81,-63,17,69,69,4,27,-56,-96,-120,3,-114,-114,-128,-116,21,81,44,12,-118,10,-40,7,-28,33,-94,-114,-125,-93,-120,-118,-54,-5,-31,123,-93,107,-42,-68,-9,-26,-51,-2,-75,-41,62,-25,-84,-13,-99,-77,-49,7,-64,8,12,-106,72,51,81,53,-128,12,-87,66,30,17,-32,-125,-57,-60,-58,-31,-28,46,64,-127,10,36,112,0,16,8,-77,100,33,115,-3,35,1,0,-8,126,60,60,43,34,-64,7,-66,0,1,120,-45,11,8,0,-64,77,-101,-64,48,28,-121,-1,15,-22,66,-103,92,1,-128,-124,1,-64,116,-111,56,75,8,-128,20,0,64,122,-114,66,-90,0,64,70,1,-128,-99,-104,38,83,0,-96,4,0,96,-53,99,98,-29,0,80,45,0,96,39,127,-26,-45,0,-128,-99,-8,-103,123,1,0,91,-108,33,21,1,-96,-111,0,32,19,101,-120,68,0,104,59,0,-84,-49,86,-118,69,0,88,48,0,20,102,75,-60,57,0,-40,45,0,48,73,87,102,72,0,-80,-73,0,-64,-50,16,11,-78,0,8,12,0,48,81,-120,-123,41,0,4,123,0,96,-56,35,35,120,0,-124,-103,0,20,70,-14,87,60,-15,43,-82,16,-25,42,0,0,120,-103,-78,60,-71,36,57,69,-127,91,8,45,113,7,87,87,46,30,40,-50,73,23,43,20,54,97,2,97,-102,64,46,-62,121,-103,25,50,-127,52,15,-32,-13,-52,0,0,-96,-111,21,17,-32,-125,-13,-3,120,-50,14,-82,-50,-50,54,-114,-74,14,95,45,-22,-65,6,-1,34,98,98,-29,-2,-27,-49,-85,112,64,0,0,-31,116,126,-47,-2,44,47,-77,26,-128,59,6,-128,109,-2,-94,37,-18,4,104,94,11,-96,117,-9,-117,102,-78,15,64,-75,0,-96,-23,-38,87,-13,112,-8,126,60,60,69,-95,-112,-71,-39,-39,-27,-28,-28,-40,74,-60,66,91,97,-54,87,125,-2,103,-62,95,-64,87,-3,108,-7,126,60,-4,-9,-11,-32,-66,-30,36,-127,50,93,-127,71,4,-8,-32,-62,-52,-12,76,-91,28,-49,-110,9,-124,98,-36,-26,-113,71,-4,-73,11,-1,-4,29,-45,34,-60,73,98,-71,88,42,20,-29,81,18,113,-114,68,-102,-116,-13,50,-91,34,-119,66,-110,41,-59,37,-46,-1,100,-30,-33,44,-5,3,62,-33,53,0,-80,106,62,1,123,-111,45,-88,93,99,3,-10,75,39,16,88,116,-64,-30,-9,0,0,-14,-69,111,-63,-44,40,8,3,-128,104,-125,-31,-49,119,-1,-17,63,-3,71,-96,37,0,-128,102,73,-110,113,0,0,94,68,36,46,84,-54,-77,63,-57,8,0,0,68,-96,-127,42,-80,65,27,-12,-63,24,44,-64,6,28,-63,5,-36,-63,11,-4,96,54,-124,66,36,-60,-62,66,16,66,10,100,-128,28,114,96,41,-84,-126,66,40,-122,-51,-80,29,42,96,47,-44,64,29,52,-64,81,104,-122,-109,112,14,46,-62,85,-72,14,61,112,15,-6,97,8,-98,-63,40,-68,-127,9,4,65,-56,8,19,97,33,-38,-120,1,98,-118,88,35,-114,8,23,-103,-123,-8,33,-63,72,4,18,-117,36,32,-55,-120,20,81,34,75,-111,53,72,49,82,-118,84,32,85,72,29,-14,61,114,2,57,-121,92,70,-70,-111,59,-56,0,50,-126,-4,-122,-68,71,49,-108,-127,-78,81,61,-44,12,-75,67,-71,-88,55,26,-124,70,-94,11,-48,100,116,49,-102,-113,22,-96,-101,-48,114,-76,26,61,-116,54,-95,-25,-48,-85,104,15,-38,-113,62,67,-57,48,-64,-24,24,7,51,-60,108,48,46,-58,-61,66,-79,56,44,9,-109,99,-53,-79,34,-84,12,-85,-58,26,-80,86,-84,3,-69,-119,-11,99,-49,-79,119,4,18,-127,69,-64,9,54,4,119,66,32,97,30,65,72,88,76,88,78,-40,72,-88,32,28,36,52,17,-38,9,55,9,3,-124,81,-62,39,34,-109,-88,75,-76,38,-70,17,-7,-60,24,98,50,49,-121,88,72,44,35,-42,18,-113,19,47,16,123,-120,67,-60,55,36,18,-119,67,50,39,-71,-112,2,73,-79,-92,84,-46,18,-46,70,-46,110,82,35,-23,44,-87,-101,52,72,26,35,-109,-55,-38,100,107,-78,7,57,-108,44,32,43,-56,-123,-28,-99,-28,-61,-28,51,-28,27,-28,33,-14,91,10,-99,98,64,113,-92,-8,83,-30,40,82,-54,106,74,25,-27,16,-27,52,-27,6,101,-104,50,65,85,-93,-102,82,-35,-88,-95,84,17,53,-113,90,66,-83,-95,-74,82,-81,81,-121,-88,19,52,117,-102,57,-51,-125,22,73,75,-91,-83,-94,-107,-45,26,104,23,104,-9,105,-81,-24,116,-70,17,-35,-107,30,78,-105,-48,87,-46,-53,-23,71,-24,-105,-24,3,-12,119,12,13,-122,21,-125,-57,-120,103,40,25,-101,24,7,24,103,25,119,24,-81,-104,76,-90,25,-45,-117,25,-57,84,48,55,49,-21,-104,-25,-103,15,-103,111,85,88,42,-74,42,124,21,-111,-54,10,-107,74,-107,38,-107,27,42,47,84,-87,-86,-90,-86,-34,-86,11,85,-13,85,-53,84,-113,-87,94,83,125,-82,70,85,51,83,-29,-87,9,-44,-106,-85,85,-86,-99,80,-21,83,27,83,103,-87,59,-88,-121,-86,103,-88,111,84,63,-92,126,89,-3,-119,6,89,-61,76,-61,79,67,-92,81,-96,-79,95,-29,-68,-58,32,11,99,25,-77,120,44,33,107,13,-85,-122,117,-127,53,-60,38,-79,-51,-39,124,118,42,-69,-104,-3,29,-69,-117,61,-86,-87,-95,57,67,51,74,51,87,-77,82,-13,-108,102,63,7,-29,-104,113,-8,-100,116,78,9,-25,40,-89,-105,-13,126,-118,-34,20,-17,41,-30,41,27,-90,52,76,-71,49,101,92,107,-86,-106,-105,-106,88,-85,72,-85,81,-85,71,-21,-67,54,-82,-19,-89,-99,-90,-67,69,-69,89,-5,-127,14,65,-57,74,39,92,39,71,103,-113,-50,5,-99,-25,83,-39,83,-35,-89,10,-89,22,77,61,58,-11,-82,46,-86,107,-91,27,-95,-69,68,119,-65,110,-89,-18,-104,-98,-66,94,-128,-98,76,111,-89,-34,121,-67,-25,-6,28,125,47,-3,84,-3,109,-6,-89,-11,71,12,88,6,-77,12,36,6,-37,12,-50,24,60,-59,53,113,111,60,29,47,-57,-37,-15,81,67,93,-61,64,67,-91,97,-107,97,-105,-31,-124,-111,-71,-47,60,-93,-43,70,-115,70,15,-116,105,-58,92,-29,36,-29,109,-58,109,-58,-93,38,6,38,33,38,75,77,-22,77,-18,-102,82,77,-71,-90,41,-90,59,76,59,76,-57,-51,-52,-51,-94,-51,-42,-103,53,-101,61,49,-41,50,-25,-101,-25,-101,-41,-101,-33,-73,96,90,120,90,44,-74,-88,-74,-72,101,73,-78,-28,90,-90,89,-18,-74,-68,110,-123,90,57,89,-91,88,85,90,93,-77,70,-83,-99,-83,37,-42,-69,-83,-69,-89,17,-89,-71,78,-109,78,-85,-98,-42,103,-61,-80,-15,-74,-55,-74,-87,-73,25,-80,-27,-40,6,-37,-82,-74,109,-74,125,97,103,98,23,103,-73,-59,-82,-61,-18,-109,-67,-109,125,-70,125,-115,-3,61,7,13,-121,-39,14,-85,29,90,29,126,115,-76,114,20,58,86,58,-34,-102,-50,-100,-18,63,125,-59,-12,-106,-23,47,103,88,-49,16,-49,-40,51,-29,-74,19,-53,41,-60,105,-99,83,-101,-45,71,103,23,103,-71,115,-125,-13,-120,-117,-119,75,-126,-53,46,-105,62,46,-101,27,-58,-35,-56,-67,-28,74,116,-11,113,93,-31,122,-46,-11,-99,-101,-77,-101,-62,-19,-88,-37,-81,-18,54,-18,105,-18,-121,-36,-97,-52,52,-97,41,-98,89,51,115,-48,-61,-56,67,-32,81,-27,-47,63,11,-97,-107,48,107,-33,-84,126,79,67,79,-127,103,-75,-25,35,47,99,47,-111,87,-83,-41,-80,-73,-91,119,-86,-9,97,-17,23,62,-10,62,114,-97,-29,62,-29,60,55,-34,50,-34,89,95,-52,55,-64,-73,-56,-73,-53,79,-61,111,-98,95,-123,-33,67,127,35,-1,100,-1,122,-1,-47,0,-89,-128,37,1,103,3,-119,-127,65,-127,91,2,-5,-8,122,124,33,-65,-114,63,58,-37,101,-10,-78,-39,-19,65,-116,-96,-71,65,21,65,-113,-126,-83,-126,-27,-63,-83,33,104,-56,-20,-112,-83,33,-9,-25,-104,-50,-111,-50,105,14,-123,80,126,-24,-42,-48,7,97,-26,97,-117,-61,126,12,39,-123,-121,-123,87,-122,63,-114,112,-120,88,26,-47,49,-105,53,119,-47,-36,67,115,-33,68,-6,68,-106,68,-34,-101,103,49,79,57,-81,45,74,53,42,62,-86,46,106,60,-38,55,-70,52,-70,63,-58,46,102,89,-52,-43,88,-99,88,73,108,75,28,57,46,42,-82,54,110,108,-66,-33,-4,-19,-13,-121,-30,-99,-30,11,-29,123,23,-104,47,-56,93,112,121,-95,-50,-62,-12,-123,-89,22,-87,46,18,44,58,-106,64,76,-120,78,56,-108,-16,65,16,42,-88,22,-116,37,-14,19,119,37,-114,10,121,-62,29,-62,103,34,47,-47,54,-47,-120,-40,67,92,42,30,78,-14,72,42,77,122,-110,-20,-111,-68,53,121,36,-59,51,-91,44,-27,-71,-124,39,-87,-112,-68,76,13,76,-35,-101,58,-98,22,-102,118,32,109,50,61,58,-67,49,-125,-110,-111,-112,113,66,-86,33,77,-109,-74,103,-22,103,-26,102,118,-53,-84,101,-123,-78,-2,-59,110,-117,-73,47,30,-107,7,-55,107,-77,-112,-84,5,89,45,10,-74,66,-90,-24,84,90,40,-41,42,7,-78,103,101,87,102,-65,-51,-119,-54,57,-106,-85,-98,43,-51,-19,-52,-77,-54,-37,-112,55,-100,-17,-97,-1,-19,18,-62,18,-31,-110,-74,-91,-122,75,87,45,29,88,-26,-67,-84,106,57,-78,60,113,121,-37,10,-29,21,5,43,-122,86,6,-84,60,-72,-118,-74,42,109,-43,79,-85,-19,87,-105,-82,126,-67,38,122,77,107,-127,94,-63,-54,-126,-63,-75,1,107,-21,11,85,10,-27,-123,125,-21,-36,-41,-19,93,79,88,47,89,-33,-75,97,-6,-122,-99,27,62,21,-119,-118,-82,20,-37,23,-105,21,127,-40,40,-36,120,-27,27,-121,111,-54,-65,-103,-36,-108,-76,-87,-85,-60,-71,100,-49,102,-46,102,-23,-26,-34,45,-98,91,14,-106,-86,-105,-26,-105,14,110,13,-39,-38,-76,13,-33,86,-76,-19,-11,-10,69,-37,47,-105,-51,40,-37,-69,-125,-74,67,-71,-93,-65,60,-72,-68,101,-89,-55,-50,-51,59,63,84,-92,84,-12,84,-6,84,54,-18,-46,-35,-75,97,-41,-8,110,-47,-18,27,123,-68,-10,52,-20,-43,-37,91,-68,-9,-3,62,-55,-66,-37,85,1,85,77,-43,102,-43,101,-5,73,-5,-77,-9,63,-82,-119,-86,-23,-8,-106,-5,109,93,-83,78,109,113,-19,-57,3,-46,3,-3,7,35,14,-74,-41,-71,-44,-43,29,-46,61,84,82,-113,-42,43,-21,71,14,-57,31,-66,-2,-99,-17,119,45,13,54,13,85,-115,-100,-58,-30,35,112,68,121,-28,-23,-9,9,-33,-9,30,13,58,-38,118,-116,123,-84,-31,7,-45,31,118,29,103,29,47,106,66,-102,-14,-102,70,-101,83,-102,-5,91,98,91,-70,79,-52,62,-47,-42,-22,-34,122,-4,71,-37,31,15,-100,52,60,89,121,74,-13,84,-55,105,-38,-23,-126,-45,-109,103,-14,-49,-116,-99,-107,-99,125,126,46,-7,-36,96,-37,-94,-74,123,-25,99,-50,-33,106,15,111,-17,-70,16,116,-31,-46,69,-1,-117,-25,59,-68,59,-50,92,-14,-72,116,-14,-78,-37,-27,19,87,-72,87,-102,-81,58,95,109,-22,116,-22,60,-2,-109,-45,79,-57,-69,-100,-69,-102,-82,-71,92,107,-71,-18,122,-67,-75,123,102,-9,-23,27,-98,55,-50,-35,-12,-67,121,-15,22,-1,-42,-43,-98,57,61,-35,-67,-13,122,111,-9,-59,-9,-11,-33,22,-35,126,114,39,-3,-50,-53,-69,-39,119,39,-18,-83,-68,79,-68,95,-12,64,-19,65,-39,67,-35,-121,-43,63,91,-2,-36,-40,-17,-36,127,106,-64,119,-96,-13,-47,-36,71,-9,6,-123,-125,-49,-2,-111,-11,-113,15,67,5,-113,-103,-113,-53,-122,13,-122,-21,-98,56,62,57,57,-30,63,114,-3,-23,-4,-89,67,-49,100,-49,38,-98,23,-2,-94,-2,-53,-82,23,22,47,126,-8,-43,-21,-41,-50,-47,-104,-47,-95,-105,-14,-105,-109,-65,109,124,-91,-3,-22,-64,-21,25,-81,-37,-58,-62,-58,30,-66,-55,120,51,49,94,-12,86,-5,-19,-63,119,-36,119,29,-17,-93,-33,15,79,-28,124,32,127,40,-1,104,-7,-79,-11,83,-48,-89,-5,-109,25,-109,-109,-1,4,3,-104,-13,-4,99,51,45,-37,0,0,0,32,99,72,82,77,0,0,122,37,0,0,-128,-125,0,0,-7,-1,0,0,-128,-23,0,0,117,48,0,0,-22,96,0,0,58,-104,0,0,23,111,-110,95,-59,70,0,0,7,-66,73,68,65,84,120,-38,-19,-99,9,108,20,85,24,-57,17,5,43,-120,-120,39,81,36,68,-28,16,-28,-82,-83,70,-124,20,33,-94,104,48,40,-94,68,5,-15,8,24,9,106,-60,32,81,2,42,96,84,12,70,17,19,74,91,6,-124,24,-126,28,22,-62,33,-48,110,-95,88,-108,-37,114,-123,74,-95,-126,-106,-101,-118,22,41,-27,-7,-67,-35,111,-55,118,-35,-99,-99,107,119,118,-10,-3,55,-7,-91,-108,-12,-51,-101,125,-33,111,-34,123,51,-13,-114,122,66,-120,122,64,93,28,57,-120,-74,33,51,-111,-76,38,-102,38,56,79,59,-36,69,92,-105,-56,60,83,89,-128,-2,-60,14,-30,25,-113,4,-65,33,-79,-118,-8,38,-111,-46,-90,-78,0,99,9,65,-108,16,13,60,32,-64,80,62,-33,-125,-60,-115,16,-64,62,77,-120,-35,92,-88,-61,-110,60,-8,87,19,91,-7,92,71,-95,9,112,-114,-105,-72,80,119,18,-115,76,-90,-67,-126,-72,-106,-72,-109,-56,98,-119,94,35,-58,16,-109,-120,9,-4,-5,40,-66,122,-17,39,110,39,-46,18,124,-98,16,32,-58,-107,-75,-123,11,119,-92,-127,-65,111,65,12,38,-90,18,107,-120,-93,68,53,113,-119,-113,-95,-57,69,-30,28,81,70,124,79,-68,-49,-3,-112,-21,13,-44,84,-91,124,-116,23,18,93,-5,-92,-70,0,-95,109,-21,-2,40,-63,104,73,-68,78,-28,19,103,13,4,-38,44,82,34,-115,59,-93,-111,58,119,-93,-7,-17,54,-69,-47,87,81,65,-128,43,-119,98,46,-28,-73,66,-2,-65,39,-111,75,-100,-114,67,-48,-93,113,-120,-104,66,-76,-29,115,-72,-127,107,12,-63,53,79,61,8,16,31,-98,-32,66,62,64,60,78,44,51,88,-83,-57,-117,127,-120,79,-119,-49,-7,-9,66,-18,115,64,-128,56,81,-97,11,89,22,118,-83,-117,-127,-113,-58,-77,110,-35,-127,-88,-46,4,-56,-98,-6,-15,36,12,124,16,-7,-64,-86,31,4,112,-98,-101,-119,37,73,28,-8,80,100,-51,52,57,-47,29,-63,84,22,32,-125,-40,-21,-111,-32,-121,34,-17,70,110,-123,0,-10,120,-104,56,21,-85,-80,-25,108,-56,-16,-109,-56,0,7,-14,-117,-103,-25,54,-94,21,4,-80,-58,64,-94,42,86,32,114,124,93,-4,-28,-6,-70,-47,-49,-50,70,-126,98,47,-16,69,-23,98,118,97,39,-111,87,-44,93,-52,-10,5,126,-58,72,-77,-121,104,11,1,-52,-111,101,36,-8,-71,-66,-82,98,-59,-114,-31,-30,64,101,-66,40,63,-79,86,20,-18,29,47,-14,124,-35,-29,38,-127,12,-2,-68,-30,7,-60,47,-27,95,-120,-61,39,11,68,-23,-47,-7,98,-31,-26,1,-100,-89,110,-38,-35,-15,-82,9,82,73,-128,14,68,69,-20,-32,119,19,75,-73,62,45,-86,47,-100,18,-95,31,-33,-66,-9,68,78,97,-25,56,8,-112,-31,-49,115,-9,-111,-7,117,-14,-85,-84,-38,65,82,-12,-12,-53,17,-29,24,69,-4,-72,24,2,-24,32,31,-15,-2,108,36,32,-39,5,29,-60,-42,-14,25,34,-4,115,-24,-60,58,-86,-106,123,56,-34,39,-56,-93,0,47,-40,-108,69,-62,-99,-84,-109,-33,37,81,43,86,-18,122,-43,-33,12,25,56,-50,76,8,-96,-49,12,-93,1,-55,46,-24,40,74,-54,62,-7,-97,0,101,-57,-106,-5,-81,84,-89,5,-112,87,-8,-73,-59,-67,68,85,-11,-31,58,-7,-43,94,-86,17,-7,-37,-97,-9,55,71,6,-113,53,24,2,68,-26,17,115,87,100,15,-15,93,73,63,113,-68,106,-41,-27,96,-100,-81,57,35,86,-20,28,97,38,24,-90,-112,-57,-35,116,96,-118,-1,-70,15,126,-10,87,46,33,-39,-46,-51,8,119,-112,-33,86,66,-128,-80,-89,124,27,-52,87,-53,-35,-59,-126,-97,-6,-120,-51,101,-97,-119,109,-121,102,-118,37,91,-98,-92,32,117,-119,-29,93,0,-11,3,-118,-70,-7,-85,-4,-99,21,57,-44,-33,24,47,-76,-115,25,70,-38,-1,112,-90,67,-128,-70,-68,104,-89,109,-106,-3,-127,89,68,110,-20,-34,-72,35,-56,-10,126,86,65,123,-1,-19,-96,-59,-90,-26,111,-94,43,4,8,-112,-58,-49,-48,-123,98,-52,-126,0,1,-122,40,24,124,-55,73,30,-60,-94,-68,0,-117,21,21,64,-14,-74,-22,2,-76,52,-14,-60,47,-123,41,-30,49,14,-54,10,48,76,-31,-32,7,71,20,-75,81,89,-128,-81,21,23,-64,-79,-71,14,94,20,64,-34,-5,111,-124,0,-103,-45,84,21,64,14,-83,-82,-124,0,-103,75,85,21,-96,13,-73,-127,-86,11,-80,-99,39,-108,-90,-124,0,-14,-95,78,39,-94,55,-111,30,99,54,77,95,4,-33,-49,-15,40,83,-55,-21,115,57,126,76,44,36,22,17,95,-15,-53,-92,-58,-55,38,64,51,-98,66,37,103,-19,-44,-16,88,125,57,-59,-22,15,34,-101,104,31,-31,11,62,-57,127,87,-51,53,-127,-118,92,32,-2,-116,48,-45,-88,21,-49,121,-120,38,77,41,15,-102,73,10,1,-18,-26,-55,-112,122,-106,-53,113,125,-125,-62,-66,-92,-100,60,-39,-100,7,78,-86,-52,45,97,-109,73,-38,-123,-52,50,-118,117,11,57,-56,109,1,90,-16,-104,55,-93,-9,-68,89,97,-85,126,-68,-62,51,106,71,40,-54,-53,92,19,54,12,-103,4,91,108,-94,-7,56,70,116,116,75,0,57,-27,58,-57,66,-121,-89,-111,-30,-17,0,-62,57,19,-46,4,-116,-80,-112,94,-50,-117,108,-28,-122,0,67,120,26,-75,-43,-23,83,-3,17,-4,-53,2,4,-57,10,-26,91,72,47,111,-91,-5,-72,33,64,-74,-59,47,28,28,23,-9,16,-126,127,89,-128,-58,92,-3,87,88,72,47,59,-37,99,-36,16,-32,71,27,51,102,100,-6,62,8,126,29,1,26,-13,-65,-83,28,99,-110,27,2,-84,-73,120,-78,107,32,-128,-29,2,124,4,1,-44,22,-32,67,8,0,1,32,0,4,-128,0,16,0,2,64,0,8,0,1,32,0,4,-128,0,16,0,2,64,0,8,0,1,32,0,4,-128,0,16,0,2,64,-128,100,17,96,53,4,80,91,-128,-75,16,-64,113,1,38,123,73,-128,-46,-112,-75,0,33,-128,51,2,-52,-15,-110,0,123,32,-128,-29,2,-52,-125,0,106,11,48,23,2,64,0,-49,8,-80,15,2,56,46,-64,124,47,9,80,2,1,28,23,-32,75,47,9,-80,10,-73,-127,24,22,14,1,-16,40,24,2,64,0,4,31,2,0,8,0,1,32,0,4,-128,0,16,0,2,64,0,8,0,1,32,0,4,-128,0,16,0,2,64,0,8,0,1,32,0,4,-128,0,16,0,2,64,0,8,0,1,32,0,4,72,54,1,-42,89,60,-39,-107,16,32,-94,0,-41,104,-42,-74,-48,-111,123,46,-68,-29,-122,0,11,44,126,-31,60,13,107,5,-121,11,16,92,44,-38,103,33,-3,95,-60,64,55,4,24,-87,5,118,-68,48,123,-62,-93,53,108,25,19,46,64,112,-71,-8,-15,22,-46,-53,-75,-105,-101,-69,33,-64,109,92,-99,-101,57,-39,10,78,7,1,34,11,32,119,80,-7,-51,100,-11,47,107,82,-41,118,12,-71,-113,56,107,-30,-124,71,105,-40,52,74,79,0,-55,99,-60,121,-125,105,39,106,73,-80,103,-48,96,110,-121,98,78,97,-42,-80,107,-104,17,1,-126,18,-4,-82,-109,70,110,-76,53,86,75,-94,93,-61,-18,-27,-37,-69,-117,17,78,-10,87,-30,41,13,-37,-58,-103,17,64,34,55,-108,26,-89,5,54,-104,-106,-69,-81,-55,-19,-27,-74,17,-45,-119,123,-76,36,-36,55,80,-18,115,-41,-107,59,-121,19,-120,55,120,-6,87,-102,-122,125,3,-83,8,16,-70,-59,-82,-36,-97,73,-18,45,-40,64,75,-95,-99,67,33,-128,49,1,82,118,-21,88,8,0,1,32,0,4,0,16,0,2,64,0,8,0,1,32,0,4,-128,0,74,9,-48,15,-63,87,91,-128,7,-119,90,8,-112,121,-124,-97,-12,41,39,64,51,-94,28,2,100,46,114,-96,44,61,41,-128,-28,77,-59,-125,47,-33,-22,-11,82,89,0,-55,7,-60,-65,10,6,95,-66,66,31,-22,84,57,122,89,0,73,58,49,79,11,-84,34,122,38,10,103,121,4,-116,-107,-62,62,71,-100,-42,57,118,52,78,-101,24,-100,17,78,77,-124,-13,63,65,108,-25,87,-70,-19,-99,44,67,-81,11,16,36,-115,123,-60,-31,-56,81,-77,45,109,12,-101,-106,-125,86,-82,-118,114,108,61,-28,57,77,-75,-104,-25,122,62,70,-109,-112,-29,-23,-66,-46,-123,0,-6,52,-75,33,-64,-93,54,-14,-99,104,49,-49,-43,-119,44,31,8,-96,-49,0,23,4,88,3,1,32,0,4,-128,0,16,0,2,64,0,8,0,1,32,0,4,-128,0,16,0,2,64,0,8,0,1,32,0,4,-128,0,16,0,2,64,0,8,0,1,32,0,4,-128,0,16,-64,8,77,108,44,-93,-42,-37,70,-66,-29,44,10,-80,24,2,56,75,125,27,-53,-88,-35,97,35,-33,65,22,5,-104,6,1,-100,-57,-22,50,106,118,-14,-68,-119,87,55,51,-101,111,95,8,-32,60,-106,-105,81,-77,-55,-69,38,-125,-65,44,-47,101,-93,-118,0,-106,-105,81,-77,73,67,-30,7,-125,121,-106,17,-83,33,64,-4,37,48,-75,-116,-102,3,-56,17,-67,115,98,4,127,19,-47,-42,-115,50,81,77,0,-45,-53,-88,57,-120,108,-37,-25,18,123,-119,83,60,-67,109,57,49,92,103,69,-76,-44,19,0,120,-105,-1,0,83,114,125,-123,-21,121,84,-45,0,0,0,0,73,69,78,68,-82,66,96,-126};
          			if(headPortraitByteArray!=null){
          				mHeadPortrait=bytes2Drawable(Base64.decode(headPortraitByteArray, Base64.NO_WRAP));
          			}
  					 return true;
- 				  }else if(res.getResCode().equals("201")){
+ 				  }else{
  			          return false;
  				  }  
  			}else{
@@ -2060,20 +2060,24 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
 			  String strurl = "http://" + this.getString(R.string.ip) + "/itspark/owner/queryNearbyParking/query";
 			  HttpPost request = new HttpPost(strurl);
 			  request.addHeader("Accept","application/json");
-			  //request.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 			  request.setHeader("Content-Type", "application/json; charset=utf-8");
-			  JSONObject param = new JSONObject();
+			  SearchParkInfo info = new SearchParkInfo();
 			  CommonRequestHeader header = new CommonRequestHeader();
 			  header.addRequestHeader(CommonRequestHeader.REQUEST_OWNER_NEARBY_PARKING_CODE, mTeleNumber, readToken());
-			  param.put("header", header);
-			  param.put("latitude", latitude);
-			  param.put("longitude", longitude);
-			  param.put("city", mCurrentCity);
-			  param.put("parkingType", mParkingType);
-			  param.put("range", range);
-			  StringEntity se = new StringEntity(param.toString(), "UTF-8");
-			  request.setEntity(se);//发送数据
-			  
+			  info.setHeader(header);
+			  info.setLongitude(longitude);
+			  info.setLatitude(latitude);
+			  if(mParkingType== "150903|150904|150905|150906"){//全部
+				  info.setParkingType(3);
+			  }else if(mParkingType=="150906"){//路外
+				  info.setParkingType(2);
+			  }else if(mParkingType=="150903|150904|150905"){//路内
+				  info.setParkingType(1);
+			  }
+			  info.setRange(range);
+			  StringEntity se = new StringEntity(JacksonJsonUtil.beanToJson(info), "UTF-8");
+			  Log.e(LOG_TAG,"clientQueryParking-> param is " + JacksonJsonUtil.beanToJson(info));
+			  request.setEntity(se);//发送数据  
 			  try{
 				  HttpResponse httpResponse = httpClient.execute(request);//获得响应
 				  int code = httpResponse.getStatusLine().getStatusCode();
@@ -2085,7 +2089,7 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
 					  if(res.getResCode().equals("100")){
 						  mList = res.getDataList();
 						  return true;
-					  }else if(res.getResCode().equals("201")){
+					  }else{
 				          return false;
 					  } 
 				}else{
@@ -2165,13 +2169,11 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
                   HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
 		  httpClient.getParams().setIntParameter(  
                   HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置 
-		  String strurl = "http://" + this.getString(R.string.ip) + "/ipippay-pay/owner/queryCurrent/query";
+		  String strurl = "http://" + this.getString(R.string.ip) + "/itspark/owner/queryCurrent/query";
 		  Log.e(LOG_TAG,"clientQueryCurrentRecord->url is " + strurl);
 		  HttpPost request = new HttpPost(strurl);
 		  request.addHeader("Accept","application/json");
-			//request.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 		  request.setHeader("Content-Type", "application/json; charset=utf-8");
-		  JSONObject param = new JSONObject();
 		  QueryRecordInfo info = new QueryRecordInfo();
 		  CommonRequestHeader header = new CommonRequestHeader();
 		  header.addRequestHeader(CommonRequestHeader.REQUEST_OWNER_CURRENT_PARKING_RECORD_CODE, mTeleNumber, readToken());
@@ -2266,14 +2268,14 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
 		  String strurl = "http://" + 	this.getString(R.string.ip) + "/itspark/owner/userCenter/logout";
 		  HttpPost request = new HttpPost(strurl);
 		  request.addHeader("Accept","application/json");
-		//request.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 		  request.setHeader("Content-Type", "application/json; charset=utf-8");
-		  JSONObject param = new JSONObject();
+		  LogoutInfo info = new LogoutInfo();
 		  CommonRequestHeader header = new CommonRequestHeader();
 		  header.addRequestHeader(CommonRequestHeader.REQUEST_OWNER_LOGOUT_CODE, mTeleNumber, readToken());
-		  param.put("header", header);
-		  StringEntity se = new StringEntity(param.toString(), "UTF-8");
-		  request.setEntity(se);
+		  info.setHeader(header);
+		  StringEntity se = new StringEntity(JacksonJsonUtil.beanToJson(info), "UTF-8");
+		  Log.e(LOG_TAG,"clientLogout-> param is " + JacksonJsonUtil.beanToJson(info));
+		  request.setEntity(se);//发送数据
 		  try{
 			  HttpResponse httpResponse = httpClient.execute(request);//获得响应
 			  int code = httpResponse.getStatusLine().getStatusCode();
@@ -2285,7 +2287,7 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
 				  toastWrapper(res.getResMsg());
 				  if(resCode.equals("100")){
 					  return true;
-				  }else if(resCode.equals("201")){
+				  }else{
 					  return false;
 				  }
 			  }else{

@@ -21,9 +21,12 @@ import com.example.driver.R;
 import com.example.driver.R.id;
 import com.example.driver.R.layout;
 import com.example.driver.R.string;
+import com.example.driver.common.JacksonJsonUtil;
 import com.example.driver.common.UserDbAdapter;
 import com.example.driver.info.CommonRequestHeader;
 import com.example.driver.info.CommonResponse;
+import com.example.driver.info.UnBindLicenseInfo;
+import com.example.driver.info.QueryLicenseInfo;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -74,7 +77,7 @@ public class LicensePlateManagementActivity extends Activity {
     private static final String FILE_NAME_TOKEN = "save_pref_token";
     private static final String LOG_TAG = "LicensePlateManagementActivity";
     private UserLicenseDisplayTask  mDisplayLicenseTask= null;
-    private UserLicenseDeleteTask  mDeleteLicenseTask= null;
+    private UserLicenseUnbindTask  mUnbindLicenseTask= null;
     
 	@Override  
     public void onCreate(Bundle savedInstanceState) {  
@@ -103,8 +106,8 @@ public class LicensePlateManagementActivity extends Activity {
             public void onClick(View v){
             	mType = TYPE_DELETE_FIRST_LICENSE;
             	//new DeleteThread().start();
-            	mDeleteLicenseTask = new UserLicenseDeleteTask();
-            	mDeleteLicenseTask.execute((Void) null);
+            	mUnbindLicenseTask = new UserLicenseUnbindTask();
+            	mUnbindLicenseTask.execute((Void) null);
             }
         });
         mDeleteSecondLicensePlateIV=(ImageView)findViewById(R.id.iv_delete_license_plate_second);
@@ -113,8 +116,8 @@ public class LicensePlateManagementActivity extends Activity {
             public void onClick(View v){
             	mType = TYPE_DELETE_SECOND_LICENSE;
             	//new DeleteThread().start();
-            	mDeleteLicenseTask = new UserLicenseDeleteTask();
-            	mDeleteLicenseTask.execute((Void) null);
+            	mUnbindLicenseTask = new UserLicenseUnbindTask();
+            	mUnbindLicenseTask.execute((Void) null);
             }
         });
         mLinearLicensePlateFirst=(View)findViewById(R.id.linear_license_plate_first);
@@ -139,7 +142,6 @@ public class LicensePlateManagementActivity extends Activity {
 	
     @Override  
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {  
-        // TODO Auto-generated method stub  
         super.onActivityResult(requestCode, resultCode, data);  
         if(requestCode==0){  
         	finish();
@@ -222,17 +224,17 @@ public class LicensePlateManagementActivity extends Activity {
                    HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
  		  httpClient.getParams().setIntParameter(  
                    HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置 
- 		  String strurl = "http://" + this.getString(R.string.ip) + ":8080/park/owner/license/query";
+ 		  String strurl = "http://" + this.getString(R.string.ip) + "/itspark/owner/license/query";
  		  HttpPost request = new HttpPost(strurl);
  		  request.addHeader("Accept","application/json");
- 			//request.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 		  request.setHeader("Content-Type", "application/json; charset=utf-8");
-		  JSONObject param = new JSONObject();
+		  QueryLicenseInfo info = new QueryLicenseInfo();
 		  CommonRequestHeader header = new CommonRequestHeader();
 		  header.addRequestHeader(CommonRequestHeader.REQUEST_OWNER_QUERY_LICENSE_CODE, mTeleNumber, readToken());
-		  param.put("header", header);
- 		  StringEntity se = new StringEntity(param.toString(), "UTF-8");
- 		  request.setEntity(se);//发送数据
+		  info.setHeader(header);
+		  StringEntity se = new StringEntity(JacksonJsonUtil.beanToJson(info), "UTF-8");
+		  Log.e(LOG_TAG,"clientQueryLicense-> param is " + JacksonJsonUtil.beanToJson(info));
+		  request.setEntity(se);//发送数据
  		  try{
  			  HttpResponse httpResponse = httpClient.execute(request);//获得响应
  			  int code = httpResponse.getStatusLine().getStatusCode();
@@ -244,7 +246,7 @@ public class LicensePlateManagementActivity extends Activity {
  					  mLicensePlateFirst = (String)res.getPropertyMap().get("licensePlateFirst");
  					  mLicensePlateSecond = (String)res.getPropertyMap().get("licensePlateSecond");
  					  return true;
- 				  }else if(res.getResCode().equals("201")){
+ 				  }else{
  			          return false;
  				  }  
  			}else{
@@ -283,19 +285,19 @@ public class LicensePlateManagementActivity extends Activity {
  		protected void onPostExecute(final Boolean success) {
  			mDisplayLicenseTask = null;
  			if(success){
-    		    if(!mLicensePlateFirst.equals("") && !mLicensePlateSecond.equals("")){
+    		    if(!"".equals(mLicensePlateFirst) && mLicensePlateFirst!=null && !"".equals(mLicensePlateSecond) && mLicensePlateSecond!=null){
     		    	Message msg = new Message();
     		    	msg.what = EVENT_DISPLAY_DOUBLE_LICENSE;
     		    	mHandler.sendMessage(msg);
-    		    }else if(!mLicensePlateFirst.equals("")  && mLicensePlateSecond.equals("") ){
+    		    }else if(!"".equals(mLicensePlateFirst)  && mLicensePlateFirst!=null && ("".equals(mLicensePlateSecond) || mLicensePlateSecond==null)){
     		    	Message msg = new Message();
     		    	msg.what = EVENT_DISPLAY_FIRST_LICENSE;
     		    	mHandler.sendMessage(msg);
-    		    }else if(mLicensePlateFirst.equals("")  && !mLicensePlateSecond.equals("") ){
+    		    }else if(("".equals(mLicensePlateFirst) || mLicensePlateFirst==null)  && !"".equals(mLicensePlateSecond) && mLicensePlateSecond!=null ){
     		    	Message msg = new Message();
     		    	msg.what = EVENT_DISPLAY_SECOND_LICENSE;
     		    	mHandler.sendMessage(msg);
-    		    }else if(mLicensePlateFirst.equals("")  && mLicensePlateSecond.equals("") ){
+    		    }else if(("".equals(mLicensePlateFirst) || mLicensePlateFirst==null)  && ( "".equals(mLicensePlateSecond) || mLicensePlateSecond==null) ){
     		    	Message msg = new Message();
     		    	msg.what = EVENT_DISMISS_BOTH_LICENSE;
     		    	mHandler.sendMessage(msg);
@@ -313,37 +315,37 @@ public class LicensePlateManagementActivity extends Activity {
     /**
  	 * Add for request delete  license plate
  	 * */
- 	public boolean clientDeleteLicense() throws ParseException, IOException, JSONException{
+ 	public boolean clientUnbindLicense() throws ParseException, IOException, JSONException{
  		Log.e(LOG_TAG,"clientDeleteLicense->enter clientQueryLicense");  
  		HttpClient httpClient = new DefaultHttpClient();
  		  httpClient.getParams().setIntParameter(  
                    HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
  		  httpClient.getParams().setIntParameter(  
                    HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置 
- 		  String strurl = "http://" + this.getString(R.string.ip) + ":8080/park/owner/license/delete";
+ 		  String strurl = "http://" + this.getString(R.string.ip) + "/itspark/owner/license/unbind";
  		  HttpPost request = new HttpPost(strurl);
  		  request.addHeader("Accept","application/json");
- 			//request.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 		  request.setHeader("Content-Type", "application/json; charset=utf-8");
-		  JSONObject param = new JSONObject();
+		  UnBindLicenseInfo info = new UnBindLicenseInfo();
 		  CommonRequestHeader header = new CommonRequestHeader();
 		  header.addRequestHeader(CommonRequestHeader.REQUEST_OWNER_DELETE_LICENSE_CODE, mTeleNumber, readToken());
-		  param.put("header", header);
+		  info.setHeader(header);
 		    if(mType==TYPE_DELETE_FIRST_LICENSE){
 		    	if((mLicensePlateFirstTV.getText().toString()).equals(mLicensePlateFirst)){
-		    		param.put("licensePlateDismiss", mLicensePlateFirst);
+		    		info.setLicensePlateDismiss(mLicensePlateFirst);
 		    	}else if((mLicensePlateFirstTV.getText().toString()).equals(mLicensePlateSecond)){
-		    		param.put("licensePlateDismiss", mLicensePlateSecond);
+		    		info.setLicensePlateDismiss(mLicensePlateSecond);
 		    	}
 		    }else if(mType==TYPE_DELETE_SECOND_LICENSE){
 		    	if((mLicensePlateSecondTV.getText().toString()).equals(mLicensePlateFirst)){
-		    		param.put("licensePlateDismiss", mLicensePlateFirst);
+		    		info.setLicensePlateDismiss(mLicensePlateFirst);
 		    	}else if((mLicensePlateSecondTV.getText().toString()).equals(mLicensePlateSecond)){
-		    		param.put("licensePlateDismiss", mLicensePlateSecond);
+		    		info.setLicensePlateDismiss(mLicensePlateSecond);
 		    	}
 		    }
- 		  StringEntity se = new StringEntity(param.toString(), "UTF-8");
- 		  request.setEntity(se);//发送数据
+			  StringEntity se = new StringEntity(JacksonJsonUtil.beanToJson(info), "UTF-8");
+			  Log.e(LOG_TAG,"clientUnbindLicense-> param is " + JacksonJsonUtil.beanToJson(info));
+			  request.setEntity(se);//发送数据
  		  try{
  			  HttpResponse httpResponse = httpClient.execute(request);//获得响应
  			  int code = httpResponse.getStatusLine().getStatusCode();
@@ -354,7 +356,7 @@ public class LicensePlateManagementActivity extends Activity {
  				 toastWrapper(res.getResMsg());  
  				  if(res.getResCode().equals("100")){
  					  return true;
- 				  }else if(res.getResCode().equals("201")){
+ 				  }else{
  			          return false;
  				  }  
  			}else{
@@ -376,12 +378,12 @@ public class LicensePlateManagementActivity extends Activity {
  	/**
  	 * 解绑车牌Task
  	 */
- 	public class UserLicenseDeleteTask extends AsyncTask<Void, Void, Boolean> {
+ 	public class UserLicenseUnbindTask extends AsyncTask<Void, Void, Boolean> {
  		@Override
  		protected Boolean doInBackground(Void... params) {
  			try{
  				Log.e(LOG_TAG,"UserLicenseDeleteTask->doInBackmDeleteLicenseTaskground");  
- 				return clientDeleteLicense();
+ 				return clientUnbindLicense();
  			}catch(Exception e){
  				Log.e(LOG_TAG,"UserLicenseDeleteTask->exists exception ");  
  				e.printStackTrace();
@@ -391,7 +393,7 @@ public class LicensePlateManagementActivity extends Activity {
 
  		@Override
  		protected void onPostExecute(final Boolean success) {
- 			mDeleteLicenseTask = null;
+ 			mUnbindLicenseTask = null;
  			if(success){
  			    if(mType==TYPE_DELETE_FIRST_LICENSE){
  			    	Message msg = new Message();
@@ -407,7 +409,7 @@ public class LicensePlateManagementActivity extends Activity {
 
  		@Override
  		protected void onCancelled() {
- 			mDeleteLicenseTask = null;
+ 			mUnbindLicenseTask = null;
  		}
  		
  	}

@@ -24,8 +24,10 @@ import com.example.driver.R.drawable;
 import com.example.driver.R.id;
 import com.example.driver.R.layout;
 import com.example.driver.R.string;
+import com.example.driver.common.JacksonJsonUtil;
 import com.example.driver.info.CommonRequestHeader;
 import com.example.driver.info.CommonResponse;
+import com.example.driver.info.TokenInfo;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -141,17 +143,17 @@ public class MessageCenterActivity extends Activity {
                   HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
 		  httpClient.getParams().setIntParameter(  
                   HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置 
-		  String strurl = "http://" + 	this.getString(R.string.ip) + ":8080/park/owner/messageCenter/getMessage";
+		  String strurl = "http://" + 	this.getString(R.string.ip) + "/itspark/owner/messageCenter/getMessage";
 		  HttpPost request = new HttpPost(strurl);
 		  request.addHeader("Accept","application/json");
-		//request.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 		  request.setHeader("Content-Type", "application/json; charset=utf-8");
-		  JSONObject param = new JSONObject();
+		  TokenInfo info = new TokenInfo();
 		  CommonRequestHeader header = new CommonRequestHeader();
 		  header.addRequestHeader(CommonRequestHeader.REQUEST_OWNER_MESSAGE_CENTER_CODE, mTeleNumber, readToken());
-		  param.put("header", header);
-		  StringEntity se = new StringEntity(param.toString(), "UTF-8");
-		  request.setEntity(se);
+		  info.setHeader(header);
+		  StringEntity se = new StringEntity( JacksonJsonUtil.beanToJson(info), "UTF-8");
+		  Log.e(LOG_TAG,"clientGet-> param is " + JacksonJsonUtil.beanToJson(info));
+		  request.setEntity(se);//发送数据
 		  try{
 			  HttpResponse httpResponse = httpClient.execute(request);//获得响应
 			  int code = httpResponse.getStatusLine().getStatusCode();
@@ -163,7 +165,7 @@ public class MessageCenterActivity extends Activity {
 				  if(res.getResCode().equals("100")){
 					  mList = res.getDataList();
 					  return true;
-				  }else if(res.getResCode().equals("201")){
+				  }else{
 			          return false;
 				  } 
 			}else{

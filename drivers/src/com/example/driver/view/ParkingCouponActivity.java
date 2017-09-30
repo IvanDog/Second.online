@@ -168,7 +168,7 @@ public class ParkingCouponActivity extends FragmentActivity {
                   HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
 		  httpClient.getParams().setIntParameter(  
                   HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置 
-		  String strurl = "http://" + this.getString(R.string.ip) + "/ipippay-pay/owner/queryCoupon/query";
+		  String strurl = "http://" + this.getString(R.string.ip) + "/itspark/owner/queryCoupon/query";
 		  HttpPost request = new HttpPost(strurl);
 		  request.addHeader("Accept","application/json");
 		  request.setHeader("Content-Type", "application/json; charset=utf-8");
@@ -189,7 +189,7 @@ public class ParkingCouponActivity extends FragmentActivity {
 				  if(res.getResCode().equals("100")){
 					  mList = res.getDataList();
 					  return true;
-				  }else if(res.getResCode().equals("201")){
+				  }else {
 			          return false;
 				  }  
 			}else{

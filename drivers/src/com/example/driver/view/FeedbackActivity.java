@@ -19,8 +19,10 @@ import com.example.driver.R;
 import com.example.driver.R.id;
 import com.example.driver.R.layout;
 import com.example.driver.R.string;
+import com.example.driver.common.JacksonJsonUtil;
 import com.example.driver.info.CommonRequestHeader;
 import com.example.driver.info.CommonResponse;
+import com.example.driver.info.FeedBackInfo;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -134,18 +136,18 @@ public class FeedbackActivity extends Activity {
                   HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
 		  httpClient.getParams().setIntParameter(  
                   HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置,"0"代表永不超时
-		  String strurl = "http://" + 	this.getString(R.string.ip) + ":8080/park/owner/feedback/feedback";
+		  String strurl = "http://" + 	this.getString(R.string.ip) + "/itspark/owner/feedback/feedback";
 		  HttpPost request = new HttpPost(strurl);
 		  request.addHeader("Accept","application/json");
-			//request.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 		  request.setHeader("Content-Type", "application/json; charset=utf-8");
-		  JSONObject param = new JSONObject();
+		  FeedBackInfo info = new FeedBackInfo();
 		  CommonRequestHeader header = new CommonRequestHeader();
 		  header.addRequestHeader(CommonRequestHeader.REQUEST_OWNER_FEEDBACK, mTeleNumber, readToken());
-		  param.put("header", header);
-		  param.put("feedContent", mContentET.getText().toString());
-		  StringEntity se = new StringEntity(param.toString(), "UTF-8");
-		  request.setEntity(se);//发送数据
+		  info.setHeader(header);
+		  info.setFeedContent(mContentET.getText().toString());
+		  StringEntity se = new StringEntity(JacksonJsonUtil.beanToJson(info), "UTF-8");
+		  Log.e(LOG_TAG,"clientFeedBack-> param is " + JacksonJsonUtil.beanToJson(info));
+		  request.setEntity(se);//发送数据  
 		  try{
 			  HttpResponse httpResponse = httpClient.execute(request);//获得响应
 			  int code = httpResponse.getStatusLine().getStatusCode();
@@ -157,7 +159,7 @@ public class FeedbackActivity extends Activity {
 				  toastWrapper(res.getResMsg());
 				  if(resCode.equals("100")){
 					  return true;
-				  }else if(resCode.equals("201")){
+				  }else {
 					  return false;
 				  }
 			  }else{

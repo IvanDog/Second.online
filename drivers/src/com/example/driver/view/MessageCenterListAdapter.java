@@ -89,7 +89,7 @@ public class MessageCenterListAdapter extends BaseAdapter {
         zujian.messageCenterTimeTV.setText((String)(data.get(position).get("messageTime"))); 
         zujian.messageCenterDetailHideTV.setText((String)(data.get(position).get("messageDetail"))); 
 		Drawable drawable = context.getResources().getDrawable(R.drawable.ic_error_outline_black_18dp);
-        if(((String)data.get(position).get("messageCenterTitle")).equals("停车券通知")){
+        if("停车券通知".equals((String)data.get(position).get("messageTitle"))){
         	drawable = context.getResources().getDrawable(R.drawable.ic_plus_one_black_18dp);
         }
 		drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight()); 

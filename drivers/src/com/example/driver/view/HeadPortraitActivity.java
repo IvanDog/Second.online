@@ -364,12 +364,10 @@ public class HeadPortraitActivity extends Activity {
 	                  HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
 			  httpClient.getParams().setIntParameter(  
 	                  HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置,"0"代表永不超时
-			  String strurl = "http://" + 	this.getString(R.string.ip) + ":8080/itspark/owner/headportrait/set";
+			  String strurl = "http://" + 	this.getString(R.string.ip) + "/itspark/owner/headportrait/set";
 			  HttpPost request = new HttpPost(strurl);
 			  request.addHeader("Accept","application/json");
-			//request.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 			  request.setHeader("Content-Type", "application/json; charset=utf-8");
-			  JSONObject param = new JSONObject();
 			  SetHeadPortraitInfo info = new SetHeadPortraitInfo();
 			  CommonRequestHeader header = new CommonRequestHeader();
 			  header.addRequestHeader(CommonRequestHeader.REQUEST_OWNER_SET_HEAD_PORTRAIT, mTeleNumber, readToken());
@@ -377,7 +375,7 @@ public class HeadPortraitActivity extends Activity {
 			  info.setHeadPortrait(converImageToByte(mPhoto));
 			  StringEntity se = new StringEntity(JacksonJsonUtil.beanToJson(info), "UTF-8");
 			  Log.e(LOG_TAG,"clientSetHead-> param is " + JacksonJsonUtil.beanToJson(info));
-			  request.setEntity(se);
+			  request.setEntity(se);//发送数据
 			  try{
 				  HttpResponse httpResponse = httpClient.execute(request);//获得响应
 				  int code = httpResponse.getStatusLine().getStatusCode();
@@ -389,7 +387,7 @@ public class HeadPortraitActivity extends Activity {
 					  toastWrapper(res.getResMsg());
 					  if(resCode.equals("100")){
 						  return true;
-					  }else if(resCode.equals("201")){
+					  }else{
 						  return false;
 					  }
 				  }else{

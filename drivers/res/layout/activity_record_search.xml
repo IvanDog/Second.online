@@ -16,7 +16,7 @@
        android:paddingBottom="10dp"
        android:layout_weight="1"
        android:gravity="center"
-       android:text="当前记录"
+       android:text="今日记录"
        android:textSize="15sp"
        android:textColor="#FFFFFF"  />
      <TextView

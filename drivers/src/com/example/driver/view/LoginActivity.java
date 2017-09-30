@@ -131,7 +131,7 @@ public class LoginActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
+		//EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
 		mUserDbAdapter = new UserDbAdapter(this);
 		setContentView(R.layout.activity_login);
 		initSDK();
@@ -522,12 +522,8 @@ public class LoginActivity extends Activity {
 		}
 
 		if (cancel) {
-			// There was an error; don't attempt login and focus the first
-			// form field with an error.
 			focusView.requestFocus();
 		} else {
-			// Show a progress spinner, and kick off a background task to
-			// perform the user login attempt.
 			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
 			showProgress(true);
 			mLoginTask = new UserLoginTask();
@@ -540,9 +536,6 @@ public class LoginActivity extends Activity {
 	 */
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
 	private void showProgress(final boolean show) {
-		// On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-		// for very easy animations. If available, use these APIs to fade-in
-		// the progress spinner.
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
 			int shortAnimTime = getResources().getInteger(
 					android.R.integer.config_shortAnimTime);
@@ -580,18 +573,16 @@ public class LoginActivity extends Activity {
 	 * Add for request login's state
 	 * */
 	public boolean clientLogin(String account, String pwd)throws ParseException, IOException, JSONException{
-		 return true;//置位true用于测试
-		  /*HttpClient httpClient = new DefaultHttpClient();
+		  HttpClient httpClient = new DefaultHttpClient();
 		  httpClient.getParams().setIntParameter(  
                   HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
 		  httpClient.getParams().setIntParameter(  
                   HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置,"0"代表永不超时
-		  String strurl = "http://" + 	this.getString(R.string.ip) + ":8080/itspark/owner/login/login";
+		  String strurl = "http://" + 	this.getString(R.string.ip) + "/itspark/owner/login/login";
 		  HttpPost request = new HttpPost(strurl);
 		  request.addHeader("Accept","application/json");
 		  //request.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 		  request.setHeader("Content-Type", "application/json; charset=utf-8");
-		  JSONObject param = new JSONObject();
 		  LoginInfo info = new LoginInfo();
 		  CommonRequestHeader header = new CommonRequestHeader();
 		  header.addRequestHeader(CommonRequestHeader.REQUEST_OWNER_LOGIN_CODE, account, readToken());
@@ -640,7 +631,7 @@ public class LoginActivity extends Activity {
           }finally{  
         	  httpClient.getConnectionManager().shutdown();  
           }  
-		  return false;*/
+		  return false;
     }
 	
 	/**
@@ -698,7 +689,7 @@ public class LoginActivity extends Activity {
                   HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
 		  httpClient.getParams().setIntParameter(  
                   HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置 
-		  String strurl = "http://" + 	this.getString(R.string.ip) + ":8080/itspark/owner/login/analysis";
+		  String strurl = "http://" + 	this.getString(R.string.ip) + "/itspark/owner/login/analysis";
 		  HttpPost request = new HttpPost(strurl);
 		  request.addHeader("Accept","application/json");
 		  //request.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
@@ -794,10 +785,9 @@ public class LoginActivity extends Activity {
                   HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
 		  httpClient.getParams().setIntParameter(  
                   HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置 
-		  String strurl = "http://" + 	this.getString(R.string.ip) + ":8080/itspark/owner/login/register";
+		  String strurl = "http://" + 	this.getString(R.string.ip) + "/itspark/owner/login/register";
 		  HttpPost request = new HttpPost(strurl);
 		  request.addHeader("Accept","application/json");
-		  //request.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 		  request.setHeader("Content-Type", "application/json; charset=utf-8");
 		  JSONObject param = new JSONObject();
 		  RegisterInfo info = new RegisterInfo();

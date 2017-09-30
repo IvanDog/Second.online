@@ -100,7 +100,7 @@ public class PaymentActivity extends Activity {
 	private String mExpenseFinal;
 	private String mAlipayOrderInfo;
 	//private boolean mAccountState;
-	private String mParkingRecordrID;
+	private String mParkingRecordID;
 	private String mTradeRecordID;
 	private String mCouponID;
 	private Context mContext;
@@ -116,7 +116,7 @@ public class PaymentActivity extends Activity {
 		Bundle bundle = intent.getExtras();
 		mTeleNumber=bundle.getString("telenumber");
         mParkNumber = bundle.getString("parkNumber");
-        mParkingRecordrID = bundle.getString("parkingRecordrID");
+        mParkingRecordID = bundle.getString("parkingRecordID");
 		mLicensePlateNumber = bundle.getString("licensePlateNumber");
 		mCarType=bundle.getString("carType");
 		mStartTime = bundle.getString("startTime");
@@ -206,14 +206,14 @@ public class PaymentActivity extends Activity {
             		accountIntent.putExtras(accountBundle);
             		startActivity(accountIntent);
                 	break;
-                case EVENT_MOBILE_PAYMENT_SUCCESS:
+/*                case EVENT_MOBILE_PAYMENT_SUCCESS:
             		Intent mobileIntent = new Intent(PaymentActivity.this,PaymentSuccessActivity.class);
             		Bundle mobileBundle = new Bundle();
             		mobileBundle.putString("expense", mExpense);
             		mobileBundle.putString("telenumber", mTeleNumber);
             		mobileIntent.putExtras(mobileBundle);
             		startActivity(mobileIntent);
-                	break;
+                	break;*/
                 case EVENT_MOBILE_PAYMENT_FAIL:
                 	mDialog.dismiss();
                 	Toast.makeText(getApplicationContext(), "移动支付失败", Toast.LENGTH_SHORT).show();
@@ -230,6 +230,12 @@ public class PaymentActivity extends Activity {
     				if (TextUtils.equals(resultStatus, "9000")) {
     					// 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
     					Toast.makeText(PaymentActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                		Intent mobileIntent = new Intent(PaymentActivity.this,PaymentSuccessActivity.class);
+                		Bundle mobileBundle = new Bundle();
+                		mobileBundle.putString("expense", mExpense);
+                		mobileBundle.putString("telenumber", mTeleNumber);
+                		mobileIntent.putExtras(mobileBundle);
+                		startActivity(mobileIntent);
     				} else {
     					// 该笔订单真实的支付结果，需要依赖服务端的异步通知。
     					Toast.makeText(PaymentActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
@@ -313,7 +319,7 @@ public class PaymentActivity extends Activity {
                   HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
 		  httpClient.getParams().setIntParameter(  
                   HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置 
-		  String strurl = "http://" + this.getString(R.string.ip) + "/ipippay-pay/owner/payment/pay";
+		  String strurl = "http://" + this.getString(R.string.ip) + "/itspark/owner/payment/pay";
 		  HttpPost request = new HttpPost(strurl);
 		  request.addHeader("Accept","application/json");
 		  request.setHeader("Content-Type", "application/json; charset=utf-8");
@@ -325,8 +331,8 @@ public class PaymentActivity extends Activity {
 		  info.setParkNumber(mParkNumber);
 		  info.setLicensePlateNumber(mLicensePlateNumber);
 		  info.setPassword(getMD5Code(password));
-		  info.setParkingRecordID(mParkingRecordrID);
-		  info.setTradeRecordID(mTradeRecordID);
+		  info.setParkingRecordID(convertString(mParkingRecordID));
+		  info.setTradeRecordID(convertString(mTradeRecordID));
 		  info.setPaymentPattern(convertPayPattToInteger(paymentPattern));
 		  info.setPaidMoney(mExpenseFinal);
 		  info.setCouponID(mCouponID);
@@ -435,7 +441,7 @@ public class PaymentActivity extends Activity {
                   HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
 		  httpClient.getParams().setIntParameter(  
                   HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置 
-		  String strurl = "http://" + this.getString(R.string.ip) + "/ipippay-pay/owner/payment/queryExpense";
+		  String strurl = "http://" + this.getString(R.string.ip) + "/itspark/owner/payment/queryExpense";
 		  HttpPost request = new HttpPost(strurl);
 		  request.addHeader("Accept","application/json");
 		  request.setHeader("Content-Type", "application/json; charset=utf-8");
@@ -447,7 +453,7 @@ public class PaymentActivity extends Activity {
 		  info.setParkNumber(mParkNumber);
 		  info.setLicensePlateNumber(mLicensePlateNumber);
 		  info.setCarType(mCarType);
-		  info.setParkingRecordID(String.valueOf(mParkingRecordrID));
+		  info.setParkingRecordID(mParkingRecordID);
 		  info.setCouponID(mCouponID);
 		  StringEntity se = new StringEntity( JacksonJsonUtil.beanToJson(info), "UTF-8");
 		  Log.e(LOG_TAG,"clientQueryExpense-> param is " + JacksonJsonUtil.beanToJson(info));
@@ -592,18 +598,29 @@ public class PaymentActivity extends Activity {
 				return 3;
 			}else if("微信扫码支付".equals(paymentPattern)){
 				return 4;
-			}else if("支付宝扫码支付".equals(paymentPattern)){
+			}else if("支付宝扫码付".equals(paymentPattern)){
 				return 5;
 			}else if("微信刷卡支付".equals(paymentPattern)){
 				return 6;
-			}else if("支付宝条码支付".equals(paymentPattern)){
+			}else if("支付宝条码付".equals(paymentPattern)){
 				return 7;
 			}else if("余额支付".equals(paymentPattern)){
 				return 8;
 			}else if("逃费".equals(paymentPattern)){
 				return 9;
-			}else{
+			}else if("未付".equals(paymentPattern)){
 				return 0;
-			}
+			}else{
+                 return -1;      
+            }
 		}
+	
+	
+	public String convertString(String str){
+		if("null".equals(str)){ 
+			return "";
+		}else{
+			return str;
+		}
+	}
 }

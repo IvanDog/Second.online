@@ -287,16 +287,14 @@ public class UserInformationActivity extends Activity {
 	                   HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时  
 	 		  httpClient.getParams().setIntParameter(  
 	                   HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置 
-	 		  String strurl = "http://" + this.getString(R.string.ip) + ":8080/itspark/owner/userInformation/query";
+	 		  String strurl = "http://" + this.getString(R.string.ip) + "/itspark/owner/userInformation/query";
 	 		  HttpPost request = new HttpPost(strurl);
 	 		  request.addHeader("Accept","application/json");
-				//request.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 			  request.setHeader("Content-Type", "application/json; charset=utf-8");
 			  JSONObject param = new JSONObject();
 			  QueryUserInfo info = new QueryUserInfo();
 			  CommonRequestHeader header = new CommonRequestHeader();
 			  header.addRequestHeader(CommonRequestHeader.REQUEST_OWNER_USER_INFORMATION_CODE, mTeleNumber, readToken());
-			  //param.put("header", header);
 			  info.setHeader(header);
 			  StringEntity se = new StringEntity(JacksonJsonUtil.beanToJson(info), "UTF-8");
 			  Log.e(LOG_TAG,"clientQueryUser-> param is " + JacksonJsonUtil.beanToJson(info));
@@ -306,7 +304,6 @@ public class UserInformationActivity extends Activity {
 	 			  int code = httpResponse.getStatusLine().getStatusCode();
 	 			  if(code==HttpStatus.SC_OK){
 	 				  String strResult = EntityUtils.toString(httpResponse.getEntity());
-	 				  //Log.e(LOG_TAG,"clientQueryUser->strResult is " + strResult);
 	 				  CommonResponse res = new CommonResponse(strResult);
 	 				  toastWrapper(res.getResMsg());
 	 				  if(res.getResCode().equals("100")){
@@ -317,7 +314,7 @@ public class UserInformationActivity extends Activity {
 	         				mHeadPortrait=bytes2Drawable(Base64.decode(headPortraitByteArray, Base64.NO_WRAP));
 	         			}
 	 					  return true;
-	 				  }else if(res.getResCode().equals("201")){
+	 				  }else{
 	 			          return false;
 	 				  }  
 	 			}else{
