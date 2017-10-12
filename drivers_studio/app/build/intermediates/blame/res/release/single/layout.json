@@ -1,0 +1,158 @@
+[
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/list_parking_coupon.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/list_parking_coupon.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/dialog_city.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/dialog_city.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/activity_parking_coupon.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/activity_parking_coupon.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/dialog_account_payment.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/dialog_account_payment.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/activity_recharge.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/activity_recharge.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/fragment_record.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/fragment_record.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/view_user_center.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/view_user_center.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/activity_set_head_portrait.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/activity_set_head_portrait.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/activity_license_management.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/activity_license_management.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/activity_parking_detail.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/activity_parking_detail.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/activity_message_center.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/activity_message_center.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/list_function_user_center.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/list_function_user_center.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/list_parking_list_hide.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/list_parking_list_hide.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/activity_main.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/activity_main.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/fragment_number.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/fragment_number.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/dialog_verification_code.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/dialog_verification_code.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/list_record.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/list_record.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/activity_login.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/activity_login.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/activity_payment_success.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/activity_payment_success.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/list_user_information.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/list_user_information.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/list_message_center.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/list_message_center.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/fragment_location.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/fragment_location.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/activity_input_license.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/activity_input_license.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/list_search.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/list_search.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/dialog_parking_information.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/dialog_parking_information.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/list_parking_detail.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/list_parking_detail.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/list_parking_list.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/list_parking_list.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/dialog_charge_success.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/dialog_charge_success.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/list_message_center_hide.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/list_message_center_hide.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/list_parking_coupon_hide.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/list_parking_coupon_hide.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/fragment_letter.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/fragment_letter.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/fragment_car_type.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/fragment_car_type.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/activity_reset_passwd.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/activity_reset_passwd.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/activity_record_search.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/activity_record_search.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/activity_payment.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/activity_payment.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/activity_user_information.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/activity_user_information.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/activity_set_nickname.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/activity_set_nickname.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/activity_feedback.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/activity_feedback.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/release/layout/dialog_passwd_set.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/layout/dialog_passwd_set.xml"
+    }
+]

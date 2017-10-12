@@ -1,0 +1,273 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:2:1-139:12
+	package
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:3:5-33
+		INJECTED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml
+		INJECTED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml
+	android:versionName
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:5:5-30
+		INJECTED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml
+		INJECTED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml
+	android:versionCode
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:4:5-28
+		INJECTED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml
+		INJECTED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:2:11-69
+uses-sdk
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:6:5-8:41
+	android:targetSdkVersion
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:8:9-38
+		INJECTED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml
+		INJECTED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:7:9-35
+		INJECTED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml
+		INJECTED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml
+uses-permission#android.permission.INTERNET
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:9:5-67
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:9:22-64
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:10:5-81
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:10:22-78
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:11:5-81
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:11:22-78
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:12:5-79
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:12:22-76
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:13:5-79
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:13:22-76
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:14:5-75
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:14:22-72
+uses-permission#android.permission.CHANGE_WIFI_STATE
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:15:5-76
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:15:22-73
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:16:5-76
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:16:22-73
+uses-permission#android.permission.CHANGE_CONFIGURATION
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:17:5-79
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:17:22-76
+uses-permission#android.permission.WAKE_LOCK
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:18:5-68
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:18:22-65
+uses-permission#android.permission.CAMERA
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:20:6-66
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:20:23-63
+uses-permission#android.permission.MOUNT_UNMOUNT_FILESYSTEMS
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:22:5-83
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:22:22-81
+uses-permission#android.permission.WRITE_SETTINGS
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:25:5-73
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:25:22-70
+uses-permission#android.permission.RECEIVE_SMS
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:27:5-69
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:27:22-67
+uses-permission#android.permission.SEND_SMS
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:28:5-66
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:28:22-64
+application
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:29:5-137:19
+	android:label
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:32:9-28
+	android:allowBackup
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:30:9-35
+	android:icon
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:31:9-41
+	android:theme
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:33:9-40
+meta-data#com.amap.api.v2.apikey
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:34:9-36:64
+	android:value
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:36:13-61
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:35:13-50
+service#com.amap.api.location.APSService
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:38:9-76
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:38:18-65
+activity#com.example.driver.view.LoginActivity
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:39:9-48:20
+	android:label
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:41:13-32
+	android:windowSoftInputMode
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:43:13-64
+	android:theme
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:42:13-46
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:40:13-65
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:44:13-47:29
+action#android.intent.action.MAIN
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:45:13-65
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:45:21-62
+category#android.intent.category.LAUNCHER
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:46:13-73
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:46:23-70
+activity#com.example.driver.view.MainActivity
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:49:9-53:20
+	android:label
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:52:13-39
+	android:theme
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:51:13-46
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:50:13-64
+activity#com.example.driver.view.ParkingInformationActivity
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:54:9-58:20
+	android:label
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:57:13-33
+	android:theme
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:56:13-46
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:55:13-78
+activity#com.example.driver.view.PaymentActivity
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:59:9-63:20
+	android:label
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:62:13-33
+	android:theme
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:61:13-46
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:60:13-67
+activity#com.example.driver.view.PaymentSuccessActivity
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:64:9-68:20
+	android:label
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:67:13-33
+	android:theme
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:66:13-46
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:65:13-74
+activity#com.example.driver.view.MessageCenterActivity
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:69:9-73:20
+	android:label
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:72:13-33
+	android:theme
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:71:13-46
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:70:13-73
+activity#com.example.driver.view.FeedbackActivity
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:74:9-79:20
+	android:label
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:77:13-33
+	android:windowSoftInputMode
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:78:13-64
+	android:theme
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:76:13-46
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:75:13-68
+activity#com.example.driver.view.ParkingRecordActivity
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:80:10-84:20
+	android:label
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:83:13-33
+	android:theme
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:82:13-46
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:81:13-73
+activity#com.example.driver.view.InputLicenseActivity
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:85:10-89:20
+	android:label
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:88:13-33
+	android:theme
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:87:13-46
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:86:13-72
+activity#com.example.driver.view.LicensePlateManagementActivity
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:90:10-94:20
+	android:label
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:93:13-33
+	android:theme
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:92:13-46
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:91:13-82
+activity#com.example.driver.view.RechargeActivity
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:95:10-99:20
+	android:label
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:98:13-31
+	android:theme
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:97:13-46
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:96:13-68
+activity#com.example.driver.view.ParkingCouponActivity
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:100:10-104:20
+	android:label
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:103:13-32
+	android:theme
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:102:13-46
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:101:13-73
+activity#com.example.driver.view.UserInformationActivity
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:105:10-109:20
+	android:label
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:108:13-33
+	android:theme
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:107:13-46
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:106:13-75
+activity#com.example.driver.view.ResetPasswdActivity
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:110:10-114:20
+	android:label
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:113:13-33
+	android:theme
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:112:13-46
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:111:13-71
+activity#com.example.driver.view.SetNickNameActivity
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:115:10-119:20
+	android:label
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:118:13-33
+	android:theme
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:117:13-46
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:116:13-71
+activity#com.example.driver.view.HeadPortraitActivity
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:120:10-124:20
+	android:label
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:123:13-33
+	android:theme
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:122:13-46
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:121:13-72
+activity#com.alipay.sdk.app.H5PayActivity
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:126:12-130:23
+	android:screenOrientation
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:128:41-75
+	android:exported
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:128:16-40
+	android:windowSoftInputMode
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:129:16-70
+	android:configChanges
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:127:16-88
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:126:22-69
+activity#com.alipay.sdk.app.H5AuthActivity
+ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:131:12-135:20
+	android:screenOrientation
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:133:41-75
+	android:exported
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:133:16-40
+	android:windowSoftInputMode
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:134:16-70
+	android:configChanges
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:132:16-77
+	android:name
+		ADDED from /home/gouyifan/StudioProjects/drivers/app/src/main/AndroidManifest.xml:131:22-70

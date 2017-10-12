@@ -1,0 +1,30 @@
+[
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/edittext_background.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/drawable-hdpi/edittext_background.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/button_style_pressed.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/drawable-hdpi/button_style_pressed.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/list_type.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/drawable-hdpi/list_type.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/button_close_route.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/drawable-hdpi/button_close_route.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/button_style_un_pressed.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/drawable-hdpi/button_style_un_pressed.xml"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/ic_background_login_driver.jpg",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/drawable-hdpi/ic_background_login_driver.jpg"
+    },
+    {
+        "merged": "/home/gouyifan/StudioProjects/drivers/app/build/intermediates/res/merged/debug/drawable-hdpi-v4/button_selector.xml",
+        "source": "/home/gouyifan/StudioProjects/drivers/app/src/main/res/drawable-hdpi/button_selector.xml"
+    }
+]

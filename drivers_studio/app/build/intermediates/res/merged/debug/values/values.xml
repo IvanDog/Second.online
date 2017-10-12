@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="blue">#99CCFF</color>
+    <color name="gray">#BFBFBF</color>
+    <color name="green">#99CC66</color>
+    <color name="orange">#E94509</color>
+    <color name="transparent">#00000000</color>
+    <color name="white">#FFFFFF</color>
+    <string name="A">A</string>
+    <string name="Anhui">皖</string>
+    <string name="B">B</string>
+    <string name="Beijing">京</string>
+    <string name="C">C</string>
+    <string name="Chongqing">渝</string>
+    <string name="D">D</string>
+    <string name="E">E</string>
+    <string name="F">F</string>
+    <string name="Fujian">闽</string>
+    <string name="G">G</string>
+    <string name="Gansu">甘</string>
+    <string name="Guangdong">粤</string>
+    <string name="Guangxi">桂</string>
+    <string name="Guizhou">黔</string>
+    <string name="H">H</string>
+    <string name="Hainan">琼</string>
+    <string name="Hebei">冀</string>
+    <string name="Heilongjiang">黑</string>
+    <string name="Henan">豫</string>
+    <string name="Hubei">鄂</string>
+    <string name="Hunan">湘</string>
+    <string name="I">I</string>
+    <string name="J">J</string>
+    <string name="Jiangsu">苏</string>
+    <string name="Jiangxi">赣</string>
+    <string name="Jilin">吉</string>
+    <string name="K">K</string>
+    <string name="L">L</string>
+    <string name="Liaoning">辽</string>
+    <string name="M">M</string>
+    <string name="N">N</string>
+    <string name="Neimenggu">蒙</string>
+    <string name="Ningxia">宁</string>
+    <string name="O">O</string>
+    <string name="P">P</string>
+    <string name="Q">Q</string>
+    <string name="Qinghai">青</string>
+    <string name="R">R</string>
+    <string name="S">S</string>
+    <string name="Shandong">鲁</string>
+    <string name="Shanghai">沪</string>
+    <string name="Shanxi">晋</string>
+    <string name="Shanxixi">陕</string>
+    <string name="Sichuan">川</string>
+    <string name="T">T</string>
+    <string name="Tianjin">津</string>
+    <string name="U">U</string>
+    <string name="V">V</string>
+    <string name="W">W</string>
+    <string name="X">X</string>
+    <string name="Xinjiang">新</string>
+    <string name="Xizang">藏</string>
+    <string name="Y">Y</string>
+    <string name="Yunnan">云</string>
+    <string name="Z">Z</string>
+    <string name="Zhejiang">浙</string>
+    <string name="action_register_short">注册</string>
+    <string name="action_sign_in_register"><b>登录</b> 或注册</string>
+    <string name="action_sign_in_short">登录</string>
+    <string name="agree_clause">我已同意《易录通条款》</string>
+    <string name="app_name">易录通</string>
+    <string name="apply_verification_code">获取验证码</string>
+    <string name="backspace">删</string>
+    <string name="can_not_find_version_name">"找不到版本名"</string>
+    <string name="cancelSetPaymentPasswd">取消</string>
+    <string name="cancelresetpasswd">取消</string>
+    <string name="confirmSetPaymentPasswd">确定</string>
+    <string name="confirmresetpasswd">确定</string>
+    <string name="coupon_expand">选择优惠券</string>
+    <string name="eight">8</string>
+    <string name="error_empty_tele">手机号码为空</string>
+    <string name="error_incorrect_email">邮箱不存在</string>
+    <string name="error_incorrect_password">密码错误</string>
+    <string name="error_incorrect_tele">手机号码不存在</string>
+    <string name="error_invalid_email">非法邮箱地址</string>
+    <string name="error_invalid_password">密码过短</string>
+    <string name="error_invalid_tele_number">请输入正确手机号码</string>
+    <string name="error_passwd_field_required">请输入密码</string>
+    <string name="error_tele_number_field_required">请输入手机号码</string>
+    <string name="finish_register">完成</string>
+    <string name="five">5</string>
+    <string name="four">4</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="ip">10.150.27.33:8080</string>
+    <string name="letter">字母</string>
+    <string name="location">地区</string>
+    <string name="loginPasswdTitle">登录密码:</string>
+    <string name="login_progress_signing_in">登录中…</string>
+    <string name="menu_forgot_password">找回密码</string>
+    <string name="newpasswdtitle">修改密码:</string>
+    <string name="next">下一步</string>
+    <string name="next_register_step">下一步</string>
+    <string name="nine">9</string>
+    <string name="notify_input_tele_number">请输入您的手机号</string>
+    <string name="notify_input_verification_code">请输入验证码</string>
+    <string name="notify_re_input_passwd">确认新密码</string>
+    <string name="notify_set_passwd">新密码</string>
+    <string name="number">数字</string>
+    <string name="oldpasswdtitle">原密码:</string>
+    <string name="one">1</string>
+    <string name="paymentPasswdTitle">支付密码:</string>
+    <string name="prompt_password">密码</string>
+    <string name="prompt_tele">手机号</string>
+    <string name="renewPaymentPasswdTitle">确认密码:</string>
+    <string name="renewpasswdtitle">确认密码:</string>
+    <string name="resetpasswd">重置密码</string>
+    <string name="scan">扫描牌照</string>
+    <string name="setPaymentPasswd">支付密码</string>
+    <string name="seven">7</string>
+    <string name="six">6</string>
+    <string name="three">3</string>
+    <string name="two">2</string>
+    <string name="type_bus">大客车</string>
+    <string name="type_car">小客车</string>
+    <string name="type_truck">货车</string>
+    <string name="zero">0</string>
+    <style name="AppBaseTheme" parent="android:Theme.Holo.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+    <style name="CustomWindowTitleBackground">
+        <item name="android:background">#E94509</item>
+    </style>
+    <style name="LabelTheme" parent="android:Theme.Holo.Light">
+    <item name="android:windowTitleSize">50dp</item>
+    <item name="android:windowTitleBackgroundStyle">@style/CustomWindowTitleBackground</item>
+    <item name="android:actionBarStyle">@style/my_actionbar_style</item>
+    <item name="android:homeAsUpIndicator">@drawable/ic_keyboard_backspace_black_24dp</item> 
+    </style>
+    <style name="LoginFormContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+    </style>
+    <style name="dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item><!--边框-->
+        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">false</item><!--半透明-->
+        <item name="android:windowNoTitle">true</item><!--无标题-->
+        <item name="android:windowBackground">@color/white</item><!--背景透明-->
+        <item name="android:backgroundDimEnabled">false</item><!--模糊-->
+    </style>
+    <style name="my_actionbar_style" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">#E94509</item>
+         <item name="android:displayOptions">showTitle</item>
+    </style>
+</resources>

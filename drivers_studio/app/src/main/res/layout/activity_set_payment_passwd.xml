@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <TextView 
+        android:id="@+id/tv_set_payment_passwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:focusable="true"  
+        android:focusableInTouchMode="true"
+        android:textSize="20sp"
+        android:text="@string/setPaymentPasswd"
+        android:drawablePadding="3dp"
+        android:drawableLeft="@drawable/ic_payment_passwd_48px"/>
+     <View
+         android:id="@+id/view_divider"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/tv_set_payment_passwd"
+        android:background="#FF909090"/>
+     <LinearLayout 
+        android:id="@+id/linear_login_passwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_divider"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:orientation="horizontal" >
+         <TextView 
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:textSize="15sp"
+            android:text="@string/loginPasswdTitle"/>
+         <EditText 
+            android:id="@+id/et_login_passwd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textSize="15sp"
+            android:inputType="textPassword"
+            android:background="@drawable/edittext_background"/>
+     </LinearLayout>
+      <LinearLayout 
+        android:id="@+id/linear_payment_passwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear_login_passwd"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:orientation="horizontal" >
+         <TextView 
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:textSize="15sp"
+            android:text="@string/paymentPasswdTitle"/>
+         <EditText 
+            android:id="@+id/et_payment_passwd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textSize="15sp"
+            android:inputType="textPassword"
+            android:background="@drawable/edittext_background"/>
+     </LinearLayout>
+      <LinearLayout 
+        android:id="@+id/linear_renew_payment_passwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear_payment_passwd"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:orientation="horizontal" >
+         <TextView 
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:textSize="15sp"
+            android:text="@string/renewPaymentPasswdTitle"/>
+         <EditText 
+            android:id="@+id/et_renew_payment_passwd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textSize="15sp"
+            android:inputType="textPassword"
+            android:background="@drawable/edittext_background"/>
+     </LinearLayout>
+     <LinearLayout 
+        android:id="@+id/linear_set_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="30dp"
+        android:gravity="bottom"
+        android:orientation="horizontal" >
+            <Button 
+              android:id="@+id/bt_confirm_set_payment_passwd"
+              android:background = "@drawable/ic_ok"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:gravity="center"
+              android:text="@string/confirmSetPaymentPasswd" />
+            <Button 
+              android:id="@+id/bt_cancel_set_payment_passwd"
+              android:background = "@drawable/ic_ok"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:gravity="center"
+              android:text="@string/cancelSetPaymentPasswd" />
+     </LinearLayout>
+</RelativeLayout>

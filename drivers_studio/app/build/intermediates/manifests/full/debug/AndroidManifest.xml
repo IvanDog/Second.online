@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.driver"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!-- Mob短信验证需要的权限 -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_icon"
+        android:label="易录通"
+        android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="6d4246f56840ac7630ac3f2c3de51c81" />
+        <!-- 声明定位service -->
+        <service android:name="com.amap.api.location.APSService" />
+
+        <activity
+            android:name="com.example.driver.view.LoginActivity"
+            android:label="易录通"
+            android:theme="@style/LabelTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.driver.view.MainActivity"
+            android:label="做最贴心的停车引导者"
+            android:theme="@style/LabelTheme" >
+        </activity>
+        <activity
+            android:name="com.example.driver.view.ParkingInformationActivity"
+            android:label="停车信息"
+            android:theme="@style/LabelTheme" >
+        </activity>
+        <activity
+            android:name="com.example.driver.view.PaymentActivity"
+            android:label="收费确认"
+            android:theme="@style/LabelTheme" >
+        </activity>
+        <activity
+            android:name="com.example.driver.view.PaymentSuccessActivity"
+            android:label="支付成功"
+            android:theme="@style/LabelTheme" >
+        </activity>
+        <activity
+            android:name="com.example.driver.view.MessageCenterActivity"
+            android:label="消息中心"
+            android:theme="@style/LabelTheme" >
+        </activity>
+        <activity
+            android:name="com.example.driver.view.FeedbackActivity"
+            android:label="意见反馈"
+            android:theme="@style/LabelTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden" >
+        </activity>
+        <activity
+            android:name="com.example.driver.view.ParkingRecordActivity"
+            android:label="停车记录"
+            android:theme="@style/LabelTheme" >
+        </activity>
+        <activity
+            android:name="com.example.driver.view.InputLicenseActivity"
+            android:label="绑定牌照"
+            android:theme="@style/LabelTheme" >
+        </activity>
+        <activity
+            android:name="com.example.driver.view.LicensePlateManagementActivity"
+            android:label="车辆管理"
+            android:theme="@style/LabelTheme" >
+        </activity>
+        <activity
+            android:name="com.example.driver.view.RechargeActivity"
+            android:label="充值"
+            android:theme="@style/LabelTheme" >
+        </activity>
+        <activity
+            android:name="com.example.driver.view.ParkingCouponActivity"
+            android:label="优惠券"
+            android:theme="@style/LabelTheme" >
+        </activity>
+        <activity
+            android:name="com.example.driver.view.UserInformationActivity"
+            android:label="用户信息"
+            android:theme="@style/LabelTheme" >
+        </activity>
+        <activity
+            android:name="com.example.driver.view.ResetPasswdActivity"
+            android:label="重置密码"
+            android:theme="@style/LabelTheme" >
+        </activity>
+        <activity
+            android:name="com.example.driver.view.SetPaymentPasswdActivity"
+            android:label="支付密码"
+            android:theme="@style/LabelTheme" >
+        </activity>
+        <activity
+            android:name="com.example.driver.view.SetNickNameActivity"
+            android:label="设置昵称"
+            android:theme="@style/LabelTheme" >
+        </activity>
+        <activity
+            android:name="com.example.driver.view.HeadPortraitActivity"
+            android:label="设置头像"
+            android:theme="@style/LabelTheme" >
+        </activity>
+        <!-- alipay sdk begin -->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <!-- alipay sdk end -->
+    </application>
+
+</manifest>

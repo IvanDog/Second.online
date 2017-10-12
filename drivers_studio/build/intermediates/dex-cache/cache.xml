@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/home/gouyifan/StudioProjects/drivers/app/libs/AMap2DMap_4.2.0_AMapSearch_5.0.0_AMapLocation_3.4.0_20170427.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="19.1.0"
+        sha1="8f9ae59f123241ab1147d1ab4802d67aea7291ee">
+        <dex dex="/home/gouyifan/StudioProjects/drivers/app/build/intermediates/pre-dexed/debug/AMap2DMap_4.2.0_AMapSearch_5.0.0_AMapLocation_3.4.0_20170427_4f9ad66e9bcca51fe84563e52982e87e20802387.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/gouyifan/StudioProjects/drivers/app/libs/MobTools-2017.0321.1624.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="19.1.0"
+        sha1="242b3a8f9b6b47d2ea8cf932cd978a5b6651d22a">
+        <dex dex="/home/gouyifan/StudioProjects/drivers/app/build/intermediates/pre-dexed/debug/MobTools-2017.0321.1624_156ae6cec0e59eab9e0714482f787f4c8f18a308.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/gouyifan/StudioProjects/drivers/app/libs/jackson-module-jaxb-annotations-2.5.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="19.1.0"
+        sha1="92209d3d0dba86b68d0e2dd6ae81f1f063d60570">
+        <dex dex="/home/gouyifan/StudioProjects/drivers/app/build/intermediates/pre-dexed/debug/jackson-module-jaxb-annotations-2.5.0_62c91a58fe9ce61d2a3804b3d8f606fc43525d99.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/gouyifan/StudioProjects/drivers/app/libs/jackson-annotations-2.5.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="19.1.0"
+        sha1="a2a55a3375bc1cef830ca426d68d2ea22961190e">
+        <dex dex="/home/gouyifan/StudioProjects/drivers/app/build/intermediates/pre-dexed/debug/jackson-annotations-2.5.0_112151cc89abdab2a839aef73408919dd747e4cf.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/gouyifan/StudioProjects/drivers/app/libs/jackson-core-2.5.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="19.1.0"
+        sha1="b2ece1bd57ac7b4c315b7505b65ac79cb1da4270">
+        <dex dex="/home/gouyifan/StudioProjects/drivers/app/build/intermediates/pre-dexed/debug/jackson-core-2.5.0_951e506d402d311d1d1b9558eb307787b4f0c034.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/gouyifan/StudioProjects/drivers/app/libs/SMSSDK-2.1.4.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="19.1.0"
+        sha1="29de8afd6edd30f246bb7de991037875d0787ec6">
+        <dex dex="/home/gouyifan/StudioProjects/drivers/app/build/intermediates/pre-dexed/debug/SMSSDK-2.1.4_0da9388d852e31b19175411b755597b746df9be1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/gouyifan/StudioProjects/drivers/app/libs/alipaySdk-20170725.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="19.1.0"
+        sha1="6c36921ced2693fec6cb2c6161eedd295222daaa">
+        <dex dex="/home/gouyifan/StudioProjects/drivers/app/build/intermediates/pre-dexed/debug/alipaySdk-20170725_28b2653fcadf296158e820c0fad7d6f126f07148.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/gouyifan/StudioProjects/drivers/app/libs/jackson-databind-2.5.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="19.1.0"
+        sha1="489b7552dd3322b63f694122d16ce62c21c303b5">
+        <dex dex="/home/gouyifan/StudioProjects/drivers/app/build/intermediates/pre-dexed/debug/jackson-databind-2.5.0_df37496ddff17691f03c4d030264fe14d462e247.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/gouyifan/StudioProjects/drivers/app/libs/android-support-v13.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="19.1.0"
+        sha1="5b3db0befb5f9a8c310ca661ea2f67da12871fa2">
+        <dex dex="/home/gouyifan/StudioProjects/drivers/app/build/intermediates/pre-dexed/debug/android-support-v13_d1ea8f8fc50ef9998e7bc75471feb4e7e444a4d1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/gouyifan/StudioProjects/drivers/app/libs/MobCommons-2017.0321.1624.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="19.1.0"
+        sha1="d49d36ec407502d69c217d81a87283eba9c746b2">
+        <dex dex="/home/gouyifan/StudioProjects/drivers/app/build/intermediates/pre-dexed/debug/MobCommons-2017.0321.1624_76b62820ddc8d3478e2f283c21106a69f983b813.jar" />
+    </item>
+
+</items>
