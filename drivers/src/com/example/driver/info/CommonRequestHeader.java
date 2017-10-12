@@ -47,7 +47,9 @@ import org.json.JSONObject;
     	public static final int REQUEST_OWNER_QUERY_LICENSE_CODE = 220;
     	public static final int REQUEST_OWNER_DELETE_LICENSE_CODE = 221;
     	public static final int REQUEST_OWNER_BIND_LICENSE = 222;
-    	public static final int REQUEST_QUERY_PARKING_RECORD_CODE = 223;
+    	public static final int REQUEST_OWNER_QUERY_PARKING_RECORD_CODE = 223;
+		public static final int REQUEST_OWNER_SET_PAYMENT_PASSWORD_CODE = 224;
+		public static final int REQUEST_OWNER_QUERY_PAYMENT_PASSWORD_CODE = 225;
         /** 
          * 请求码
          */  

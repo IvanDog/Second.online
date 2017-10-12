@@ -59,6 +59,7 @@ public class SetNickNameActivity extends Activity {
 	private EditText mNickNameET;
 	private Button mConfirmBT;
 	private String mTeleNumber;
+	private String mNickName;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,9 +69,13 @@ public class SetNickNameActivity extends Activity {
         Bundle bundle=intent.getExtras();
         if(bundle!=null){
         	mTeleNumber = bundle.getString("telenumber");
+			mNickName = bundle.getString("nickname");
         }
 		setContentView(R.layout.activity_set_nickname);
 		mNickNameET=(EditText)findViewById(R.id.et_set_nickname);
+		if(mNickName!=null){
+			mNickNameET.setText(mNickName);
+		}
 		mConfirmBT=(Button)findViewById(R.id.bt_confirm_nickname);
 		mConfirmBT.setOnClickListener(new OnClickListener(){
 			@Override

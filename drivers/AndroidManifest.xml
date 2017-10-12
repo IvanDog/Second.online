@@ -112,6 +112,11 @@
             android:theme="@style/LabelTheme"
             android:label="重置密码">
         </activity>
+        <activity
+            android:name="com.example.driver.view.SetPaymentPasswdActivity"
+            android:theme="@style/LabelTheme"
+            android:label="支付密码">
+        </activity>
          <activity
             android:name="com.example.driver.view.SetNickNameActivity"
             android:theme="@style/LabelTheme"

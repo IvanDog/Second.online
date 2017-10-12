@@ -3,6 +3,7 @@ package com.example.driver.info;
 public class BindLicenseInfo {
 	private CommonRequestHeader header;
 	private String licensePlateBind;
+	private String carType;
 	
 	public CommonRequestHeader getheader() {
 		return header;
@@ -15,5 +16,11 @@ public class BindLicenseInfo {
 	}
 	public void setLicensePlateBind(String licensePlateBind){
 		this.licensePlateBind = licensePlateBind;
+	}
+	public String getCarType() {
+		return carType;
+	}
+	public void setCarType(String carType) {
+		this.carType = carType;
 	}
 }

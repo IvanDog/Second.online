@@ -20,32 +20,27 @@ import org.json.JSONObject;
 import com.alipay.sdk.app.EnvUtils;
 import com.alipay.sdk.app.PayTask;
 import com.example.driver.R;
-import com.example.driver.R.id;
-import com.example.driver.R.layout;
-import com.example.driver.R.string;
 import com.example.driver.common.JacksonJsonUtil;
 import com.example.driver.info.CommonRequestHeader;
 import com.example.driver.info.CommonResponse;
 import com.example.driver.info.PaymentInfo;
 import com.example.driver.info.SettleAccountInfo;
+import com.example.driver.info.TokenInfo;
 import com.example.driver.view.payment.AlipayResult;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.net.ParseException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -67,7 +62,10 @@ public class PaymentActivity extends Activity {
 	private static final int PAYMENT_TYPE_ALIPAY=202;
 	private static final int PAYMENT_TYPE_WECHATPAY=203;
 	private static final int EVENT_DISPLAY_INFORMATION = 301;
+	private static final int EVENT_SET_PAYMENT_PASSWD = 302;
+	private static final int EVENT_DISPLAY_PAYMENT_DIALOG = 303;
 	private static final int COUPON_CODE = 401;
+	private static final int PAYMENT_PASSWD_CODE = 402;
 	private static final int SDK_PAY_FLAG = 501;
 	private static final String LOG_TAG = "PaymentActivity";
     private static final String FILE_NAME_TOKEN = "save_pref_token";
@@ -107,6 +105,7 @@ public class PaymentActivity extends Activity {
 	private AlertDialog mDialog;
 	private UserQueryTask mQueryTask = null;
 	private UserPaymentTask mPaymentTask = null;
+	private UserQueryPaymentPasswdTask mQueryPaymentPasswdTask = null;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -163,7 +162,9 @@ public class PaymentActivity extends Activity {
 			@Override
 			public void onClick(View v){
 				if(mPaymentType==PAYMENT_TYPE_ACCOUNT){
-					showAccountPaymentDialog();
+					//showAccountPaymentDialog();
+					mQueryPaymentPasswdTask = new UserQueryPaymentPasswdTask();
+					mQueryPaymentPasswdTask.execute((Void) null);
 				}else if(mPaymentType==PAYMENT_TYPE_ALIPAY){
 					makeMobilePay(PAYMENT_TYPE_ALIPAY);
 				}else if(mPaymentType==PAYMENT_TYPE_WECHATPAY){
@@ -194,6 +195,16 @@ public class PaymentActivity extends Activity {
 				    mExpenseDiscountTV.setText("停车券抵扣: " + mDiscount + "元" );
 				    mExpenseFinalTV.setText("支付金额: " + mExpenseFinal + "元");
             	    break;
+				case EVENT_SET_PAYMENT_PASSWD:
+					Intent intent = new Intent(PaymentActivity.this, SetPaymentPasswdActivity.class);
+					Bundle bundle = new Bundle();
+					bundle.putString("telenumber", mTeleNumber);
+					intent.putExtras(bundle);
+					startActivityForResult(intent,PAYMENT_PASSWD_CODE);
+					break;
+				case EVENT_DISPLAY_PAYMENT_DIALOG:
+					showAccountPaymentDialog();
+					break;
                 case EVENT_PASSWD_EMPTY:
                 	Toast.makeText(getApplicationContext(), "密码为空", Toast.LENGTH_SHORT).show();
                 	break;
@@ -276,7 +287,7 @@ public class PaymentActivity extends Activity {
 			mPaymentTask = new UserPaymentTask(null,"微信支付");
 			mPaymentTask.execute((Void) null);
     	}else if(mPaymentType == PAYMENT_TYPE_ALIPAY){
-			mPaymentTask = new UserPaymentTask(null,"支付宝支付");
+			mPaymentTask = new UserPaymentTask(null,"支付宝付");
 			mPaymentTask.execute((Void) null);
     	}
     }
@@ -499,7 +510,7 @@ public class PaymentActivity extends Activity {
     }
 	
     /**
-	 * 查询j结算信息Task
+	 * 查询结算信息Task
 	 * 
 	 */
 	public class UserQueryTask extends AsyncTask<Void, Void, Boolean> {
@@ -531,8 +542,95 @@ public class PaymentActivity extends Activity {
 		}
 		
 	}
-	
-	
+
+	/**
+	 * Add for request query whether the payment password has been set
+	 * */
+	public boolean clientQueryPaymentPasswd() throws ParseException, IOException, JSONException{
+		Log.e(LOG_TAG,"clientQueryPaymentPasswd->enter clientQueryPaymentPasswd");
+		HttpClient httpClient = new DefaultHttpClient();
+		httpClient.getParams().setIntParameter(
+				HttpConnectionParams.SO_TIMEOUT, 5000); // 请求超时设置,"0"代表永不超时
+		httpClient.getParams().setIntParameter(
+				HttpConnectionParams.CONNECTION_TIMEOUT, 5000);// 连接超时设置
+		String strurl = "http://" + this.getString(R.string.ip) + "/itspark/owner/payment/queryPassword";
+		HttpPost request = new HttpPost(strurl);
+		request.addHeader("Accept","application/json");
+		request.setHeader("Content-Type", "application/json; charset=utf-8");
+		TokenInfo info = new TokenInfo();
+		CommonRequestHeader header = new CommonRequestHeader();
+		header.addRequestHeader(CommonRequestHeader.REQUEST_OWNER_QUERY_PAYMENT_PASSWORD_CODE, mTeleNumber, readToken());
+		info.setHeader(header);
+		StringEntity se = new StringEntity( JacksonJsonUtil.beanToJson(info), "UTF-8");
+		Log.e(LOG_TAG,"clientQueryPaymentPasswd-> param is " + JacksonJsonUtil.beanToJson(info));
+		request.setEntity(se);//发送数据
+		try{
+			HttpResponse httpResponse = httpClient.execute(request);//获得响应
+			int code = httpResponse.getStatusLine().getStatusCode();
+			if(code==HttpStatus.SC_OK){
+				String strResult = EntityUtils.toString(httpResponse.getEntity());
+				Log.e(LOG_TAG,"clientQueryPaymentPasswd->strResult is " + strResult);
+				CommonResponse res = new CommonResponse(strResult);
+				toastWrapper(res.getResMsg());
+				if(res.getResCode().equals("100")){
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				Log.e(LOG_TAG, "clientQueryPaymentPasswd->error code is " + Integer.toString(code));
+				return false;
+			}
+		}catch(InterruptedIOException e){
+			if(e instanceof ConnectTimeoutException){
+				toastWrapper("连接超时");
+			}else if(e instanceof InterruptedIOException){
+				toastWrapper("请求超时");
+			}
+		}finally{
+			httpClient.getConnectionManager().shutdown();
+		}
+		return false;
+	}
+
+	/**
+	 * 查询支付密码Task
+	 *
+	 */
+	public class UserQueryPaymentPasswdTask extends AsyncTask<Void, Void, Boolean> {
+		@Override
+		protected Boolean doInBackground(Void... params) {
+			try{
+				Log.e(LOG_TAG,"UserQueryPaymentPasswdTask->doInBackground");
+				return clientQueryPaymentPasswd();
+			}catch(Exception e){
+				Log.e(LOG_TAG,"UserQueryPaymentPasswdTask-> exists exception ");
+				e.printStackTrace();
+			}
+			return false;
+		}
+
+		@Override
+		protected void onPostExecute(final Boolean success) {
+			mQueryPaymentPasswdTask = null;
+			if(success){
+				Message msg = new Message();
+				msg.what=EVENT_DISPLAY_PAYMENT_DIALOG;
+				mHandler.sendMessage(msg);
+			}else{
+				Message msg = new Message();
+				msg.what=EVENT_SET_PAYMENT_PASSWD;
+				mHandler.sendMessage(msg);
+			}
+		}
+
+		@Override
+		protected void onCancelled() {
+			mQueryTask = null;
+		}
+
+	}
+
     @Override  
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {  
         switch (requestCode) {  
@@ -541,7 +639,9 @@ public class PaymentActivity extends Activity {
         	Log.e(LOG_TAG,"onActivityResult is " + mCouponID);
     		mQueryTask = new UserQueryTask();
     		mQueryTask.execute((Void) null);
-            break;   
+            break;
+		case PAYMENT_PASSWD_CODE:
+			break;
         default:  
             break;  
         }  
@@ -594,7 +694,7 @@ public class PaymentActivity extends Activity {
 				return 1;
 			}else if("微信支付".equals(paymentPattern)){
 				return 2;
-			}else if("支付宝支付".equals(paymentPattern)){
+			}else if("支付宝付".equals(paymentPattern)){
 				return 3;
 			}else if("微信扫码支付".equals(paymentPattern)){
 				return 4;

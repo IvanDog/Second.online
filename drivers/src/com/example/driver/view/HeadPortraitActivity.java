@@ -40,6 +40,9 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 import android.net.ParseException;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -90,13 +93,15 @@ public class HeadPortraitActivity extends Activity {
 			mUserDbAdapter.open();
 	        setContentView(R.layout.activity_set_head_portrait);
 	        Intent intent = getIntent();
-	        Bundle bundle=intent.getExtras();
-	        if(bundle!=null){
+	        Bundle bundle = intent.getExtras();
+			byte [] headportrait = intent.getByteArrayExtra("headportrait");
+			if(bundle!=null){
 	        	mTeleNumber = bundle.getString("telenumber");
 	        }
-	        headImage = (ImageView) findViewById(R.id.iv_user_head_portrait);
-	        if(getHeadPortrait()!=null){
-	        	headImage.setImageBitmap(getHeadPortrait());
+	        headImage = (ImageView)findViewById(R.id.iv_user_head_portrait);
+	        if(headportrait!=null){
+				Log.e(LOG_TAG,"headportrait is not null");
+	        	headImage.setImageDrawable(bytes2Drawable(Base64.decode(headportrait, Base64.NO_WRAP)));
 	        }
 	        localBT = (Button) findViewById(R.id.bt_local_photo);
 	        localBT.setOnClickListener(new View.OnClickListener() {
@@ -287,8 +292,21 @@ public class HeadPortraitActivity extends Activity {
 		    	return null;
 		    }
 	    }
-	    
-	    /** 
+
+	    // byte[]转换成Drawable
+	    public Drawable bytes2Drawable(byte[] b) {
+		    Bitmap bitmap = this.bytes2Bitmap(b);
+		    return this.bitmap2Drawable(bitmap);
+	    }
+
+	    // Bitmap转换成Drawable
+	    public Drawable bitmap2Drawable(Bitmap bitmap) {
+		    BitmapDrawable bd = new BitmapDrawable(bitmap);
+		    Drawable d = (Drawable) bd;
+		    return d;
+	    }
+
+	    /**
 	     * 通过Base32将Bitmap转换成Base64字符串 
 	     * @param bit 
 	     * @return 

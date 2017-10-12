@@ -3,13 +3,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <ImageView
-        android:id="@+id/iv_user_head_portrait"
-        android:src="@drawable/ic_user_center_2"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_gravity="center"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:orientation="vertical" >
+        <ImageView
+            android:id="@+id/iv_user_head_portrait"
+            android:src="@drawable/ic_user_center_2"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:padding="20dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_gravity="center"
         android:layout_width="match_parent"

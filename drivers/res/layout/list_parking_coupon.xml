@@ -7,8 +7,8 @@ android:background="#BFBFBF"
 android:orientation="vertical" >
  <com.example.driver.view.CouponsView
      android:id="@+id/cv_coupon"
-    android:orientation="horizontal" 
-    android:background="#BFBFBF"
+    android:orientation="horizontal"
+    android:background="@drawable/button_selector"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants">

@@ -17,7 +17,7 @@
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:gravity="center_vertical|center"
             android:text="用户中心"
             android:clickable="true"

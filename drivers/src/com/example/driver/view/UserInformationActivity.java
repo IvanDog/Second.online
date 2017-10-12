@@ -62,14 +62,16 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class UserInformationActivity extends Activity {
-	private UserDbAdapter mUserDbAdapter;
 	private UserInformationListAdapter mUserInformationListAdapter;
 	private ListView mListView;
 	private String mTeleNumber;
 	private Context mContext;
 	private String mNickName = null;
+	private byte[] mHeadPortraitByteArray = null;
 	private Drawable mHeadPortrait = null;
 	private final static int EVENT_UPDATE_DISPLAY = 101;
+	private final static int MODIFY_NICKNAME = 201;
+	private final static int MODIFY_HEADPORTRAIT = 202;
     private static final String FILE_NAME_TOKEN = "save_pref_token";
     private static final String LOG_TAG = "UserInformationActivity";
     private UserInformationDisplayTask mDisplayInformationTask;
@@ -78,8 +80,6 @@ public class UserInformationActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user_information);
-		mUserDbAdapter = new UserDbAdapter(this);
-		mUserDbAdapter.open();
 		mContext = this;
         Intent intent = getIntent();
         Bundle bundle=intent.getExtras();
@@ -98,20 +98,30 @@ public class UserInformationActivity extends Activity {
                  	Bundle bundle = new Bundle();
                  	bundle.putString("telenumber", mTeleNumber);
                  	intent.putExtras(bundle);
-                 	startActivity(intent);
+					intent.putExtra("headportrait",mHeadPortraitByteArray);
+					startActivityForResult(intent,MODIFY_HEADPORTRAIT);
+                 	//startActivity(intent);
                  }else if(userInformation.equals("昵称: ")){
                  	Intent intent = new Intent(UserInformationActivity.this,SetNickNameActivity.class);
                  	Bundle bundle = new Bundle();
                  	bundle.putString("telenumber", mTeleNumber);
+					bundle.putString("nickname",mNickName);
                  	intent.putExtras(bundle);
-                 	startActivity(intent);
+					startActivityForResult(intent,MODIFY_NICKNAME);
+                 	//startActivity(intent);
                  }else if(userInformation.equals("重置密码: ")){
                 	Intent intent = new Intent(UserInformationActivity.this,ResetPasswdActivity.class);
                 	Bundle bundle = new Bundle();
                 	bundle.putString("telenumber", mTeleNumber);
                 	intent.putExtras(bundle);
                 	startActivity(intent);
-                 }
+                 }else if(userInformation.equals("支付密码: ")){
+					Intent intent = new Intent(UserInformationActivity.this,SetPaymentPasswdActivity.class);
+					Bundle bundle = new Bundle();
+					bundle.putString("telenumber", mTeleNumber);
+					intent.putExtras(bundle);
+					startActivity(intent);
+				}
             }
         });
         mDisplayInformationTask = new UserInformationDisplayTask();
@@ -125,7 +135,7 @@ public class UserInformationActivity extends Activity {
 	
     public List<Map<String, Object>> getUserInformationData(){  
         List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();  
-        for (int i = 1; i <= 4; i++) {  
+        for (int i = 1; i <= 5; i++) {
             Map<String, Object> map=new HashMap<String, Object>();  
             if(i==1){
                 map.put("userInformation",  "头像: ");
@@ -143,44 +153,32 @@ public class UserInformationActivity extends Activity {
             	map.put("userInformation",  "重置密码: ");
             	map.put("userInformationDetail",  "**********");
             	map.put("userInformationSpreadImage",  drawable.ic_chevron_right_black_24dp);
-            }
+            }else if(i==5){
+				map.put("userInformation",  "支付密码: ");
+				map.put("userInformationDetail",  "**********");
+				map.put("userInformationSpreadImage",  drawable.ic_chevron_right_black_24dp);
+			}
             list.add(map);  
         }  
         return list;  
       }
-    
-    public String getNickName(){
-		mUserDbAdapter.open();
-		Cursor cursor = mUserDbAdapter.getUser(mTeleNumber);
-		try{
-			mNickName = cursor.getString(cursor.getColumnIndex("nickname"));
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally{
-        	if(cursor!=null){
-        		cursor.close();
-            }
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Log.e(LOG_TAG,"onActivityResult is " + requestCode);
+		switch (requestCode) {
+			case MODIFY_HEADPORTRAIT:
+				mDisplayInformationTask = new UserInformationDisplayTask();
+				mDisplayInformationTask.execute((Void) null);
+				break;
+			case MODIFY_NICKNAME:
+				mDisplayInformationTask = new UserInformationDisplayTask();
+				mDisplayInformationTask.execute((Void) null);
+				break;
+			default:
+				break;
 		}
-		return mNickName;
-    }
-    
-    /*public Drawable getHeadPortrait(){
-		mUserDbAdapter.open();
-		Cursor cursor = mUserDbAdapter.getUser(mTeleNumber);
-		try{
-			byte[] headPortraitByteArray = cursor.getBlob(cursor.getColumnIndex("headportrait"));
-			if(headPortraitByteArray!=null){
-				mHeadPortrait=bytes2Drawable(headPortraitByteArray);
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}finally{
-        	if(cursor!=null){
-        		cursor.close();
-            }
-		}
-		return mHeadPortrait;
-    }*/
+	}
     
     // byte[]转换成Drawable  
     public Drawable bytes2Drawable(byte[] b) {  
@@ -202,35 +200,7 @@ public class UserInformationActivity extends Activity {
         Drawable d = (Drawable) bd;  
         return d;  
     } 
-    
-    /*public class UpdateDisplayThread extends Thread{
-    	@Override
-    	public void run(){
-    		do{
-    			Cursor cursor = null;
-        		try{
-            		cursor = mUserDbAdapter.getUser(mTeleNumber);
-            		byte[] headPortraitByteArray = cursor.getBlob(cursor.getColumnIndex("headportrait"));
-        			if(headPortraitByteArray!=null){
-        				mHeadPortrait=bytes2Drawable(cursor.getBlob(cursor.getColumnIndex("headportrait")));
-        			}
-            		if((mNickName!=cursor.getString(cursor.getColumnIndex("nickname")))){
-            			mNickName = cursor.getString(cursor.getColumnIndex("nickname"));
-            		}
-    			    Message msg = new Message();
-    				msg.what=EVENT_UPDATE_DISPLAY;
-    				mHandler.sendMessage(msg);
-        			Thread.sleep(1000);
-        		}catch(Exception e){
-        			e.printStackTrace();
-        		}finally{
-                	if(cursor!=null){
-                		cursor.close();
-                    }
-        		}
-    		}while(true);
-    	}
-    }*/
+
     
 	private Handler mHandler = new Handler() {
         @Override
@@ -308,18 +278,18 @@ public class UserInformationActivity extends Activity {
 	 				  toastWrapper(res.getResMsg());
 	 				  if(res.getResCode().equals("100")){
 	         			mNickName = (String)res.getPropertyMap().get("nickName");
-	         			byte[] headPortraitByteArray = new byte[1024];
-	         			headPortraitByteArray = ((String)res.getPropertyMap().get("headportrait")).getBytes();
-	         			if(headPortraitByteArray!=null){
-	         				mHeadPortrait=bytes2Drawable(Base64.decode(headPortraitByteArray, Base64.NO_WRAP));
+	         			mHeadPortraitByteArray = new byte[1024];
+	         			mHeadPortraitByteArray = ((String)res.getPropertyMap().get("headportrait")).getBytes();
+	         			if(mHeadPortraitByteArray!=null){
+	         				mHeadPortrait=bytes2Drawable(Base64.decode(mHeadPortraitByteArray, Base64.NO_WRAP));
 	         			}
 	 					  return true;
 	 				  }else{
 	 			          return false;
 	 				  }  
 	 			}else{
-	 					  Log.e(LOG_TAG, "clientQueryUser->error code is " + Integer.toString(code));
-	 					  return false;
+					  Log.e(LOG_TAG, "clientQueryUser->error code is " + Integer.toString(code));
+					  return false;
 	 		    }
 	 		  }catch(InterruptedIOException e){
 	 			  if(e instanceof ConnectTimeoutException){

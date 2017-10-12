@@ -74,7 +74,11 @@
     <string name="Qinghai">青</string>
     <string name="Ningxia">宁</string>
     <string name="Xinjiang">新</string>
-    
+
+    <string name="type_car">小客车</string>
+    <string name="type_bus">大客车</string>
+    <string name="type_truck">货车</string>
+
     <string name="scan">扫描牌照</string>
     <string name="next">下一步</string>
     

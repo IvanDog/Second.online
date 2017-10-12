@@ -88,11 +88,11 @@ public class ParkingCouponAdapter extends BaseAdapter {
 			if(vh.couponView.isSelected()){
 				vh.couponView.setSelected(false);
 				((ParkingCouponActivity)context).setCouponID(null);
-				vh.couponView.setBackgroundResource(R.color.gray);
+				//vh.couponView.setBackgroundResource(R.color.gray);
 			}else{
 				vh.couponView.setSelected(true);
 				((ParkingCouponActivity)context).setCouponID((String)data.get(position).get("couponID"));
-				vh.couponView.setBackgroundResource(R.color.orange);
+				//vh.couponView.setBackgroundResource(R.color.orange);
 			}
 			/*if (vh.enterCouponDetailIV.isSelected()) {
 		    	    vh.enterCouponDetailIV.setSelected(false);
@@ -105,7 +105,7 @@ public class ParkingCouponAdapter extends BaseAdapter {
                     vh.couponHideDetail.setVisibility(View.VISIBLE);
              }*/
         } else {
-        	vh.couponView.setBackgroundColor(color.gray);
+        	//vh.couponView.setBackgroundColor(color.gray);
             /*vh.couponHideDetail.setVisibility(View.GONE);
             vh.enterCouponDetailIV.setSelected(false);
         	vh.enterCouponDetailIV.setImageResource(R.drawable.ic_chevron_right_black_24dp);*/

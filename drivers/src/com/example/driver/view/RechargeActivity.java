@@ -19,9 +19,6 @@ import org.json.JSONObject;
 import com.alipay.sdk.app.EnvUtils;
 import com.alipay.sdk.app.PayTask;
 import com.example.driver.R;
-import com.example.driver.R.id;
-import com.example.driver.R.layout;
-import com.example.driver.R.string;
 import com.example.driver.common.JacksonJsonUtil;
 import com.example.driver.common.UserDbAdapter;
 import com.example.driver.info.CommonRequestHeader;
@@ -480,15 +477,15 @@ public class RechargeActivity extends Activity {
 				return 1;
 			}else if("微信支付".equals(paymentPattern)){
 				return 2;
-			}else if("支付宝支付".equals(paymentPattern)){
+			}else if("支付宝付".equals(paymentPattern)){
 				return 3;
 			}else if("微信扫码支付".equals(paymentPattern)){
 				return 4;
-			}else if("支付宝扫码支付".equals(paymentPattern)){
+			}else if("支付宝扫码付".equals(paymentPattern)){
 				return 5;
 			}else if("微信刷卡支付".equals(paymentPattern)){
 				return 6;
-			}else if("支付宝条码支付".equals(paymentPattern)){
+			}else if("支付宝条码付".equals(paymentPattern)){
 				return 7;
 			}else if("余额支付".equals(paymentPattern)){
 				return 8;

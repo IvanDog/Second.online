@@ -1,0 +1,8 @@
+<resources>
+    <string name="setPaymentPasswd">支付密码</string>
+    <string name="loginPasswdTitle">登录密码:</string>
+    <string name="paymentPasswdTitle">支付密码:</string>
+    <string name="renewPaymentPasswdTitle">确认密码:</string>
+    <string name="confirmSetPaymentPasswd">确定</string>
+    <string name="cancelSetPaymentPasswd">取消</string>
+</resources>
