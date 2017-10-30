@@ -429,23 +429,23 @@ public final class R {
         public static final int tv_parking_type_network_or_venue_dialog=0x7f0800af;
         public static final int tv_parking_type_network_or_venue_list=0x7f080147;
         public static final int tv_parking_type_parking_detail=0x7f080045;
-        public static final int tv_parking_type_wechat_list=0x7f08014b;
         public static final int tv_parkingname=0x7f080134;
         public static final int tv_parkingname_hide=0x7f08013d;
         public static final int tv_parkingnumber=0x7f080137;
-        public static final int tv_payemnt_type_ali_list=0x7f08014a;
         public static final int tv_payemnt_type_cash_dialog=0x7f0800b0;
-        public static final int tv_payemnt_type_cash_list=0x7f080148;
-        public static final int tv_payemnt_type_pos_list=0x7f080149;
         public static final int tv_payment_bill_record=0x7f080152;
         public static final int tv_payment_information_title_leaving=0x7f08004d;
         public static final int tv_payment_pattern_record=0x7f080151;
         public static final int tv_payment_success_notify=0x7f080061;
         public static final int tv_payment_type_ali_dialog=0x7f0800b3;
+        public static final int tv_payment_type_ali_list=0x7f08014a;
         public static final int tv_payment_type_cash_dialog=0x7f0800b1;
+        public static final int tv_payment_type_cash_list=0x7f080148;
         public static final int tv_payment_type_pos_dialog=0x7f0800b2;
+        public static final int tv_payment_type_pos_list=0x7f080149;
         public static final int tv_payment_type_title_leaving=0x7f080058;
         public static final int tv_payment_type_wechat_dialog=0x7f0800b4;
+        public static final int tv_payment_type_wechat_list=0x7f08014b;
         public static final int tv_poi_name=0x7f0800a7;
         public static final int tv_poi_name_dialog=0x7f0800a4;
         public static final int tv_record_current=0x7f08006f;
@@ -633,21 +633,12 @@ public final class R {
     public static final class style {
         /**  API 11 theme customizations can go here. 
  API 14 theme customizations can go here. 
-
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        
          */
         public static final int AppBaseTheme=0x7f040001;
-        /**  All customizations that are NOT specific to a particular API-level can go here. 
-         */
         public static final int AppTheme=0x7f040002;
         public static final int CustomWindowTitleBackground=0x7f040003;
         public static final int LabelTheme=0x7f040004;
         public static final int LoginFormContainer=0x7f040000;
-        /** 模糊
-         */
         public static final int dialog=0x7f040005;
         public static final int my_actionbar_style=0x7f040006;
     }

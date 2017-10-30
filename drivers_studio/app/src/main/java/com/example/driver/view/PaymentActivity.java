@@ -143,6 +143,7 @@ public class PaymentActivity extends Activity {
 		mAccountPaymentTypeRB=(RadioButton)findViewById(R.id.rb_account_payment_leaving);
 		mAlipayPaymentTypeRB=(RadioButton)findViewById(R.id.rb_alipay_payment_leaving);
 		mWechatpayPaymentRB=(RadioButton)findViewById(R.id.rb_wechatpay_payment_leaving);
+		mWechatpayPaymentRB.setEnabled(false);
 		mPaymentTypeRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() { 
 			@Override 
 			public void onCheckedChanged(RadioGroup group, int checkedId){
@@ -194,6 +195,10 @@ public class PaymentActivity extends Activity {
         		    mExpenseTV.setText("停车费用: " +mExpense + "元");
 				    mExpenseDiscountTV.setText("停车券抵扣: " + mDiscount + "元" );
 				    mExpenseFinalTV.setText("支付金额: " + mExpenseFinal + "元");
+					if("0.0".equals(mExpenseFinal)){
+						mAlipayPaymentTypeRB.setEnabled(false);
+						mWechatpayPaymentRB.setEnabled(false);
+					}
             	    break;
 				case EVENT_SET_PAYMENT_PASSWD:
 					Intent intent = new Intent(PaymentActivity.this, SetPaymentPasswdActivity.class);
@@ -710,8 +715,10 @@ public class PaymentActivity extends Activity {
 				return 9;
 			}else if("未付".equals(paymentPattern)){
 				return 0;
-			}else{
-                 return -1;      
+			}else if("其他支付".equals(paymentPattern)){
+			    return 10;
+		    }else{
+			    return -1;
             }
 		}
 	

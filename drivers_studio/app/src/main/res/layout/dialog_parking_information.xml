@@ -42,8 +42,7 @@
              android:paddingRight="3dp"
              android:drawableLeft="@drawable/ic_parking_idle_24px"
              android:textSize="12sp"
-             android:textColor="#E94509"
-             android:text="空闲: 20"  />
+             android:textColor="#E94509" />
             <TextView
              android:id="@+id/tv_parking_fee_dialog"
              android:layout_height="wrap_content" 
@@ -53,8 +52,7 @@
              android:paddingRight="3dp"
              android:drawableLeft="@drawable/ic_unit_price_24px"
              android:textSize="12sp"
-             android:textColor="#E94509"
-             android:text="计费: 5元/时"  />
+             android:textColor="#E94509" />
           <TextView
              android:id="@+id/tv_parking_free_time_duration_dialog"
              android:layout_height="wrap_content" 
@@ -64,8 +62,7 @@
              android:paddingRight="3dp"
              android:drawableLeft="@drawable/ic_free_one_hour_24px"
              android:textSize="12sp"
-             android:textColor="#E94509"
-             android:text="免费时长: 1h"  />
+             android:textColor="#E94509" />
 <!--             <ImageView 
              android:id="@+id/iv_enter_display_parking_dialog_detail"
              android:src="@drawable/ic_expand_more_black_18dp"
@@ -138,7 +135,7 @@
                      android:drawableLeft="@drawable/ic_pay_auto_24px"
                      android:textSize="12sp"
                      android:textColor="#E94509"
-                     android:text="自动收费" />
+                     android:text="自助" />
                  <View  
                      android:layout_width="1dip"
                      android:layout_height="match_parent"
@@ -156,7 +153,7 @@
                      android:drawableLeft="@drawable/ic_network_24px"
                      android:textSize="12sp"
                      android:textColor="#E94509"
-                     android:text="联网结算"  />
+                     android:text="联网"  />
               </LinearLayout>
               <View  
                  android:layout_height="1px"
@@ -213,7 +210,6 @@
                      android:paddingLeft="1dp"
                      android:paddingRight="1dp"
                       android:drawableLeft="@drawable/ic_pos_16px"
-                      android:drawableRight="@drawable/ic_close_16px"
                      android:textSize="10sp"
                      android:textColor="#404040"
                      android:text="POS机"  />

@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -59,6 +60,15 @@ public class ParkingListAdapter extends BaseAdapter {
     	private TextView parkingNumberIdleTV;
     	private TextView parkingFeeTV;
     	private TextView parkingFreeTimeTV;
+
+        private TextView certificatedTV;
+        private TextView chargeTV;
+        private TextView autoChargeTV;
+        private TextView networkChargeTV;
+        private TextView cashChargeTV;
+        private TextView posChargeTV;
+        private TextView alipayChargeTV;
+        private TextView wechatpayChargeTV;
     }  
     @Override  
     public int getCount() {  
@@ -100,7 +110,16 @@ public class ParkingListAdapter extends BaseAdapter {
             zujian.parkingNumberTotalTV=(TextView)convertView.findViewById(R.id.tv_parking_number_total_hide);  
             zujian.parkingNumberIdleTV=(TextView)convertView.findViewById(R.id.tv_parking_number_idle_hide);  
             zujian.parkingFeeTV=(TextView)convertView.findViewById(R.id.tv_parking_fee_hide);  
-            zujian.parkingFreeTimeTV=(TextView)convertView.findViewById(R.id.tv_parking_free_time_duration_hide);  
+            zujian.parkingFreeTimeTV=(TextView)convertView.findViewById(R.id.tv_parking_free_time_duration_hide);
+
+            zujian.certificatedTV = (TextView)convertView.findViewById(R.id.tv_parking_type_certification_or_not_list);
+            zujian.chargeTV = (TextView)convertView.findViewById(R.id.tv_parking_type_free_or_charge_list);
+            zujian.autoChargeTV = (TextView)convertView.findViewById(R.id.tv_parking_type_manual_or_auto_list);
+            zujian.networkChargeTV = (TextView)convertView.findViewById(R.id.tv_parking_type_network_or_venue_list);
+            zujian.cashChargeTV = (TextView)convertView.findViewById(R.id.tv_payment_type_cash_list);
+            zujian.posChargeTV = (TextView)convertView.findViewById(R.id.tv_payment_type_pos_list);
+            zujian.alipayChargeTV = (TextView)convertView.findViewById(R.id.tv_payment_type_ali_list);
+            zujian.wechatpayChargeTV = (TextView)convertView.findViewById(R.id.tv_payment_type_wechat_list);
             convertView.setTag(zujian);  
         }else{  
             zujian=(Zujian)convertView.getTag();  
@@ -115,8 +134,50 @@ public class ParkingListAdapter extends BaseAdapter {
         zujian.locationHideTV.setText("地址：" + (String)data.get(position).get("location"));  
         zujian.parkingNumberTotalTV.setText("总车位: " + Integer.parseInt(String.valueOf(data.get(position).get("totalLocationNumber")))); 
         zujian.parkingNumberIdleTV.setText("空闲: " + Integer.parseInt(String.valueOf(data.get(position).get("idleLocationNumber")))); 
-        zujian.parkingFeeTV.setText("计费: " + ((String)data.get(position).get("feeScale"))); 
-        zujian.parkingFreeTimeTV.setText("免费时长: " + Integer.parseInt(String.valueOf(data.get(position).get("parkingFreeTime"))) + "h"); 
+        zujian.parkingFeeTV.setText("计费: " + ((String)data.get(position).get("feeScale")));
+        zujian.parkingFreeTimeTV.setText("免费时长: " + String.valueOf(data.get(position).get("parkingFreeTime")));
+        Drawable closeDrawable = context.getResources().getDrawable(R.drawable.ic_close_16px);
+        closeDrawable.setBounds(0, 0, closeDrawable.getMinimumWidth(), closeDrawable.getMinimumHeight());
+        if(Integer.parseInt(String.valueOf(data.get(position).get("certificated")))==1){
+            Drawable certifiDrawable = context.getResources().getDrawable(R.drawable.ic_certification_24px);
+            certifiDrawable.setBounds(0, 0, certifiDrawable.getMinimumWidth(), certifiDrawable.getMinimumHeight());
+            zujian.certificatedTV.setCompoundDrawables(certifiDrawable,null,closeDrawable,null);
+        }
+        if(Integer.parseInt(String.valueOf(data.get(position).get("charge")))==1){
+            Drawable chargeDrawable = context.getResources().getDrawable(R.drawable.ic_should_pay_24px);
+            chargeDrawable.setBounds(0, 0, chargeDrawable.getMinimumWidth(), chargeDrawable.getMinimumHeight());
+            zujian.chargeTV.setCompoundDrawables(chargeDrawable,null,closeDrawable,null);
+        }
+        if(Integer.parseInt(String.valueOf(data.get(position).get("autoCharge")))==1){
+            Drawable autoChargeDrawable = context.getResources().getDrawable(R.drawable.ic_pay_auto_24px);
+            autoChargeDrawable.setBounds(0, 0, autoChargeDrawable.getMinimumWidth(), autoChargeDrawable.getMinimumHeight());
+            zujian.autoChargeTV.setCompoundDrawables(autoChargeDrawable,null,closeDrawable,null);
+        }
+        if(Integer.parseInt(String.valueOf(data.get(position).get("networkChartge")))==1){
+            Drawable netChargeDrawable = context.getResources().getDrawable(R.drawable.ic_network_24px);
+            netChargeDrawable.setBounds(0, 0, netChargeDrawable.getMinimumWidth(), netChargeDrawable.getMinimumHeight());
+            zujian.networkChargeTV.setCompoundDrawables(netChargeDrawable,null,closeDrawable,null);
+        }
+        if(Integer.parseInt(String.valueOf(data.get(position).get("cashCharge")))==0){
+            Drawable cashChargeDrawable = context.getResources().getDrawable(R.drawable.ic_cash_16px);
+            cashChargeDrawable.setBounds(0, 0, cashChargeDrawable.getMinimumWidth(), cashChargeDrawable.getMinimumHeight());
+            zujian.cashChargeTV.setCompoundDrawables(cashChargeDrawable,null,closeDrawable,null);
+        }
+        if(Integer.parseInt(String.valueOf(data.get(position).get("posCharge")))==0){
+            Drawable posChargeDrawable = context.getResources().getDrawable(R.drawable.ic_pos_16px);
+            posChargeDrawable.setBounds(0, 0, posChargeDrawable.getMinimumWidth(), posChargeDrawable.getMinimumHeight());
+            zujian.posChargeTV.setCompoundDrawables(posChargeDrawable,null,closeDrawable,null);
+        }
+        if(Integer.parseInt(String.valueOf(data.get(position).get("alipayCharge")))==0){
+            Drawable aliChargeDrawable = context.getResources().getDrawable(R.drawable.ic_ali_16px);
+            aliChargeDrawable.setBounds(0, 0, aliChargeDrawable.getMinimumWidth(), aliChargeDrawable.getMinimumHeight());
+            zujian.alipayChargeTV.setCompoundDrawables(aliChargeDrawable,null,closeDrawable,null);
+        }
+        if(Integer.parseInt(String.valueOf(data.get(position).get("wechatCharge")))==0){
+            Drawable wechatChargeDrawable = context.getResources().getDrawable(R.drawable.ic_wechat_16px);
+            wechatChargeDrawable.setBounds(0, 0, wechatChargeDrawable.getMinimumWidth(), wechatChargeDrawable.getMinimumHeight());
+            zujian.wechatpayChargeTV.setCompoundDrawables(wechatChargeDrawable,null,closeDrawable,null);
+        }
         zujian.navigation.setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View v){ 

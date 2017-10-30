@@ -276,7 +276,7 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
     	mDialogParkingFeeTV = (TextView)findViewById(R.id.tv_parking_fee_dialog);
     	mDialogParkingFreeDurationTV = (TextView)findViewById(R.id.tv_parking_free_time_duration_dialog);
     	mDialogCertificationTV = (TextView)findViewById(R.id.tv_parking_type_certification_or_not_dialog);
-    	mDialogParkingChargeTV = (TextView)findViewById(R.id.tv_parking_type_certification_or_not_dialog);
+    	mDialogParkingChargeTV = (TextView)findViewById(R.id.tv_parking_type_free_or_charge_dialog);
     	mDialogParkingAutoChargeTV= (TextView)findViewById(R.id.tv_parking_type_manual_or_auto_dialog);
     	mDialogParkingNetworkChargeTV= (TextView)findViewById(R.id.tv_parking_type_network_or_venue_dialog);
     	mDialogCashPaymentTV= (TextView)findViewById(R.id.tv_payment_type_cash_dialog);
@@ -1548,15 +1548,89 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
         			    mDialogParkingNameTV.setText(mList.get(Integer.parseInt(marker.getSnippet())).get("parkName") + "");
         		    	mDialogParkingFreeNumberTV.setText("空闲: " + mList.get(Integer.parseInt(marker.getSnippet())).get("idleLocationNumber"));
         		    	mDialogParkingFeeTV.setText("计费: " +mList.get(Integer.parseInt(marker.getSnippet())).get("feeScale"));
-        		    	mDialogParkingFreeDurationTV.setText("免费时长: " + mList.get(Integer.parseInt(marker.getSnippet())).get("parkingFreeTime") + "h");
+        		    	mDialogParkingFreeDurationTV.setText("免费时长: " + mList.get(Integer.parseInt(marker.getSnippet())).get("parkingFreeTime"));
         		    	mDialogCertificationTV = (TextView)findViewById(R.id.tv_parking_type_certification_or_not_dialog);
-        		    	mDialogParkingChargeTV = (TextView)findViewById(R.id.tv_parking_type_certification_or_not_dialog);
+        		    	mDialogParkingChargeTV = (TextView)findViewById(R.id.tv_parking_type_free_or_charge_dialog);
         		    	mDialogParkingAutoChargeTV= (TextView)findViewById(R.id.tv_parking_type_manual_or_auto_dialog);
         		    	mDialogParkingNetworkChargeTV= (TextView)findViewById(R.id.tv_parking_type_network_or_venue_dialog);
         		    	mDialogCashPaymentTV= (TextView)findViewById(R.id.tv_payment_type_cash_dialog);
         		    	mDialogCardPaymentTV= (TextView)findViewById(R.id.tv_payment_type_pos_dialog);
         		    	mDialogAliPaymentTV= (TextView)findViewById(R.id.tv_payment_type_ali_dialog);
         		    	mDialogWechatPaymentTV= (TextView)findViewById(R.id.tv_payment_type_wechat_dialog);
+						Drawable closeDrawable = getResources().getDrawable(R.drawable.ic_close_16px);
+						closeDrawable.setBounds(0, 0, closeDrawable.getMinimumWidth(), closeDrawable.getMinimumHeight());
+						if("1".equals(mList.get(Integer.parseInt(marker.getSnippet())).get("certificated"))){
+							Drawable certifiDrawable = getResources().getDrawable(R.drawable.ic_certification_24px);
+							certifiDrawable.setBounds(0, 0, certifiDrawable.getMinimumWidth(), certifiDrawable.getMinimumHeight());
+							mDialogCertificationTV.setCompoundDrawables(certifiDrawable,null,closeDrawable,null);
+						}else{
+							Drawable certifiDrawable = getResources().getDrawable(R.drawable.ic_certification_24px);
+							certifiDrawable.setBounds(0, 0, certifiDrawable.getMinimumWidth(), certifiDrawable.getMinimumHeight());
+							mDialogCertificationTV.setCompoundDrawables(certifiDrawable,null,null,null);
+						}
+						if("1".equals(mList.get(Integer.parseInt(marker.getSnippet())).get("charge"))){
+							Drawable chargeDrawable = getResources().getDrawable(R.drawable.ic_should_pay_24px);
+							chargeDrawable.setBounds(0, 0, chargeDrawable.getMinimumWidth(), chargeDrawable.getMinimumHeight());
+							mDialogParkingChargeTV.setCompoundDrawables(chargeDrawable,null,closeDrawable,null);
+						}else{
+							Drawable chargeDrawable = getResources().getDrawable(R.drawable.ic_should_pay_24px);
+							chargeDrawable.setBounds(0, 0, chargeDrawable.getMinimumWidth(), chargeDrawable.getMinimumHeight());
+							mDialogParkingChargeTV.setCompoundDrawables(chargeDrawable,null,null,null);
+						}
+						if("1".equals(mList.get(Integer.parseInt(marker.getSnippet())).get("autoCharge"))){
+							Drawable autoChargeDrawable = getResources().getDrawable(R.drawable.ic_pay_auto_24px);
+							autoChargeDrawable.setBounds(0, 0, autoChargeDrawable.getMinimumWidth(), autoChargeDrawable.getMinimumHeight());
+							mDialogParkingAutoChargeTV.setCompoundDrawables(autoChargeDrawable,null,closeDrawable,null);
+						}else{
+							Drawable autoChargeDrawable = getResources().getDrawable(R.drawable.ic_pay_auto_24px);
+							autoChargeDrawable.setBounds(0, 0, autoChargeDrawable.getMinimumWidth(), autoChargeDrawable.getMinimumHeight());
+							mDialogParkingAutoChargeTV.setCompoundDrawables(autoChargeDrawable,null,null,null);
+						}
+						if("1".equals(mList.get(Integer.parseInt(marker.getSnippet())).get("networkChartge"))){
+							Drawable netChargeDrawable = getResources().getDrawable(R.drawable.ic_network_24px);
+							netChargeDrawable.setBounds(0, 0, netChargeDrawable.getMinimumWidth(), netChargeDrawable.getMinimumHeight());
+							mDialogParkingNetworkChargeTV.setCompoundDrawables(netChargeDrawable,null,closeDrawable,null);
+						}else{
+							Drawable netChargeDrawable = getResources().getDrawable(R.drawable.ic_network_24px);
+							netChargeDrawable.setBounds(0, 0, netChargeDrawable.getMinimumWidth(), netChargeDrawable.getMinimumHeight());
+							mDialogParkingNetworkChargeTV.setCompoundDrawables(netChargeDrawable,null,null,null);
+						}
+						if("0".equals(mList.get(Integer.parseInt(marker.getSnippet())).get("cashCharge"))){
+							Drawable cashChargeDrawable = getResources().getDrawable(R.drawable.ic_cash_16px);
+							cashChargeDrawable.setBounds(0, 0, cashChargeDrawable.getMinimumWidth(), cashChargeDrawable.getMinimumHeight());
+							mDialogCashPaymentTV.setCompoundDrawables(cashChargeDrawable,null,closeDrawable,null);
+						}else{
+							Drawable cashChargeDrawable = getResources().getDrawable(R.drawable.ic_cash_16px);
+							cashChargeDrawable.setBounds(0, 0, cashChargeDrawable.getMinimumWidth(), cashChargeDrawable.getMinimumHeight());
+							mDialogCashPaymentTV.setCompoundDrawables(cashChargeDrawable,null,null,null);
+						}
+						if("0".equals(mList.get(Integer.parseInt(marker.getSnippet())).get("posCharge"))){
+							Drawable posChargeDrawable = getResources().getDrawable(R.drawable.ic_pos_16px);
+							posChargeDrawable.setBounds(0, 0, posChargeDrawable.getMinimumWidth(), posChargeDrawable.getMinimumHeight());
+							mDialogCardPaymentTV.setCompoundDrawables(posChargeDrawable,null,closeDrawable,null);
+						}else{
+							Drawable posChargeDrawable = getResources().getDrawable(R.drawable.ic_pos_16px);
+							posChargeDrawable.setBounds(0, 0, posChargeDrawable.getMinimumWidth(), posChargeDrawable.getMinimumHeight());
+							mDialogCardPaymentTV.setCompoundDrawables(posChargeDrawable,null,null,null);
+						}
+						if("0".equals(mList.get(Integer.parseInt(marker.getSnippet())).get("alipayCharge"))){
+							Drawable aliChargeDrawable = getResources().getDrawable(R.drawable.ic_ali_16px);
+							aliChargeDrawable.setBounds(0, 0, aliChargeDrawable.getMinimumWidth(), aliChargeDrawable.getMinimumHeight());
+							mDialogAliPaymentTV.setCompoundDrawables(aliChargeDrawable,null,closeDrawable,null);
+						}else{
+							Drawable aliChargeDrawable = getResources().getDrawable(R.drawable.ic_ali_16px);
+							aliChargeDrawable.setBounds(0, 0, aliChargeDrawable.getMinimumWidth(), aliChargeDrawable.getMinimumHeight());
+							mDialogAliPaymentTV.setCompoundDrawables(aliChargeDrawable,null,null,null);
+						}
+						if("0".equals(mList.get(Integer.parseInt(marker.getSnippet())).get("wechatCharge"))){
+							Drawable wechatChargeDrawable = getResources().getDrawable(R.drawable.ic_wechat_16px);
+							wechatChargeDrawable.setBounds(0, 0, wechatChargeDrawable.getMinimumWidth(), wechatChargeDrawable.getMinimumHeight());
+							mDialogWechatPaymentTV.setCompoundDrawables(wechatChargeDrawable,null,closeDrawable,null);
+						}else{
+							Drawable wechatChargeDrawable = getResources().getDrawable(R.drawable.ic_wechat_16px);
+							wechatChargeDrawable.setBounds(0, 0, wechatChargeDrawable.getMinimumWidth(), wechatChargeDrawable.getMinimumHeight());
+							mDialogWechatPaymentTV.setCompoundDrawables(wechatChargeDrawable,null,null,null);
+						}
                         return true;
                     }
                 };
@@ -1567,9 +1641,83 @@ AMap.OnInfoWindowClickListener,AMap.InfoWindowAdapter,AMap.OnMarkerClickListener
 			    mDialogParkingNameTV.setText(mList.get(0).get("parkName") + "");
 			    mDialogParkingFreeNumberTV.setText("空闲: " + mList.get(0).get("idleLocationNumber"));
 		    	mDialogParkingFeeTV.setText("计费: " +mList.get(0).get("feeScale"));
-		    	mDialogParkingFreeDurationTV.setText("免费时长: " + mList.get(0).get("parkingFreeTime") + "h");
+		    	mDialogParkingFreeDurationTV.setText("免费时长: " + mList.get(0).get("parkingFreeTime"));
 			    mCurrentDialogLatitude = Double.parseDouble(String.valueOf(mList.get(0).get("latitude")));
 			    mCurrentDialogLongtitude =  Double.parseDouble(String.valueOf(mList.get(0).get("longitude")));
+				Drawable closeDrawable = getResources().getDrawable(R.drawable.ic_close_16px);
+				closeDrawable.setBounds(0, 0, closeDrawable.getMinimumWidth(), closeDrawable.getMinimumHeight());
+				if("1".equals(mList.get(0).get("certificated"))){
+					Drawable certifiDrawable = getResources().getDrawable(R.drawable.ic_certification_24px);
+					certifiDrawable.setBounds(0, 0, certifiDrawable.getMinimumWidth(), certifiDrawable.getMinimumHeight());
+					mDialogCertificationTV.setCompoundDrawables(certifiDrawable,null,closeDrawable,null);
+				}else{
+					Drawable certifiDrawable = getResources().getDrawable(R.drawable.ic_certification_24px);
+					certifiDrawable.setBounds(0, 0, certifiDrawable.getMinimumWidth(), certifiDrawable.getMinimumHeight());
+					mDialogCertificationTV.setCompoundDrawables(certifiDrawable,null,null,null);
+				}
+				if("1".equals(mList.get(0).get("charge"))){
+					Drawable chargeDrawable = getResources().getDrawable(R.drawable.ic_should_pay_24px);
+					chargeDrawable.setBounds(0, 0, chargeDrawable.getMinimumWidth(), chargeDrawable.getMinimumHeight());
+					mDialogParkingChargeTV.setCompoundDrawables(chargeDrawable,null,closeDrawable,null);
+				}else{
+					Drawable chargeDrawable = getResources().getDrawable(R.drawable.ic_should_pay_24px);
+					chargeDrawable.setBounds(0, 0, chargeDrawable.getMinimumWidth(), chargeDrawable.getMinimumHeight());
+					mDialogParkingChargeTV.setCompoundDrawables(chargeDrawable,null,null,null);
+				}
+				if("1".equals(mList.get(0).get("autoCharge"))){
+					Drawable autoChargeDrawable = getResources().getDrawable(R.drawable.ic_pay_auto_24px);
+					autoChargeDrawable.setBounds(0, 0, autoChargeDrawable.getMinimumWidth(), autoChargeDrawable.getMinimumHeight());
+					mDialogParkingAutoChargeTV.setCompoundDrawables(autoChargeDrawable,null,closeDrawable,null);
+				}else{
+					Drawable autoChargeDrawable = getResources().getDrawable(R.drawable.ic_pay_auto_24px);
+					autoChargeDrawable.setBounds(0, 0, autoChargeDrawable.getMinimumWidth(), autoChargeDrawable.getMinimumHeight());
+					mDialogParkingAutoChargeTV.setCompoundDrawables(autoChargeDrawable,null,null,null);
+				}
+				if("1".equals(mList.get(0).get("networkChartge"))){
+					Drawable netChargeDrawable = getResources().getDrawable(R.drawable.ic_network_24px);
+					netChargeDrawable.setBounds(0, 0, netChargeDrawable.getMinimumWidth(), netChargeDrawable.getMinimumHeight());
+					mDialogParkingNetworkChargeTV.setCompoundDrawables(netChargeDrawable,null,closeDrawable,null);
+				}else{
+					Drawable netChargeDrawable = getResources().getDrawable(R.drawable.ic_network_24px);
+					netChargeDrawable.setBounds(0, 0, netChargeDrawable.getMinimumWidth(), netChargeDrawable.getMinimumHeight());
+					mDialogParkingNetworkChargeTV.setCompoundDrawables(netChargeDrawable,null,null,null);
+				}
+				if("0".equals(mList.get(0).get("cashCharge"))){
+					Drawable cashChargeDrawable = getResources().getDrawable(R.drawable.ic_cash_16px);
+					cashChargeDrawable.setBounds(0, 0, cashChargeDrawable.getMinimumWidth(), cashChargeDrawable.getMinimumHeight());
+					mDialogCashPaymentTV.setCompoundDrawables(cashChargeDrawable,null,closeDrawable,null);
+				}else{
+					Drawable cashChargeDrawable = getResources().getDrawable(R.drawable.ic_cash_16px);
+					cashChargeDrawable.setBounds(0, 0, cashChargeDrawable.getMinimumWidth(), cashChargeDrawable.getMinimumHeight());
+					mDialogCashPaymentTV.setCompoundDrawables(cashChargeDrawable,null,null,null);
+				}
+				if("0".equals(mList.get(0).get("posCharge"))){
+					Drawable posChargeDrawable = getResources().getDrawable(R.drawable.ic_pos_16px);
+					posChargeDrawable.setBounds(0, 0, posChargeDrawable.getMinimumWidth(), posChargeDrawable.getMinimumHeight());
+					mDialogCardPaymentTV.setCompoundDrawables(posChargeDrawable,null,closeDrawable,null);
+				}else{
+					Drawable posChargeDrawable = getResources().getDrawable(R.drawable.ic_pos_16px);
+					posChargeDrawable.setBounds(0, 0, posChargeDrawable.getMinimumWidth(), posChargeDrawable.getMinimumHeight());
+					mDialogCardPaymentTV.setCompoundDrawables(posChargeDrawable,null,null,null);
+				}
+				if("0".equals(mList.get(0).get("alipayCharge"))){
+					Drawable aliChargeDrawable = getResources().getDrawable(R.drawable.ic_ali_16px);
+					aliChargeDrawable.setBounds(0, 0, aliChargeDrawable.getMinimumWidth(), aliChargeDrawable.getMinimumHeight());
+					mDialogAliPaymentTV.setCompoundDrawables(aliChargeDrawable,null,closeDrawable,null);
+				}else{
+					Drawable aliChargeDrawable = getResources().getDrawable(R.drawable.ic_ali_16px);
+					aliChargeDrawable.setBounds(0, 0, aliChargeDrawable.getMinimumWidth(), aliChargeDrawable.getMinimumHeight());
+					mDialogAliPaymentTV.setCompoundDrawables(aliChargeDrawable,null,null,null);
+				}
+				if("0".equals(mList.get(0).get("wechatCharge"))){
+					Drawable wechatChargeDrawable = getResources().getDrawable(R.drawable.ic_wechat_16px);
+					wechatChargeDrawable.setBounds(0, 0, wechatChargeDrawable.getMinimumWidth(), wechatChargeDrawable.getMinimumHeight());
+					mDialogWechatPaymentTV.setCompoundDrawables(wechatChargeDrawable,null,closeDrawable,null);
+				}else{
+					Drawable wechatChargeDrawable = getResources().getDrawable(R.drawable.ic_wechat_16px);
+					wechatChargeDrawable.setBounds(0, 0, wechatChargeDrawable.getMinimumWidth(), wechatChargeDrawable.getMinimumHeight());
+					mDialogWechatPaymentTV.setCompoundDrawables(wechatChargeDrawable,null,null,null);
+				}
 			    break;
 	        case EVENT_DISMISS_MARKER:
                 //新的marker

@@ -128,13 +128,13 @@
                      android:layout_height="wrap_content" 
                      android:layout_width="0dp"
                      android:layout_weight="1"
-                      android:gravity="center"
+                     android:gravity="center"
                      android:paddingLeft="3dp"
                      android:paddingRight="3dp"
                      android:drawableLeft="@drawable/ic_pay_auto_24px"
                      android:textSize="10sp"
                      android:textColor="#E94509"
-                     android:text="自动收费" />
+                     android:text="自助" />
                  <View  
                      android:layout_width="1dip"
                      android:layout_height="match_parent"
@@ -152,14 +152,14 @@
                      android:drawableLeft="@drawable/ic_network_24px"
                      android:textSize="10sp"
                      android:textColor="#E94509"
-                     android:text="联网结算"  />
+                     android:text="联网"  />
               </LinearLayout>
               <LinearLayout 
                  android:layout_height="wrap_content" 
                  android:layout_width="match_parent"
                  android:orientation="horizontal">
-               <TextView
-                     android:id="@+id/tv_payemnt_type_cash_list"
+<!--               <TextView
+                     android:id="@+id/tv_payment_type_title_list"
                      android:layout_height="wrap_content" 
                      android:layout_width="0dp"
                      android:layout_weight="1"
@@ -175,12 +175,12 @@
                      android:layout_height="match_parent"
                      android:layout_marginTop="1dp"
                      android:background="#66CCFF"
-                     android:layout_gravity="center_horizontal"/>
+                     android:layout_gravity="center_horizontal"/>-->
                 <TextView
-                     android:id="@+id/tv_payemnt_type_cash_list"
+                     android:id="@+id/tv_payment_type_cash_list"
                      android:layout_height="wrap_content" 
                      android:layout_width="0dp"
-                     android:layout_weight="0.8"
+                     android:layout_weight="1"
                      android:gravity="center"
                      android:paddingLeft="3dp"
                      android:paddingRight="3dp"
@@ -196,15 +196,14 @@
                      android:background="#66CCFF"
                      android:layout_gravity="center_horizontal"/>
                  <TextView
-                     android:id="@+id/tv_payemnt_type_pos_list"
+                     android:id="@+id/tv_payment_type_pos_list"
                      android:layout_height="wrap_content" 
                      android:layout_width="0dp"
-                     android:layout_weight="1.2"
+                     android:layout_weight="1"
                      android:gravity="center"
                      android:paddingLeft="2dp"
                      android:paddingRight="2dp"
-                      android:drawableLeft="@drawable/ic_pos_16px"
-                      android:drawableRight="@drawable/ic_close_16px"
+                     android:drawableLeft="@drawable/ic_pos_16px"
                      android:textSize="10sp"
                      android:textColor="#404040"
                      android:text="POS机"  />
@@ -215,14 +214,14 @@
                      android:background="#66CCFF"
                      android:layout_gravity="center_horizontal"/>
                   <TextView
-                     android:id="@+id/tv_payemnt_type_ali_list"
+                     android:id="@+id/tv_payment_type_ali_list"
                      android:layout_height="wrap_content" 
                      android:layout_width="0dp"
                      android:layout_weight="1"
                       android:gravity="center"
                      android:paddingLeft="3dp"
                      android:paddingRight="3dp"
-                     android:drawableLeft="@drawable/ic_ali_24px"
+                      android:drawableLeft="@drawable/ic_ali_24px"
                      android:textSize="10sp"
                      android:textColor="#404040"
                      android:text="支付宝" />
@@ -233,7 +232,7 @@
                      android:background="#66CCFF"
                      android:layout_gravity="center_horizontal"/>
                  <TextView
-                     android:id="@+id/tv_parking_type_wechat_list"
+                     android:id="@+id/tv_payment_type_wechat_list"
                      android:layout_height="wrap_content" 
                      android:layout_width="0dp"
                      android:layout_weight="1"

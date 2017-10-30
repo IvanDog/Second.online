@@ -143,12 +143,13 @@ public class RechargeActivity extends Activity {
 		mPaymentTypeRG=(RadioGroup)findViewById(R.id.rg_payment_type_recharge);
 		mAlipayPaymentTypeRB=(RadioButton)findViewById(R.id.rb_alipay_payment_recharge);
 		mWechatpayPaymentRB=(RadioButton)findViewById(R.id.rb_wechatpay_payment_recharge);
+		mWechatpayPaymentRB.setEnabled(false);
 		mPaymentTypeRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() { 
 			@Override 
 			public void onCheckedChanged(RadioGroup group, int checkedId){
                 if (mAlipayPaymentTypeRB.getId() == checkedId){
                 	mPaymentType = PAYMENT_TYPE_ALIPAY; 
-                	mPaymentPattern = "支付宝支付"; 
+                	mPaymentPattern = "支付宝付";
 			    }else if (mWechatpayPaymentRB.getId() == checkedId){
 			    	mPaymentType = PAYMENT_TYPE_WECHATPAY; 
 			    	mPaymentPattern = "微信支付"; 
@@ -286,6 +287,7 @@ public class RechargeActivity extends Activity {
 		  info.setRecharge(mCharge);
 		  info.setPaymentPattern(convertPayPattToInteger(mPaymentPattern));
  		  StringEntity se = new StringEntity(JacksonJsonUtil.beanToJson(info), "UTF-8");
+		  Log.e(LOG_TAG,"clientRecharge-> param is " + JacksonJsonUtil.beanToJson(info));
  		  request.setEntity(se);//发送数据
  		  try{
  			  HttpResponse httpResponse = httpClient.execute(request);//获得响应
